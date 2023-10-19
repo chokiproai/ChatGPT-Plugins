@@ -13,7 +13,6 @@ export type ModelType = (typeof DEFAULT_MODELS)[number]["name"];
 
 export enum SubmitKey {
   Enter = "Enter",
-  CtrlEnter = "Ctrl + Enter",
   ShiftEnter = "Shift + Enter",
   MetaEnter = "Meta + Enter",
 }
@@ -27,7 +26,7 @@ export enum Theme {
 export const DEFAULT_CONFIG = {
   lastUpdate: Date.now(), // timestamp, to merge state
 
-  submitKey: isMacOS() ? SubmitKey.MetaEnter : SubmitKey.CtrlEnter,
+  submitKey: isMacOS() ? SubmitKey.MetaEnter : SubmitKey.Enter,
   avatar: "1f603",
   fontSize: 14,
   theme: Theme.Auto as Theme,

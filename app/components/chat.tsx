@@ -217,7 +217,8 @@ function useSubmitHandler() {
     if (e.key === "Enter" && (e.nativeEvent.isComposing || isComposing.current))
       return false;
     return (
-      (config.submitKey === SubmitKey.ShiftEnter && e.shiftKey) ||
+      (config.submitKey === SubmitKey.AltEnter && e.altKey) ||
+      (config.submitKey === SubmitKey.CtrlEnter && e.ctrlKey) ||
       (config.submitKey === SubmitKey.MetaEnter && e.metaKey) ||
       (config.submitKey === SubmitKey.Enter &&
         !e.altKey &&

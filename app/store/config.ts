@@ -13,7 +13,8 @@ export type ModelType = (typeof DEFAULT_MODELS)[number]["name"];
 
 export enum SubmitKey {
   Enter = "Enter",
-  ShiftEnter = "Shift + Enter",
+  CtrlEnter = "Ctrl + Enter",
+  AltEnter = "Alt + Enter",
   MetaEnter = "Meta + Enter",
 }
 

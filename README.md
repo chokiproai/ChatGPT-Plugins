@@ -2,6 +2,8 @@
 
 One-Click to get well-designed cross-platform ChatGPT web UI.
 
+[Triển khai trên Hugging Face](https://huggingface.co/login?next=%2Fspaces%2Fngoctuanai%2Fchatgptfree%3Fduplicate%3Dtrue)
+
 ## Mục lục
 
 - [Features](https://github.com/chokiproai/ChatGPT-Compact#Features)

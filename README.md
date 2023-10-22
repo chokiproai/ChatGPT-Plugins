@@ -1,4 +1,5 @@
 <h1 align="center">ChatGPT Plugins</h1>
+
 - [Deployed on Hugging Face](https://huggingface.co/login?next=%2Fspaces%2Fngoctuanai%2Fchatgptfree%3Fduplicate%3Dtrue)
 
 One-Click to get well-designed cross-platform ChatGPT web UI.

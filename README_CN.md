@@ -1,19 +1,9 @@
 <h1 align="center">ChatGPT Plugins</h1>
 
-- [部署在 Hugging Face 上](https://huggingface.co/login?next=%2Fspaces%2Fngoctuanai%2Fchatgptfree%3Fduplicate%3Dtrue)
+ ## [部署在 Hugging Face 上](https://huggingface.co/login?next=%2Fspaces%2Fngoctuanai%2Fchatgptfree%3Fduplicate%3Dtrue)
 
-一键获得精心设计的跨平台 ChatGPT Web UI。
+- 一键获得精心设计的跨平台 ChatGPT Web UI。
 
-## 指数
-- [功能](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md#Features)
-- [路线图](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md#Roadmap)
-- [新增内容](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md#Whats-New)
-- [开始](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md#Get-Started)
-- [保持更新](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md#Keep-Updated)
-- [访问密码](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md#Access-Password)
-- [要求](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md/tree/main#requirements)
-- [开发](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md/tree/main#development)
-- 更多的...
   ## 特征
 - **一键免费部署** 在 1 分钟内完成
 - Linux/Windows/MacOS 上的紧凑型客户端 (~5MB)，[立即下载](https://github.com/Yidadaa/ChatGPT-Next-Web/releases)

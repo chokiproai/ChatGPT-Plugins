@@ -1,19 +1,8 @@
 <h1 align="center">ChatGPT Plugins</h1>
 
-- [Đã triển khai trên Ôm mặt](https://huggingface.co/login?next=%2Fspaces%2Fngoctuanai%2Fchatgptfree%3Fduplicate%3Dtrue)
+## [Đã triển khai trên Ôm mặt](https://huggingface.co/login?next=%2Fspaces%2Fngoctuanai%2Fchatgptfree%3Fduplicate%3Dtrue)
 
-Một cú nhấp chuột để có được giao diện người dùng web ChatGPT đa nền tảng được thiết kế tốt.
-
-## Mục lục
-- [Tính năng](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md#Features)
-- [Lộ trình](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md#Roadmap)
-- [Có gì mới](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md#Whats-New)
-- [Bắt đầu](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md#Get-Started)
-- [Tiếp tục cập nhật](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md#Keep-Updated)
-- [Mật khẩu truy cập](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md#Access-Password)
-- [Yêu cầu](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md/tree/main#requirements)
-- [Phát triển](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md/tree/main#development)
-- HƠN...
+- Một cú nhấp chuột để có được giao diện người dùng web ChatGPT đa nền tảng được thiết kế tốt.
 ## Đặc trưng
 - **Triển khai miễn phí chỉ bằng một cú nhấp chuột** trong vòng chưa đầy 1 phút
 - Máy khách nhỏ gọn (~5MB) trên Linux/Windows/MacOS, [tải xuống ngay bây giờ](https://github.com/Yidadaa/ChatGPT-Next-Web/releases)

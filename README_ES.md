@@ -1,173 +1,91 @@
-<div align="center">
-<img src="./docs/images/icon.svg" alt="预览"/>
+<h1 align="center">Complementos de ChatGPT</h1>
 
-<h1 align="center">ChatGPT Next Web</h1>
+- [Implementado en Hugging Face](https://huggingface.co/login?next=%2Fspaces%2Fngoctuanai%2Fchatgptfree%3Fduplicate%3Dtrue)
 
-Implemente su aplicación web privada ChatGPT de forma gratuita con un solo clic.
+Un clic para obtener una interfaz de usuario web ChatGPT multiplataforma bien diseñada.
 
-[Demo demo](https://chat-gpt-next-web.vercel.app/) / [Problemas de comentarios](https://github.com/Yidadaa/ChatGPT-Next-Web/issues) / [Únete a Discord](https://discord.gg/zrhvHCr79N) / [Grupo QQ](https://user-images.githubusercontent.com/16968934/228190818-7dd00845-e9b9-4363-97e5-44c507ac76da.jpeg) / [Desarrolladores de consejos](https://user-images.githubusercontent.com/16968934/227772541-5bcd52d8-61b7-488c-a203-0330d8006e2b.jpg) / [Donar](#捐赠-donate-usdt)
+## Índice
+- [Características](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md#Features)
+- [Hoja de ruta](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md#Roadmap)
+- [Novedades](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md#Whats-New)
+- [Comenzar](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md#Get-Started)
+- [Mantener actualizado](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md#Keep-Updated)
+- [Contraseña de acceso](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md#Access-Password)
+- [Requisitos](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md/tree/main#requirements)
+- [Desarrollo](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md/tree/main#development)
+- MÁS...
+## Características
+- **Implemente gratis con un clic** en menos de 1 minuto
+- Cliente compacto (~5 MB) en Linux/Windows/MacOS, [descárgalo ahora](https://github.com/Yidadaa/ChatGPT-Next-Web/releases)
+- Totalmente compatible con llms autoimplementados, recomendado para usar con [RWKV-Runner](https://github.com/josStorer/RWKV-Runner) o [LocalAI](https://github.com/go-skynet/ IA local)
+- Privacidad primero, todos los datos almacenados localmente en el navegador
+- Soporte de Markdown: LaTex, sirena, resaltado de código, etc.
+- Diseño responsivo, modo oscuro y PWA
+- Rápida velocidad de carga de la primera pantalla (~100 kb), admite respuesta de transmisión
+- Nuevo en v2: crea, comparte y depura tus herramientas de chat con plantillas de mensajes (máscara)
+- Impresionantes indicaciones impulsadas por [awesome-chatgpt-prompts-zh](https://github.com/PlexPt/awesome-chatgpt-prompts-zh) y [awesome-chatgpt-prompts](https://github.com/ f/avisos-de-chatgpt-impresionantes)
+- Comprime automáticamente el historial de chat para admitir conversaciones largas y al mismo tiempo guarda tus tokens
+- I18n: inglés, 简体中文, 繁体中文, 日本語, Français, Español, Italiano, Türkçe, Deutsch, Tiếng Việt, Русский, Čeština, 한국어, Indonesia.
+## Mapa vial
+- [x] Mensaje del sistema: fijar un mensaje definido por el usuario como mensaje del sistema [#138](https://github.com/Yidadaa/ChatGPT-Next-Web/issues/138)
+- [x] Mensaje de usuario: el usuario puede editar y guardar mensajes personalizados en la lista de mensajes
+- [x] Plantilla de mensaje: cree un nuevo chat con mensajes predefinidos en contexto [#993](https://github.com/Yidadaa/ChatGPT-Next-Web/issues/993)
+- [x] Compartir como imagen, compartir en ShareGPT [#1741](https://github.com/Yidadaa/ChatGPT-Next-Web/pull/1741)
+- [x] Aplicación de escritorio con tauri
+- [x] Modelo de autohospedaje: Totalmente compatible con [RWKV-Runner](https://github.com/josStorer/RWKV-Runner), así como con la implementación del servidor de [LocalAI](https://github.com /go-skynet/LocalAI): llama/gpt4all/rwkv/vicuna/koala/gpt4all-j/cerebras/falcon/dolly, etc.
+- [] Complementos: admite búsqueda de red, calculadora, cualquier otra API, etc. [#165](https://github.com/Yidadaa/ChatGPT-Next-Web/issues/165)
+## Qué hay de nuevo
+- 🚀 Se lanzó v2.0, ahora puedes crear plantillas dinámicas y convertir tus ideas en realidad. Lea esto: [Consejos de ingeniería de mensajes de ChatGPT: mensajes de cero, uno y pocos disparos](https://www.allabtai.com/prompt-engineering-tips-zero-one-and-few-shot-prompting/).
+- 🚀 v2.7 ¡compartamos conversaciones como imagen o compartamos en ShareGPT!
+- 🚀 v2.8 ¡ahora tenemos un cliente que se ejecuta en todas las plataformas!
+## Empezar
+1. Obtenga [Clave API de OpenAI](https://platform.openai.com/account/api-keys);
+2. Haga clic en recordar que `CÓDIGO` es la contraseña de su página;
+3. Disfruta :)
+## Mantener actualizado
+Si ha implementado su propio proyecto con solo un clic siguiendo los pasos anteriores, es posible que encuentre el problema de "Actualizaciones disponibles" que aparece constantemente. Esto se debe a que creará un nuevo proyecto para usted de forma predeterminada en lugar de bifurcar este proyecto, lo que resultará en la incapacidad de detectar las actualizaciones correctamente.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FYidadaa%2FChatGPT-Next-Web&env=OPENAI_API_KEY&env=CODE&project-name=chatgpt-next-web&repository-name=ChatGPT-Next-Web)
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Yidadaa/ChatGPT-Next-Web)
-
-![主界面](./docs/images/cover.png)
-
-</div>
-
-## Comenzar
-
-1.  Prepara el tuyo [Clave API OpenAI](https://platform.openai.com/account/api-keys);
-2.  Haga clic en el botón de la derecha para iniciar la implementación:
-    [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FYidadaa%2FChatGPT-Next-Web&env=OPENAI_API_KEY&env=CODE&project-name=chatgpt-next-web&repository-name=ChatGPT-Next-Web), inicie sesión directamente con su cuenta de Github y recuerde completar la clave API y la suma en la página de variables de entorno[Contraseña de acceso a la página](#配置页面访问密码) CÓDIGO;
-3.  Una vez implementado, puede comenzar;
-4.  (Opcional)[Enlazar un nombre de dominio personalizado](https://vercel.com/docs/concepts/projects/domains/add-a-domain): El nombre de dominio DNS asignado por Vercel está contaminado en algunas regiones y puede conectarse directamente enlazando un nombre de dominio personalizado.
-
-## Manténgase actualizado
-
-Si sigue los pasos anteriores para implementar su proyecto con un solo clic, es posible que siempre diga "La actualización existe" porque Vercel creará un nuevo proyecto para usted de forma predeterminada en lugar de bifurcar el proyecto, lo que evitará que la actualización se detecte correctamente.
-Le recomendamos que siga estos pasos para volver a implementar:
+Le recomendamos que siga los pasos a continuación para volver a implementar:
 
 - Eliminar el repositorio original;
 - Utilice el botón de bifurcación en la esquina superior derecha de la página para bifurcar este proyecto;
-- En Vercel, vuelva a seleccionar e implementar,[Echa un vistazo al tutorial detallado](./docs/vercel-cn.md#如何新建项目)。
+- Elija e implemente nuevamente
+## Contraseña de acceso
+Este proyecto proporciona control de acceso limitado. Agregue una variable de entorno llamada "CÓDIGO" en la página de variables de entorno de Vercel. El valor debe ser contraseñas separadas por comas como esta:
 
-### Activar actualizaciones automáticas
+```
+código1, código2, código3
+```
 
-> Si encuentra un error de ejecución de Upstream Sync, ¡Sync Fork manualmente una vez!
+Después de agregar o modificar esta variable de entorno, vuelva a implementar el proyecto para que los cambios surtan efecto.
+### `OPENAI_API_KEY` (obligatorio)
 
-Cuando bifurca el proyecto, debido a las limitaciones de Github, debe ir manualmente a la página Acciones de su proyecto bifurcado para habilitar Flujos de trabajo y habilitar Upstream Sync Action, después de habilitarlo, puede activar las actualizaciones automáticas cada hora:
+Su clave API de Openai.
 
-![自动更新](./docs/images/enable-actions.jpg)
+### `CÓDIGO` (opcional)
 
-![启用自动更新](./docs/images/enable-actions-sync.jpg)
+Contraseña de acceso, separada por coma.
 
-### Actualizar el código manualmente
-
-Si desea que el manual se actualice inmediatamente, puede consultarlo [Documentación para Github](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) Aprenda a sincronizar un proyecto bifurcado con código ascendente.
-
-Puede destacar / ver este proyecto o seguir al autor para recibir notificaciones de nuevas actualizaciones de funciones.
-
-## Configurar la contraseña de acceso a la página
-
-> Después de configurar la contraseña, el usuario debe completar manualmente el código de acceso en la página de configuración para chatear normalmente, de lo contrario, se solicitará el estado no autorizado a través de un mensaje.
-
-> **advertir**: Asegúrese de establecer el número de dígitos de la contraseña lo suficientemente largo, preferiblemente más de 7 dígitos, de lo contrario[Será volado](https://github.com/Yidadaa/ChatGPT-Next-Web/issues/518)。
-
-Este proyecto proporciona control de permisos limitado, agregue el nombre al nombre en la página Variables de entorno del Panel de control del proyecto Vercel `CODE` Variables de entorno con valores para contraseñas personalizadas separadas por comas:
-
-    code1,code2,code3
-
-Después de agregar o modificar la variable de entorno, por favor**Redesplegar**proyecto para poner en vigor los cambios.
-
-## Variable de entorno
-
-> La mayoría de los elementos de configuración de este proyecto se establecen a través de variables de entorno, tutorial:[Cómo modificar las variables de entorno de Vercel](./docs/vercel-cn.md)。
-
-### `OPENAI_API_KEY` (Requerido)
-
-OpanAI key, la clave API que solicita en la página de su cuenta openai.
-
-### `CODE` (Opcional)
-
-Las contraseñas de acceso, opcionalmente, se pueden separar por comas.
-
-**advertir**: Si no completa este campo, cualquiera puede usar directamente su sitio web implementado, lo que puede hacer que su token se consuma rápidamente, se recomienda completar esta opción.
-
-### `BASE_URL` (Opcional)
+### `BASE_URL` (opcional)
 
 > Predeterminado: `https://api.openai.com`
 
-> Ejemplos: `http://your-openai-proxy.com`
+> Ejemplos: `http://tu-openai-proxy.com`
 
-URL del proxy de interfaz OpenAI, complete esta opción si configuró manualmente el proxy de interfaz openAI.
+Anular la URL base de solicitud de la API de Openai.
 
-> Si encuentra problemas con el certificado SSL, establezca el `BASE_URL` El protocolo se establece en http.
+### `OPENAI_ORG_ID` (opcional)
 
-### `OPENAI_ORG_ID` (Opcional)
+Especifique el ID de la organización OpenAI.
 
-Especifica el identificador de la organización en OpenAI.
+### `HIDE_USER_API_KEY` (opcional)
 
-### `HIDE_USER_API_KEY` (Opcional)
+> Predeterminado: Vacío
 
-Si no desea que los usuarios rellenen la clave de API ellos mismos, establezca esta variable de entorno en 1.
+Si no desea que los usuarios ingresen su propia clave API, establezca este valor en 1.
 
-### `DISABLE_GPT4` (Opcional)
+### `DISABLE_GPT4` (opcional)
 
-Si no desea que los usuarios utilicen GPT-4, establezca esta variable de entorno en 1.
+> Predeterminado: Vacío
 
-### `HIDE_BALANCE_QUERY` (Opcional)
-
-Si no desea que los usuarios consulte el saldo, establezca esta variable de entorno en 1.
-
-## explotación
-
-> No se recomienda encarecidamente desarrollar o implementar localmente, debido a algunas razones técnicas, es difícil configurar el agente API de OpenAI localmente, a menos que pueda asegurarse de que puede conectarse directamente al servidor OpenAI.
-
-Haga clic en el botón de abajo para iniciar el desarrollo secundario:
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Yidadaa/ChatGPT-Next-Web)
-
-Antes de empezar a escribir código, debe crear uno nuevo en la raíz del proyecto `.env.local` archivo, lleno de variables de entorno:
-
-    OPENAI_API_KEY=<your api key here>
-
-### Desarrollo local
-
-1.  Instale nodejs 18 e hilo, pregunte a ChatGPT para obtener más detalles;
-2.  ejecutar `yarn install && yarn dev` Enlatar. ⚠️ Nota: Este comando es solo para desarrollo local, no para implementación.
-3.  Úselo si desea implementar localmente `yarn install && yarn start` comando, puede cooperar con pm2 a daemon para evitar ser asesinado, pregunte a ChatGPT para obtener más detalles.
-
-## desplegar
-
-### Implementación de contenedores (recomendado)
-
-> La versión de Docker debe ser 20 o posterior, de lo contrario se indicará que no se puede encontrar la imagen.
-
-> ⚠️ Nota: Las versiones de Docker están de 1 a 2 días por detrás de la última versión la mayor parte del tiempo, por lo que es normal que sigas diciendo "La actualización existe" después de la implementación.
-
-```shell
-docker pull yidadaa/chatgpt-next-web
-
-docker run -d -p 3000:3000 \
-   -e OPENAI_API_KEY=sk-xxxx \
-   -e CODE=your-password \
-   yidadaa/chatgpt-next-web
-```
-
-También puede especificar proxy:
-
-```shell
-docker run -d -p 3000:3000 \
-   -e OPENAI_API_KEY=sk-xxxx \
-   -e CODE=your-password \
-   --net=host \
-   -e PROXY_URL=http://127.0.0.1:7890 \
-   yidadaa/chatgpt-next-web
-```
-
-Si necesita especificar otras variables de entorno, agréguelas usted mismo en el comando anterior `-e 环境变量=环境变量值` para especificar.
-
-### Implementación local
-
-Ejecute el siguiente comando en la consola:
-
-```shell
-bash <(curl -s https://raw.githubusercontent.com/Yidadaa/ChatGPT-Next-Web/main/scripts/setup.sh)
-```
-
-⚠️ Nota: Si tiene problemas durante la instalación, utilice la implementación de Docker.
-
-## Reconocimiento
-
-### donante
-
-> Ver versión en inglés.
-
-### Colaboradores
-
-[Ver la lista de colaboradores del proyecto](https://github.com/Yidadaa/ChatGPT-Next-Web/graphs/contributors)
-
-## Licencia de código abierto
-
-[MIT](https://opensource.org/license/mit/)
+Si no desea que los usuarios utilicen G

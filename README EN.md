@@ -5,14 +5,14 @@
 One-Click to get well-designed cross-platform ChatGPT web UI.
 
 ## Index
-- [Features](https://github.com/chokiproai/ChatGPT-Compact#Features)
-- [Roadmap](https://github.com/chokiproai/ChatGPT-Compact#Roadmap)
-- [What's New](https://github.com/chokiproai/ChatGPT-Compact#Whats-New)
-- [Get Started](https://github.com/chokiproai/ChatGPT-Compact#Get-Started)
-- [Keep Updated](https://github.com/chokiproai/ChatGPT-Compact#Keep-Updated)
-- [Access Password](https://github.com/chokiproai/ChatGPT-Compact#Access-Password)
-- [Requirements](https://github.com/chokiproai/ChatGPT-Compact/tree/main#requirements)
-- [Development](https://github.com/chokiproai/ChatGPT-Compact/tree/main#development)
+- [Features](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md#Features)
+- [Roadmap](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md#Roadmap)
+- [What's New](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md#Whats-New)
+- [Get Started](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md#Get-Started)
+- [Keep Updated](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md#Keep-Updated)
+- [Access Password](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md#Access-Password)
+- [Requirements](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md/tree/main#requirements)
+- [Development](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md/tree/main#development)
 - MORE...
 ## Features
 - **Deploy for free with one-click** in under 1 minute

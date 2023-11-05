@@ -97,8 +97,6 @@ Before starting development, you must create a new `.env.local` file at project 
 ```
 OPENAI_API_KEY=<your api key here>
 
-# if you are not able to access openai service, use this BASE_URL
-BASE_URL=https://chatgpt1.nextweb.fun/api/proxy
 ```
 
 ### Local Development
@@ -119,7 +117,7 @@ docker pull yidadaa/chatgpt-next-web
 docker run -d -p 3000:3000 \
    -e OPENAI_API_KEY=sk-xxxx \
    -e CODE=your-password \
-   yidadaa/chatgpt-next-web
+   chokiproai/ChatGPT-Plugins
 ```
 
 You can start service behind a proxy:
@@ -141,7 +139,7 @@ If your proxy needs password, use:
 ### Shell
 
 ```shell
-bash <(curl -s https://raw.githubusercontent.com/chokiproai/chatgpt/main/scripts/setup.sh)
+bash <(curl -s https://raw.githubusercontent.com/chokiproai/ChatGPT-Plugins/main/scripts/setup.sh)
 ```
 
 ## LICENSE

@@ -52,6 +52,10 @@ Sau khi thêm hoặc sửa đổi biến môi trường này, vui lòng triển 
 
 Khóa api openai của bạn.
 
+### `Proxy ngược`
+
+Có sẵn khi sử dụng `ChatGPTUnofficialProxyAPI` miễn phí.[Chi tiết](https://api.chatanywhere.org/v1/oauth/free/github/render)
+
 ### `CODE` (tùy chọn)
 
 Truy cập mật khẩu, cách nhau bằng dấu phẩy.

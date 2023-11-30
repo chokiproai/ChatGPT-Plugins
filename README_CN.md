@@ -54,7 +54,7 @@
 
 ### `反向代理`
 
-可使用免费的“ChatGPTUnofficialProxyAPI”。[详细信息](https://api.chatanywhere.org/v1/oauth/free/github/render)
+可使用免费的“ChatGPTUnofficialProxyAPI”。[详细信息](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/api%20free.md)
 
 ### `代码`（可选）
 

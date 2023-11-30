@@ -56,6 +56,10 @@
 
 访问密码，以逗号分隔。
 
+### `反向代理`
+
+可使用免费的“ChatGPTUnofficialProxyAPI”。[详细信息](https://api.chatanywhere.org/v1/oauth/free/github/render)
+
 ### `BASE_URL`（可选）
 
 > 默认：`https://api.openai.com`

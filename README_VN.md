@@ -54,7 +54,7 @@ Khóa api openai của bạn.
 
 ### `Proxy ngược`
 
-Có sẵn khi sử dụng `ChatGPTUnofficialProxyAPI` miễn phí.[Chi tiết](https://api.chatanywhere.org/v1/oauth/free/github/render)
+Có sẵn khi sử dụng `ChatGPTUnofficialProxyAPI` miễn phí.[Chi tiết](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/api%20free.md)
 
 ### `CODE` (tùy chọn)
 

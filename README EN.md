@@ -48,9 +48,14 @@ code1,code2,code3
 ```
 
 After adding or modifying this environment variable, please redeploy the project for the changes to take effect.
+
 ### `OPENAI_API_KEY` (required)
 
 Your openai api key.
+
+### `Reverse Proxy`
+
+Available when using free `ChatGPTUnofficialProxyAPI`.[Details](https://api.chatanywhere.org/v1/oauth/free/github/render)
 
 ### `CODE` (optional)
 

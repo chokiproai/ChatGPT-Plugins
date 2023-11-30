@@ -52,13 +52,13 @@
 
 您的 openai api 密钥。
 
-### `代码`（可选）
-
-访问密码，以逗号分隔。
-
 ### `反向代理`
 
 可使用免费的“ChatGPTUnofficialProxyAPI”。[详细信息](https://api.chatanywhere.org/v1/oauth/free/github/render)
+
+### `代码`（可选）
+
+访问密码，以逗号分隔。
 
 ### `BASE_URL`（可选）
 

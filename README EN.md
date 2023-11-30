@@ -55,7 +55,7 @@ Your openai api key.
 
 ### `Reverse Proxy`
 
-Available when using free `ChatGPTUnofficialProxyAPI`.[Details](https://api.chatanywhere.org/v1/oauth/free/github/render)
+Available when using free `ChatGPTUnofficialProxyAPI`.[Details](https://github.com/chokiproai/ChatGPT-v2/blob/master/api%20free.md)
 
 ### `CODE` (optional)
 

@@ -1,15 +1,13 @@
 {
-    "name": "ChatGPT Next Web",
+    "name": "ChatGPT"
     "short_name": "ChatGPT",
     "icons": [
       {
-        "src": "/android-chrome-192x192.png",
-        "sizes": "192x192",
+        "src": "/bot.png"
         "type": "image/png"
       },
       {
-        "src": "/android-chrome-512x512.png",
-        "sizes": "512x512",
+        "src": "/bot.png",
         "type": "image/png"
       }
     ],

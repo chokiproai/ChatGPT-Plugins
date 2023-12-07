@@ -21,6 +21,5 @@ export const BUILTIN_PLUGIN_STORE = {
 };
 
 export const BUILTIN_PLUGINS: BuiltinPlugin[] = [
-  ...CN_PLUGINS,
   ...EN_PLUGINS,
 ].map((m) => BUILTIN_PLUGIN_STORE.add(m));

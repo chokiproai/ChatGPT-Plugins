@@ -1,5 +1,4 @@
 import { Plugin } from "../store/plugin";
-import { CN_PLUGINS } from "./cn";
 import { EN_PLUGINS } from "./en";
 
 import { type BuiltinPlugin } from "./typing";

@@ -1,5 +1,7 @@
 ## Proxy API
-- `https://api.chatanywhere.tech`
+- Host 1: `https://api.chatanywhere.tech`
+- Host 2: `https://api.chatanywhere.com.cn`
+- Host 3: `https://api.chatanywhere.cn`
 
 ## Get key
 - `https://api.chatanywhere.org/v1/oauth/free/github/render`

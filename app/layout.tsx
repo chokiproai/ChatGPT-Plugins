@@ -6,11 +6,11 @@ import { getClientConfig } from "./config/client";
 import { type Metadata } from "next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { getServerSideConfig } from "./config/server";
-
+import { GoogleTagManager } from "@next/third-parties/google";
 const serverConfig = getServerSideConfig();
 
 export const metadata: Metadata = {
-  title: "ChatGPT-By NgocTuan",
+  title: "ChatGPT Plugin",
   description: "Your personal ChatGPT Chat Bot.",
   viewport: {
     width: "device-width",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     { media: "(prefers-color-scheme: dark)", color: "#1b262a" },
   ],
   appleWebApp: {
-    title: "ChatGPT-By NgocTuan",
+    title: "NextChat",
     statusBarStyle: "default",
   },
 };
@@ -44,6 +44,11 @@ export default function RootLayout({
         {serverConfig?.isVercel && (
           <>
             <SpeedInsights />
+          </>
+        )}
+        {serverConfig?.gtmId && (
+          <>
+            <GoogleTagManager gtmId={serverConfig.gtmId} />
           </>
         )}
       </body>

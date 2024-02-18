@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "../../auth";
 import { getServerSideConfig } from "@/app/config/server";
-import { GEMINI_BASE_URL, ModelProvider } from "@/app/constant";
+import { GOOGLE_BASE_URL, ModelProvider } from "@/app/constant";
 
 async function handle(
   req: NextRequest,
@@ -17,7 +17,7 @@ async function handle(
 
   const serverConfig = getServerSideConfig();
 
-  let baseUrl = serverConfig.googleBaseUrl || GEMINI_BASE_URL;
+  let baseUrl = serverConfig.googleBaseUrl || GOOGLE_BASE_URL;
 
   if (!baseUrl.startsWith("http")) {
     baseUrl = `https://${baseUrl}`;
@@ -101,19 +101,14 @@ export const POST = handle;
 
 export const runtime = "edge";
 export const preferredRegion = [
-  "arn1",
   "bom1",
-  "cdg1",
   "cle1",
   "cpt1",
-  "dub1",
-  "fra1",
   "gru1",
   "hnd1",
   "iad1",
   "icn1",
   "kix1",
-  "lhr1",
   "pdx1",
   "sfo1",
   "sin1",

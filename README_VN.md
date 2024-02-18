@@ -1,7 +1,5 @@
 <h1 align="center">Plugin ChatGPT</h1>
 
-  ## [Đã triển khai trên Ôm mặt](https://huggingface.co/login?next=%2Fspaces%2Fngoctuanai%2Fchatgptfree%3Fduplicate%3Dtrue)
-
 - Một cú nhấp chuột để có được giao diện người dùng web ChatGPT đa nền tảng được thiết kế tốt.
 
 ## Đặc trưng

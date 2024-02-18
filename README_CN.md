@@ -1,7 +1,5 @@
 <h1 align="center">ChatGPT Plugins</h1>
 
-## [部署在 Hugging Face 上](https://huggingface.co/login?next=%2Fspaces%2Fngoctuanai%2Fchatgptfree%3Fduplicate%3Dtrue)
-
 - 一键获得精心设计的跨平台 ChatGPT Web UI。
 
 ## 特征

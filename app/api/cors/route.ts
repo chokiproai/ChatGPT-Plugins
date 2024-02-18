@@ -1,26 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 
-async function handle(
-  req: NextRequest,
-  { params }: { params: { path: string[] } },
-) {
+async function handle(req: NextRequest) {
   if (req.method === "OPTIONS") {
     return NextResponse.json({ body: "OK" }, { status: 200 });
   }
 
-  const [protocol, ...subpath] = params.path;
-  const targetUrl = `${protocol}://${subpath.join("/")}`;
+  const targetUrl = req.nextUrl.searchParams.get("url");
+
+  if (!targetUrl) {
+    return NextResponse.json({ body: "Bad Url" }, { status: 500 });
+  }
 
   const method = req.headers.get("method") ?? undefined;
-  const shouldNotHaveBody = ["get", "head"].includes(
-    method?.toLowerCase() ?? "",
-  );
-
   const fetchOptions: RequestInit = {
     headers: {
       authorization: req.headers.get("authorization") ?? "",
     },
-    body: shouldNotHaveBody ? null : req.body,
     method,
     // @ts-ignore
     duplex: "half",
@@ -36,7 +31,6 @@ async function handle(
   return fetchResult;
 }
 
-export const POST = handle;
 export const GET = handle;
 export const OPTIONS = handle;
 

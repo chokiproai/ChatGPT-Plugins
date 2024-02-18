@@ -307,7 +307,7 @@ export function PreviewActions(props: {
     setShouldExport(false);
 
     var api: ClientApi;
-    if (config.modelConfig.model === "gemini-pro") {
+    if (config.modelConfig.model.startsWith("gemini")) {
       api = new ClientApi(ModelProvider.GeminiPro);
     } else {
       api = new ClientApi(ModelProvider.GPT);
@@ -515,6 +515,18 @@ export function ImagePreviewer(props: {
     }
   };
 
+  const markdownImageUrlCorsProcess = (markdownContent: string) => {
+    const updatedContent = markdownContent.replace(
+      /!\[.*?\]\((.*?)\)/g,
+      (match, url) => {
+        if (!url.startsWith("http")) return `![image](${url})`;
+        const updatedURL = `/api/cors?url=${encodeURIComponent(url)}`;
+        return `![image](${updatedURL})`;
+      },
+    );
+    return updatedContent;
+  };
+
   return (
     <div className={styles["image-previewer"]}>
       <PreviewActions
@@ -538,9 +550,9 @@ export function ImagePreviewer(props: {
           </div>
 
           <div>
-            <div className={styles["main-title"]}>ChatGPT Plugins</div>
+            <div className={styles["main-title"]}>NextChat</div>
             <div className={styles["sub-title"]}>
-            github.com/chokiproai/ChatGPT-Plugins
+              github.com/chokiproai/ChatGPT-Plugins
             </div>
             <div className={styles["icons"]}>
               <ExportAvatar avatar={config.avatar} />
@@ -580,7 +592,7 @@ export function ImagePreviewer(props: {
 
               <div className={styles["body"]}>
                 <Markdown
-                  content={m.content}
+                  content={markdownImageUrlCorsProcess(m.content)}
                   imageBase64={m.image_url}
                   fontSize={config.fontSize}
                   defaultShow

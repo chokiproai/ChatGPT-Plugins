@@ -1,6 +1,6 @@
 {
-	"name": "ChatGPT Plugin",
-	"dockerComposeFile": "docker-compose.yml",
-	"service": "ChatGPT-Plugin",
-	"workspaceFolder": "/app"
+	"name": "ChatGPT-Plugins",
+	"build": {
+	  "dockerfile": "./Dockerfile"
+	}
   }  

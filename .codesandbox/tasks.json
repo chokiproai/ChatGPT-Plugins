@@ -1,68 +1,7 @@
 {
   // These tasks will run in order when initializing your CodeSandbox project.
-  "setupTasks": [
-    {
-      "name": "Install Dependencies",
-      "command": "yarn install"
-    }
-  ],
+  "setupTasks": [],
 
   // These tasks can be run from CodeSandbox. Running one will open a log in the app.
-  "tasks": {
-    "dev": {
-      "name": "dev",
-      "command": "yarn dev",
-      "runAtStart": true
-    },
-    "build": {
-      "name": "build",
-      "command": "yarn build",
-      "runAtStart": false
-    },
-    "start": {
-      "name": "start",
-      "command": "yarn start",
-      "runAtStart": false
-    },
-    "lint": {
-      "name": "lint",
-      "command": "yarn lint",
-      "runAtStart": false
-    },
-    "export": {
-      "name": "export",
-      "command": "yarn export",
-      "runAtStart": false
-    },
-    "export:dev": {
-      "name": "export:dev",
-      "command": "yarn export:dev",
-      "runAtStart": false
-    },
-    "app:dev": {
-      "name": "app:dev",
-      "command": "yarn app:dev",
-      "runAtStart": false
-    },
-    "app:build": {
-      "name": "app:build",
-      "command": "yarn app:build",
-      "runAtStart": false
-    },
-    "prompts": {
-      "name": "prompts",
-      "command": "yarn prompts",
-      "runAtStart": false
-    },
-    "prepare": {
-      "name": "prepare",
-      "command": "yarn prepare",
-      "runAtStart": false
-    },
-    "proxy-dev": {
-      "name": "proxy-dev",
-      "command": "yarn proxy-dev",
-      "runAtStart": false
-    }
-  }
+  "tasks": {}
 }

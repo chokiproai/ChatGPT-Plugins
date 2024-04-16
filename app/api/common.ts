@@ -43,10 +43,6 @@ export async function requestOpenai(req: NextRequest) {
 
   console.log("[Proxy] ", path);
   console.log("[Base Url]", baseUrl);
-  // this fix [Org ID] undefined in server side if not using custom point
-  if (serverConfig.openaiOrgId !== undefined) {
-    console.log("[Org ID]", serverConfig.openaiOrgId);
-  }
 
   const timeoutId = setTimeout(
     () => {
@@ -67,9 +63,16 @@ export async function requestOpenai(req: NextRequest) {
 
   let jsonBody;
   let clonedBody;
-  if (req.method !== "GET" && req.method !== "HEAD") {
+  const contentType = req.headers.get("Content-Type");
+  if (
+    req.method !== "GET" &&
+    req.method !== "HEAD" &&
+    contentType?.includes("json")
+  ) {
     clonedBody = await req.text();
     jsonBody = JSON.parse(clonedBody) as { model?: string };
+  } else {
+    clonedBody = req.body;
   }
   if (serverConfig.isAzure) {
     baseUrl = `${baseUrl}/${jsonBody?.model}`;
@@ -77,7 +80,7 @@ export async function requestOpenai(req: NextRequest) {
   const fetchUrl = `${baseUrl}/${path}`;
   const fetchOptions: RequestInit = {
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": contentType ?? "application/json",
       "Cache-Control": "no-store",
       [authHeaderName]: authValue,
       ...(serverConfig.openaiOrgId && {
@@ -124,11 +127,28 @@ export async function requestOpenai(req: NextRequest) {
   try {
     const res = await fetch(fetchUrl, fetchOptions);
 
+    // Extract the OpenAI-Organization header from the response
+    const openaiOrganizationHeader = res.headers.get("OpenAI-Organization");
+
+    // Check if serverConfig.openaiOrgId is defined and not an empty string
+    if (serverConfig.openaiOrgId && serverConfig.openaiOrgId.trim() !== "") {
+      // If openaiOrganizationHeader is present, log it; otherwise, log that the header is not present
+      console.log("[Org ID]", openaiOrganizationHeader);
+    } else {
+      console.log("[Org ID] is not set up.");
+    }
+
     // to prevent browser prompt for credentials
     const newHeaders = new Headers(res.headers);
     newHeaders.delete("www-authenticate");
     // to disable nginx buffering
     newHeaders.set("X-Accel-Buffering", "no");
+
+    // Conditionally delete the OpenAI-Organization header from the response if [Org ID] is undefined or empty (not setup in ENV)
+    // Also, this is to prevent the header from being sent to the client
+    if (!serverConfig.openaiOrgId || serverConfig.openaiOrgId.trim() === "") {
+      newHeaders.delete("OpenAI-Organization");
+    }
 
     // The latest version of the OpenAI API forced the content-encoding to be "br" in json response
     // So if the streaming is disabled, we need to remove the content-encoding header

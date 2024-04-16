@@ -42,6 +42,8 @@ const cn = {
       PinToastAction: "查看",
       Delete: "删除",
       Edit: "编辑",
+      Speech: "朗读",
+      StopSpeech: "停止",
     },
     Commands: {
       new: "新建聊天",
@@ -65,6 +67,8 @@ const cn = {
       Settings: "对话设置",
       EnablePlugins: "开启插件",
       DisablePlugins: "关闭插件",
+      UploadImage: "上传图片",
+      UploadFle: "上传文件",
     },
     Rename: "重命名对话",
     Typing: "正在输入…",
@@ -76,6 +80,8 @@ const cn = {
       return inputHints + "，/ 触发补全，: 触发命令";
     },
     Send: "发送",
+    StartSpeak: "说话",
+    StopSpeak: "停止",
     Config: {
       Reset: "清除记忆",
       SaveAs: "存为面具",
@@ -315,21 +321,38 @@ const cn = {
           SubTitle: "选择指定的部分版本",
         },
       },
-      Google: {
+      Anthropic: {
         ApiKey: {
           Title: "接口密钥",
-          SubTitle: "使用自定义 Google AI Studio API Key 绕过密码访问限制",
-          Placeholder: "Google AI Studio API Key",
+          SubTitle: "使用自定义 Anthropic Key 绕过密码访问限制",
+          Placeholder: "Anthropic API Key",
         },
 
         Endpoint: {
           Title: "接口地址",
-          SubTitle: "不包含请求路径，样例：",
+          SubTitle: "样例：",
         },
 
         ApiVerion: {
-          Title: "接口版本 (gemini-pro api version)",
-          SubTitle: "选择指定的部分版本",
+          Title: "接口版本 (claude api version)",
+          SubTitle: "选择一个特定的 API 版本输入",
+        },
+      },
+      Google: {
+        ApiKey: {
+          Title: "API 密钥",
+          SubTitle: "从 Google AI 获取您的 API 密钥",
+          Placeholder: "输入您的 Google AI Studio API 密钥",
+        },
+
+        Endpoint: {
+          Title: "终端地址",
+          SubTitle: "示例：",
+        },
+
+        ApiVersion: {
+          Title: "API 版本（仅适用于 gemini-pro）",
+          SubTitle: "选择一个特定的 API 版本",
         },
       },
       CustomModel: {
@@ -371,6 +394,35 @@ const cn = {
       ReturnIntermediateStep: {
         Title: "返回中间步骤",
         SubTitle: "是否返回插件调用的中间步骤",
+      },
+    },
+    TTS: {
+      Enable: {
+        Title: "启用文本转语音",
+        SubTitle: "启用基于 OpenAI 的文本生成语音服务",
+      },
+      Autoplay: {
+        Title: "启用自动朗读",
+        SubTitle: "自动生成语音并播放，需先开启文本转语音开关",
+      },
+      Model: "模型",
+      Voice: {
+        Title: "声音",
+        SubTitle: "生成语音时使用的声音",
+      },
+      Speed: {
+        Title: "速度",
+        SubTitle: "生成语音的速度",
+      },
+    },
+    STT: {
+      Enable: {
+        Title: "启用语音转文本",
+        SubTitle: "启用语音转文本",
+      },
+      Engine: {
+        Title: "转换引擎",
+        SubTitle: "音频转换引擎",
       },
     },
   },

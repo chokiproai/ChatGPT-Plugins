@@ -1,5 +1,111 @@
 @import "../styles/animation.scss";
 
+.attach-files {
+  position: absolute;
+  left: 30px;
+  bottom: 32px;
+  display: flex;
+}
+
+.attach-file {
+  cursor: default;
+  width: 64px;
+  height: 64px;
+  border: rgba($color: #888, $alpha: 0.2) 1px solid;
+  border-radius: 5px;
+  margin-right: 10px;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--second);
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+
+  .attach-file-info {
+    top: 5px;
+    width: 100%;
+    position: absolute;
+    font-size: 12px;
+    font-weight: bolder;
+    text-align: center;
+    word-wrap: break-word;
+    word-break: break-all;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    line-height: 1.5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+  }
+
+  .attach-file-mask {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: all ease 0.2s;
+    z-index: 999;
+  }
+
+  .attach-file-mask:hover {
+    opacity: 1;
+  }
+
+  .delete-file {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    float: right;
+    background-color: var(--white);
+  }
+}
+
+.attach-images {
+  position: absolute;
+  left: 30px;
+  bottom: 32px;
+  display: flex;
+}
+
+.attach-image {
+  cursor: default;
+  width: 64px;
+  height: 64px;
+  border: rgba($color: #888, $alpha: 0.2) 1px solid;
+  border-radius: 5px;
+  margin-right: 10px;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--white);
+
+  .attach-image-mask {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: all ease 0.2s;
+  }
+
+  .attach-image-mask:hover {
+    opacity: 1;
+  }
+
+  .delete-image {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    float: right;
+    background-color: var(--white);
+  }
+}
+
 .chat-input-actions {
   display: flex;
   flex-wrap: wrap;
@@ -350,6 +456,7 @@
       padding: 7px;
     }
   }
+
   /* Specific styles for iOS devices */
   @media screen and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 2) {
     @supports (-webkit-touch-callout: none) {
@@ -411,6 +518,79 @@
   border: var(--border-in-light);
   position: relative;
   transition: all ease 0.3s;
+}
+
+.chat-message-item-files {
+  display: grid;
+  grid-template-columns: repeat(var(--file-count), auto);
+  grid-gap: 5px;
+}
+
+.chat-message-item-file {
+  text-decoration: none;
+  color: #aaa;
+}
+
+.chat-message-item-image {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.chat-message-item-images {
+  width: 100%;
+  display: grid;
+  justify-content: left;
+  grid-gap: 10px;
+  grid-template-columns: repeat(var(--image-count), auto);
+  margin-top: 10px;
+}
+
+.chat-message-item-image-multi {
+  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.chat-message-item-image,
+.chat-message-item-image-multi {
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: rgba($color: #888, $alpha: 0.2) 1px solid;
+}
+
+@media only screen and (max-width: 600px) {
+  $calc-image-width: calc(100vw / 3 * 2 / var(--image-count));
+
+  .chat-message-item-image-multi {
+    width: $calc-image-width;
+    height: $calc-image-width;
+  }
+
+  .chat-message-item-image {
+    max-width: calc(100vw / 3 * 2);
+  }
+}
+
+@media screen and (min-width: 600px) {
+  $max-image-width: calc(
+    calc(1200px - var(--sidebar-width)) / 3 * 2 / var(--image-count)
+  );
+  $image-width: calc(
+    calc(var(--window-width) - var(--sidebar-width)) / 3 * 2 /
+      var(--image-count)
+  );
+
+  .chat-message-item-image-multi {
+    width: $image-width;
+    height: $image-width;
+    max-width: $max-image-width;
+    max-height: $max-image-width;
+  }
+
+  .chat-message-item-image {
+    max-width: calc(calc(1200px - var(--sidebar-width)) / 3 * 2);
+  }
 }
 
 .chat-message-action-date {
@@ -492,6 +672,7 @@
 
       @include single-line();
     }
+
     .hint-content {
       font-size: 12px;
 
@@ -506,15 +687,26 @@
 }
 
 .chat-input-panel-inner {
+  cursor: text;
   display: flex;
   flex: 1;
+  border-radius: 10px;
+  border: var(--border-in-light);
+}
+
+.chat-input-panel-inner-attach {
+  padding-bottom: 80px;
+}
+
+.chat-input-panel-inner:has(.chat-input:focus) {
+  border: 1px solid var(--primary);
 }
 
 .chat-input {
   height: 100%;
   width: 100%;
   border-radius: 10px;
-  border: var(--border-in-light);
+  border: none;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.03);
   background-color: var(--white);
   color: var(--black);
@@ -527,7 +719,6 @@
 }
 
 .chat-input:focus {
-  border: 1px solid var(--primary);
 }
 
 .chat-input-send {
@@ -539,39 +730,6 @@
   bottom: 32px;
 }
 
-.chat-input-image {
-  background-color: var(--primary);
-  color: white;
-
-  position: absolute;
-  right: 28px;
-  bottom: 78px;
-
-  display: flex;
-  align-items: flex-start;
-
-  border-radius: 4px;
-  overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.chat-input-image-close {
-  background-color: white;
-  fill: black;
-  border: none;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  margin: 0px;
-  padding: 0px;
-  width: 22px;
-  height: 48px;
-}
-
-.chat-input-image-close:hover {
-  background-color: #f3f3f3;
-}
-
 @media only screen and (max-width: 600px) {
   .chat-input {
     font-size: 16px;
@@ -579,10 +737,5 @@
 
   .chat-input-send {
     bottom: 30px;
-  }
-
-  .chat-input-image {
-    bottom: 84px;
-    right: 32px;
   }
 }

@@ -44,6 +44,8 @@ const en: LocaleType = {
       PinToastAction: "View",
       Delete: "Delete",
       Edit: "Edit",
+      Speech: "Play",
+      StopSpeech: "Stop",
     },
     Commands: {
       new: "Start a new chat",
@@ -67,6 +69,8 @@ const en: LocaleType = {
       Settings: "Settings",
       EnablePlugins: "Enable Plugins",
       DisablePlugins: "Disable Plugins",
+      UploadImage: "Upload Images",
+      UploadFle: "Upload Files",
     },
     Rename: "Rename Chat",
     Typing: "Typing…",
@@ -78,6 +82,8 @@ const en: LocaleType = {
       return inputHints + ", / to search prompts, : to use commands";
     },
     Send: "Send",
+    StartSpeak: "Talk",
+    StopSpeak: "Stop",
     Config: {
       Reset: "Reset to Default",
       SaveAs: "Save as Mask",
@@ -318,16 +324,12 @@ const en: LocaleType = {
           SubTitle: "Check your api version from azure console",
         },
       },
-      CustomModel: {
-        Title: "Custom Models",
-        SubTitle: "Custom model options, seperated by comma",
-      },
-      Google: {
+      Anthropic: {
         ApiKey: {
-          Title: "API Key",
+          Title: "Anthropic API Key",
           SubTitle:
-            "Bypass password access restrictions using a custom Google AI Studio API Key",
-          Placeholder: "Google AI Studio API Key",
+            "Use a custom Anthropic Key to bypass password access restrictions",
+          Placeholder: "Anthropic API Key",
         },
 
         Endpoint: {
@@ -336,8 +338,29 @@ const en: LocaleType = {
         },
 
         ApiVerion: {
-          Title: "API Version (gemini-pro api version)",
-          SubTitle: "Select a specific part version",
+          Title: "API Version (claude api version)",
+          SubTitle: "Select and input a specific API version",
+        },
+      },
+      CustomModel: {
+        Title: "Custom Models",
+        SubTitle: "Custom model options, seperated by comma",
+      },
+      Google: {
+        ApiKey: {
+          Title: "API Key",
+          SubTitle: "Obtain your API Key from Google AI",
+          Placeholder: "Enter your Google AI Studio API Key",
+        },
+
+        Endpoint: {
+          Title: "Endpoint Address",
+          SubTitle: "Example:",
+        },
+
+        ApiVersion: {
+          Title: "API Version (specific to gemini-pro)",
+          SubTitle: "Select a specific API version",
         },
       },
     },
@@ -377,6 +400,36 @@ const en: LocaleType = {
       ReturnIntermediateStep: {
         Title: "Return Intermediate Steps",
         SubTitle: "Return Intermediate Steps",
+      },
+    },
+    TTS: {
+      Enable: {
+        Title: "Enable TTS",
+        SubTitle: "Enable text-to-speech service based on OpenAI",
+      },
+      Autoplay: {
+        Title: "Enable Autoplay",
+        SubTitle:
+          "Automatically generate speech and play, you need to enable the text-to-speech switch first",
+      },
+      Model: "Model",
+      Voice: {
+        Title: "Voice",
+        SubTitle: "The voice to use when generating the audio",
+      },
+      Speed: {
+        Title: "Speed",
+        SubTitle: "The speed of the generated audio",
+      },
+    },
+    STT: {
+      Enable: {
+        Title: "Enable STT",
+        SubTitle: "Enable Speech-to-Text",
+      },
+      Engine: {
+        Title: "STT Engine",
+        SubTitle: "Text-to-Speech Engine",
       },
     },
   },

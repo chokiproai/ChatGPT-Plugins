@@ -51,6 +51,7 @@ import Locale, {
 import { copyToClipboard } from "../utils";
 import Link from "next/link";
 import {
+  Anthropic,
   Azure,
   Google,
   OPENAI_BASE_URL,
@@ -72,6 +73,8 @@ import { nanoid } from "nanoid";
 import { PluginConfigList } from "./plugin-config";
 import { useMaskStore } from "../store/mask";
 import { ProviderType } from "../utils/cloud";
+import { TTSConfigList } from "./tts-config";
+import { STTConfigList } from "./stt-config";
 
 function EditPromptModal(props: { id: string; onClose: () => void }) {
   const promptStore = usePromptStore();
@@ -694,7 +697,9 @@ export function Settings() {
             >
               <div
                 className={styles.avatar}
-                onClick={() => setShowEmojiPicker(true)}
+                onClick={() => {
+                  setShowEmojiPicker(!showEmojiPicker);
+                }}
               >
                 <Avatar avatar={config.avatar} />
               </div>
@@ -707,8 +712,8 @@ export function Settings() {
               checkingUpdate
                 ? Locale.Settings.Update.IsChecking
                 : hasNewVersion
-                ? Locale.Settings.Update.FoundUpdate(remoteId ?? "ERROR")
-                : Locale.Settings.Update.IsLatest
+                  ? Locale.Settings.Update.FoundUpdate(remoteId ?? "ERROR")
+                  : Locale.Settings.Update.IsLatest
             }
           >
             {checkingUpdate ? (
@@ -801,7 +806,11 @@ export function Settings() {
           >
             <input
               type="checkbox"
-              checked={config.enableAutoGenerateTitle}
+              disabled={!!process.env.NEXT_PUBLIC_DISABLE_AUTOGENERATETITLE}
+              checked={
+                !process.env.NEXT_PUBLIC_DISABLE_AUTOGENERATETITLE &&
+                config.enableAutoGenerateTitle
+              }
               onChange={(e) =>
                 updateConfig(
                   (config) =>
@@ -962,7 +971,7 @@ export function Settings() {
                     </Select>
                   </ListItem>
 
-                  {accessStore.provider === "OpenAI" ? (
+                  {accessStore.provider === ServiceProvider.OpenAI && (
                     <>
                       <ListItem
                         title={Locale.Settings.Access.OpenAI.Endpoint.Title}
@@ -1001,7 +1010,8 @@ export function Settings() {
                         />
                       </ListItem>
                     </>
-                  ) : accessStore.provider === "Azure" ? (
+                  )}
+                  {accessStore.provider === ServiceProvider.Azure && (
                     <>
                       <ListItem
                         title={Locale.Settings.Access.Azure.Endpoint.Title}
@@ -1049,7 +1059,7 @@ export function Settings() {
                         <input
                           type="text"
                           value={accessStore.azureApiVersion}
-                          placeholder="2023-08-01-preview"
+                          placeholder="2024-02-15-preview"
                           onChange={(e) =>
                             accessStore.update(
                               (access) =>
@@ -1060,7 +1070,8 @@ export function Settings() {
                         ></input>
                       </ListItem>
                     </>
-                  ) : accessStore.provider === "Google" ? (
+                  )}
+                  {accessStore.provider === ServiceProvider.Google && (
                     <>
                       <ListItem
                         title={Locale.Settings.Access.Google.Endpoint.Title}
@@ -1071,19 +1082,19 @@ export function Settings() {
                       >
                         <input
                           type="text"
-                          value={accessStore.googleBaseUrl}
+                          value={accessStore.googleUrl}
                           placeholder={Google.ExampleEndpoint}
                           onChange={(e) =>
                             accessStore.update(
                               (access) =>
-                                (access.googleBaseUrl = e.currentTarget.value),
+                                (access.googleUrl = e.currentTarget.value),
                             )
                           }
                         ></input>
                       </ListItem>
                       <ListItem
-                        title={Locale.Settings.Access.Azure.ApiKey.Title}
-                        subTitle={Locale.Settings.Access.Azure.ApiKey.SubTitle}
+                        title={Locale.Settings.Access.Google.ApiKey.Title}
+                        subTitle={Locale.Settings.Access.Google.ApiKey.SubTitle}
                       >
                         <PasswordInput
                           value={accessStore.googleApiKey}
@@ -1100,15 +1111,15 @@ export function Settings() {
                         />
                       </ListItem>
                       <ListItem
-                        title={Locale.Settings.Access.Google.ApiVerion.Title}
+                        title={Locale.Settings.Access.Google.ApiVersion.Title}
                         subTitle={
-                          Locale.Settings.Access.Google.ApiVerion.SubTitle
+                          Locale.Settings.Access.Google.ApiVersion.SubTitle
                         }
                       >
                         <input
                           type="text"
                           value={accessStore.googleApiVersion}
-                          placeholder="2023-08-01-preview"
+                          placeholder="2024-02-15-preview"
                           onChange={(e) =>
                             accessStore.update(
                               (access) =>
@@ -1119,7 +1130,70 @@ export function Settings() {
                         ></input>
                       </ListItem>
                     </>
-                  ) : null}
+                  )}
+                  {accessStore.provider === ServiceProvider.Anthropic && (
+                    <>
+                      <ListItem
+                        title={Locale.Settings.Access.Anthropic.Endpoint.Title}
+                        subTitle={
+                          Locale.Settings.Access.Anthropic.Endpoint.SubTitle +
+                          Anthropic.ExampleEndpoint
+                        }
+                      >
+                        <input
+                          type="text"
+                          value={accessStore.anthropicUrl}
+                          placeholder={Anthropic.ExampleEndpoint}
+                          onChange={(e) =>
+                            accessStore.update(
+                              (access) =>
+                                (access.anthropicUrl = e.currentTarget.value),
+                            )
+                          }
+                        ></input>
+                      </ListItem>
+                      <ListItem
+                        title={Locale.Settings.Access.Anthropic.ApiKey.Title}
+                        subTitle={
+                          Locale.Settings.Access.Anthropic.ApiKey.SubTitle
+                        }
+                      >
+                        <PasswordInput
+                          value={accessStore.anthropicApiKey}
+                          type="text"
+                          placeholder={
+                            Locale.Settings.Access.Anthropic.ApiKey.Placeholder
+                          }
+                          onChange={(e) => {
+                            accessStore.update(
+                              (access) =>
+                                (access.anthropicApiKey =
+                                  e.currentTarget.value),
+                            );
+                          }}
+                        />
+                      </ListItem>
+                      <ListItem
+                        title={Locale.Settings.Access.Anthropic.ApiVerion.Title}
+                        subTitle={
+                          Locale.Settings.Access.Anthropic.ApiVerion.SubTitle
+                        }
+                      >
+                        <input
+                          type="text"
+                          value={accessStore.anthropicApiVersion}
+                          placeholder={Anthropic.Vision}
+                          onChange={(e) =>
+                            accessStore.update(
+                              (access) =>
+                                (access.anthropicApiVersion =
+                                  e.currentTarget.value),
+                            )
+                          }
+                        ></input>
+                      </ListItem>
+                    </>
+                  )}
                 </>
               )}
             </>
@@ -1190,6 +1264,28 @@ export function Settings() {
               const pluginConfig = { ...config.pluginConfig };
               updater(pluginConfig);
               config.update((config) => (config.pluginConfig = pluginConfig));
+            }}
+          />
+        </List>
+
+        <List>
+          <TTSConfigList
+            ttsConfig={config.ttsConfig}
+            updateConfig={(updater) => {
+              const ttsConfig = { ...config.ttsConfig };
+              updater(ttsConfig);
+              config.update((config) => (config.ttsConfig = ttsConfig));
+            }}
+          />
+        </List>
+
+        <List>
+          <STTConfigList
+            sttConfig={config.sttConfig}
+            updateConfig={(updater) => {
+              const sttConfig = { ...config.sttConfig };
+              updater(sttConfig);
+              config.update((config) => (config.sttConfig = sttConfig));
             }}
           />
         </List>

@@ -29,7 +29,10 @@ declare global {
 
       // google only
       GOOGLE_API_KEY?: string;
-      GOOGLE_BASE_URL?: string;
+      GOOGLE_URL?: string;
+
+      // google tag manager
+      GTM_ID?: string;
     }
   }
 }
@@ -66,6 +69,7 @@ export const getServerSideConfig = () => {
 
   const isAzure = !!process.env.AZURE_URL;
   const isGoogle = !!process.env.GOOGLE_API_KEY;
+  const isAnthropic = !!process.env.ANTHROPIC_API_KEY;
 
   const apiKeyEnvVar = process.env.OPENAI_API_KEY ?? "";
   const apiKeys = apiKeyEnvVar.split(",").map((v) => v.trim());
@@ -73,6 +77,10 @@ export const getServerSideConfig = () => {
   const apiKey = apiKeys[randomIndex];
   console.log(
     `[Server Config] using ${randomIndex + 1} of ${apiKeys.length} api key`,
+  );
+
+  const whiteWebDevEndpoints = (process.env.WHITE_WEBDEV_ENDPOINTS ?? "").split(
+    ",",
   );
 
   return {
@@ -87,7 +95,12 @@ export const getServerSideConfig = () => {
 
     isGoogle,
     googleApiKey: process.env.GOOGLE_API_KEY,
-    googleBaseUrl: process.env.GOOGLE_BASE_URL,
+    googleUrl: process.env.GEMINI_BASE_URL ?? process.env.GOOGLE_URL,
+
+    isAnthropic,
+    anthropicApiKey: process.env.ANTHROPIC_API_KEY,
+    anthropicApiVersion: process.env.ANTHROPIC_API_VERSION,
+    anthropicUrl: process.env.ANTHROPIC_URL,
 
     gtmId: process.env.GTM_ID,
 
@@ -104,9 +117,18 @@ export const getServerSideConfig = () => {
     disableFastLink: !!process.env.DISABLE_FAST_LINK,
     customModels,
 
+    whiteWebDevEndpoints,
+
     isStoreFileToLocal:
       !!process.env.NEXT_PUBLIC_ENABLE_NODEJS_PLUGIN &&
       !process.env.R2_ACCOUNT_ID &&
       !process.env.S3_ENDPOINT,
+
+    isEnableRAG: !!process.env.ENABLE_RAG,
+    ragEmbeddingModel:
+      process.env.RAG_EMBEDDING_MODEL ?? "text-embedding-3-large",
+    ragChunkSize: process.env.RAG_CHUNK_SIZE ?? "2000",
+    ragChunkOverlap: process.env.RAG_CHUNK_OVERLAP ?? "200",
+    ragReturnCount: process.env.RAG_RETURN_COUNT ?? "4",
   };
 };

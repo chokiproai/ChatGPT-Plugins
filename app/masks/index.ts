@@ -30,7 +30,7 @@ if (typeof window != "undefined") {
       return { cn: [], vn: [], en: [] };
     })
     .then((masks) => {
-      const { cn = [], tw = [], en = [] } = masks;
+      const { cn = [], vn = [], en = [] } = masks;
       return [...cn, ...vn, ...en].map((m) => {
         BUILTIN_MASKS.push(BUILTIN_MASK_STORE.add(m));
       });

@@ -258,7 +258,7 @@ function useSubmitHandler() {
       (config.submitKey === SubmitKey.Enter &&
         !e.altKey &&
         !e.ctrlKey &&
-        !e.shiftKey &&
+        !e.altKey &&
         !e.metaKey)
     );
   };

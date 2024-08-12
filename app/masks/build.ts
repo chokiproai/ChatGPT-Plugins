@@ -1,12 +1,14 @@
 import fs from "fs";
 import path from "path";
+import { CN_MASKS } from "./cn";
 import { VN_MASKS } from "./vn";
 import { EN_MASKS } from "./en";
 
 import { type BuiltinMask } from "./typing";
 
 const BUILTIN_MASKS: Record<string, BuiltinMask[]> = {
-  cn: VN_MASKS,
+  cn: CN_MASKS,
+  tw: VN_MASKS,
   en: EN_MASKS,
 };
 

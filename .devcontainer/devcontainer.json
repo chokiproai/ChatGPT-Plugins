@@ -1,6 +1,0 @@
-{
-	"name": "ChatGPT-Plugins",
-	"build": {
-	  "dockerfile": "./Dockerfile"
-	}
-  }  

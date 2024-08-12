@@ -25,7 +25,7 @@ Sau khi thêm hoặc sửa đổi biến môi trường này, vui lòng triển 
 
 ## Environment Variables
 
-[Chi tiết](./env)
+[Chi tiết](./env.md)
 
 ## Yêu cầu
 

@@ -25,7 +25,7 @@ After adding or modifying this environment variable, please redeploy the project
 
 ## Environment Variables
 
-[Details](./env)
+[Details](./env.md)
 
 ## Requirements
 

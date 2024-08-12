@@ -19,4 +19,4 @@
 [deploy-button-image]: https://vercel.com/button
 [deploy-link]: https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fchokiproai%2FChatGPT-Pluginsv2&env=OPENAI_API_KEY,ACCESS_CODE&envDescription=Find%20your%20OpenAI%20API%20Key%20by%20click%20the%20right%20Learn%20More%20button.%20%7C%20Access%20Code%20can%20protect%20your%20website&envLink=https%3A%2F%2Fplatform.openai.com%2Faccount%2Fapi-keys&project-name=lobe-chat&repository-name=lobe-chat
 [deploy-button-image2]: https://cdn-uploads.huggingface.co/production/uploads/65c33f0aa592fce762eed505/qpm9eCvzXeXp-3tKJVSqs.png
-[deploy-link2]: https://huggingface.co/spaces/ngoctuanai/ChatGPT-Plugins/blob/main/Dockerfile?duplicate=true
+[deploy-link2]: https://huggingface.co/spaces/ngoctuanai/ChatGPT-Plugins?duplicate=true

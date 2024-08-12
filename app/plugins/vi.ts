@@ -1,6 +1,6 @@
 import { BuiltinPlugin } from "./typing";
 
-export const VN_PLUGINS: BuiltinPlugin[] = [
+export const VI_PLUGINS: BuiltinPlugin[] = [
   {
     name: "Tìm kiếm Web",
     toolName: "web-search",

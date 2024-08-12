@@ -1,6 +1,6 @@
 import { BuiltinMask } from "./typing";
 
-export const VN_MASKS: BuiltinMask[] = [
+export const VI_MASKS: BuiltinMask[] = [
   {
     avatar: "1f3a8",
     name: "Stable Diffusion",

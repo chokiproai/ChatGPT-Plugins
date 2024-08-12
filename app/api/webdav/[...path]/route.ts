@@ -1,13 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
-import { STORAGE_KEY, internalWhiteWebDavEndpoints } from "../../../constant";
+import { STORAGE_KEY, internalAllowedWebDavEndpoints } from "../../../constant";
 import { getServerSideConfig } from "@/app/config/server";
 
 const config = getServerSideConfig();
 
-const mergedWhiteWebDavEndpoints = [
-  ...internalWhiteWebDavEndpoints,
-  ...config.whiteWebDevEndpoints,
+const mergedAllowedWebDavEndpoints = [
+  ...internalAllowedWebDavEndpoints,
+  ...config.allowedWebDevEndpoints,
 ].filter((domain) => Boolean(domain.trim()));
+
+const normalizeUrl = (url: string) => {
+  try {
+    return new URL(url);
+  } catch (err) {
+    return null;
+  }
+};
 
 async function handle(
   req: NextRequest,
@@ -24,7 +32,15 @@ async function handle(
 
   // Validate the endpoint to prevent potential SSRF attacks
   if (
-    !mergedWhiteWebDavEndpoints.some((white) => endpoint?.startsWith(white))
+    !endpoint ||
+    !mergedAllowedWebDavEndpoints.some((allowedEndpoint) => {
+      const normalizedAllowedEndpoint = normalizeUrl(allowedEndpoint);
+      const normalizedEndpoint = normalizeUrl(endpoint as string);
+
+      return normalizedEndpoint &&
+        normalizedEndpoint.hostname === normalizedAllowedEndpoint?.hostname &&
+        normalizedEndpoint.pathname.startsWith(normalizedAllowedEndpoint.pathname);
+    })
   ) {
     return NextResponse.json(
       {

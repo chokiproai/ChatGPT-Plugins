@@ -1,5 +1,4 @@
 import { LLMModel } from "../client/api";
-import { isMacOS } from "../utils";
 import { getClientConfig } from "../config/client";
 import {
   DEFAULT_INPUT_TEMPLATE,
@@ -7,17 +6,21 @@ import {
   DEFAULT_SIDEBAR_WIDTH,
   DEFAULT_STT_ENGINE,
   DEFAULT_STT_ENGINES,
+  DEFAULT_TTS_ENGINE,
+  DEFAULT_TTS_ENGINES,
   DEFAULT_TTS_MODEL,
   DEFAULT_TTS_MODELS,
   DEFAULT_TTS_VOICE,
   DEFAULT_TTS_VOICES,
   StoreKey,
+  ServiceProvider,
 } from "../constant";
 import { createPersistStore } from "../utils/store";
 
 export type ModelType = (typeof DEFAULT_MODELS)[number]["name"];
 export type TTSModelType = (typeof DEFAULT_TTS_MODELS)[number];
 export type TTSVoiceType = (typeof DEFAULT_TTS_VOICES)[number];
+export type TTSEngineType = (typeof DEFAULT_TTS_ENGINES)[number];
 
 export type STTEngineType = (typeof DEFAULT_STT_ENGINES)[number];
 
@@ -34,6 +37,8 @@ export enum Theme {
   Light = "light",
 }
 
+const config = getClientConfig();
+
 export const DEFAULT_CONFIG = {
   lastUpdate: Date.now(), // timestamp, to merge state
 
@@ -41,7 +46,7 @@ export const DEFAULT_CONFIG = {
   avatar: "1f603",
   fontSize: 14,
   theme: Theme.Auto as Theme,
-  tightBorder: !!getClientConfig()?.isApp,
+  tightBorder: !!config?.isApp,
   sendPreviewBubble: true,
   enableAutoGenerateTitle: true,
   sidebarWidth: DEFAULT_SIDEBAR_WIDTH,
@@ -56,6 +61,7 @@ export const DEFAULT_CONFIG = {
 
   modelConfig: {
     model: "gpt-3.5-turbo" as ModelType,
+    providerName: "OpenAI" as ServiceProvider,
     temperature: 0.5,
     top_p: 1,
     max_tokens: 4000,
@@ -65,7 +71,7 @@ export const DEFAULT_CONFIG = {
     historyMessageCount: 4,
     compressMessageLengthThreshold: 1000,
     enableInjectSystemPrompts: true,
-    template: DEFAULT_INPUT_TEMPLATE,
+    template: config?.template ?? DEFAULT_INPUT_TEMPLATE,
   },
 
   pluginConfig: {
@@ -77,6 +83,7 @@ export const DEFAULT_CONFIG = {
   ttsConfig: {
     enable: false,
     autoplay: false,
+    engine: DEFAULT_TTS_ENGINE,
     model: DEFAULT_TTS_MODEL,
     voice: DEFAULT_TTS_VOICE,
     speed: 1.0,
@@ -109,6 +116,9 @@ export function limitNumber(
 }
 
 export const TTSConfigValidator = {
+  engine(x: string) {
+    return x as TTSEngineType;
+  },
   model(x: string) {
     return x as TTSModelType;
   },
@@ -164,12 +174,12 @@ export const useAppConfig = createPersistStore(
 
       for (const model of oldModels) {
         model.available = false;
-        modelMap[model.name] = model;
+        modelMap[`${model.name}@${model?.provider?.id}`] = model;
       }
 
       for (const model of newModels) {
         model.available = true;
-        modelMap[model.name] = model;
+        modelMap[`${model.name}@${model?.provider?.id}`] = model;
       }
 
       set(() => ({
@@ -181,7 +191,7 @@ export const useAppConfig = createPersistStore(
   }),
   {
     name: StoreKey.Config,
-    version: 3.8,
+    version: 3.9,
     migrate(persistedState, version) {
       const state = persistedState as ChatConfig;
 
@@ -210,6 +220,13 @@ export const useAppConfig = createPersistStore(
 
       if (version < 3.8) {
         state.lastUpdate = Date.now();
+      }
+
+      if (version < 3.9) {
+        state.modelConfig.template =
+          state.modelConfig.template !== DEFAULT_INPUT_TEMPLATE
+            ? state.modelConfig.template
+            : (config?.template ?? DEFAULT_INPUT_TEMPLATE);
       }
 
       return state as any;

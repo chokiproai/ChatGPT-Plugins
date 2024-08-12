@@ -14,6 +14,9 @@ const DANGER_CONFIG = {
   disableFastLink: serverConfig.disableFastLink,
   customModels: serverConfig.customModels,
   isEnableRAG: serverConfig.isEnableRAG,
+  defaultModel: serverConfig.defaultModel,
+  edgeTTSVoiceName: serverConfig.edgeTTSVoiceName,
+  isUseOpenAIEndpointForAllModels: serverConfig.isUseOpenAIEndpointForAllModels,
 };
 
 declare global {

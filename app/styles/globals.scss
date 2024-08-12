@@ -83,6 +83,7 @@
     @include dark;
   }
 }
+
 html {
   height: var(--full-height);
 
@@ -107,10 +108,14 @@ body {
   @media only screen and (max-width: 600px) {
     background-color: var(--second);
   }
+
+  *:focus-visible {
+    outline: none;
+  }
 }
 
 ::-webkit-scrollbar {
-  --bar-width: 5px;
+  --bar-width: 10px;
   width: var(--bar-width);
   height: var(--bar-width);
 }

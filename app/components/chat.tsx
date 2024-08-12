@@ -67,10 +67,11 @@ import {
   getMessageTextContent,
   getMessageImages,
   isVisionModel,
-  compressImage,
   isFirefox,
   isSupportRAGModel,
 } from "../utils";
+
+import { uploadImage as uploadImageRemote } from "@/app/utils/chat";
 
 import dynamic from "next/dynamic";
 
@@ -94,12 +95,14 @@ import { useNavigate } from "react-router-dom";
 import {
   CHAT_PAGE_SIZE,
   DEFAULT_STT_ENGINE,
+  DEFAULT_TTS_ENGINE,
   FIREFOX_DEFAULT_STT_ENGINE,
   LAST_INPUT_KEY,
   ModelProvider,
   Path,
   REQUEST_TIMEOUT_MS,
   UNFINISHED_INPUT,
+  ServiceProvider,
 } from "../constant";
 import { Avatar } from "./emoji";
 import { ContextPrompts, MaskAvatar, MaskConfig } from "./mask";
@@ -118,6 +121,7 @@ import {
   WebTranscriptionApi,
 } from "../utils/speech";
 import { FileInfo } from "../client/platforms/utils";
+import { MsEdgeTTS, OUTPUT_FORMAT } from "../utils/ms_edge_tts";
 
 const ttsPlayer = createTTSPlayer();
 
@@ -248,10 +252,11 @@ function useSubmitHandler() {
     if (e.key === "Enter" && (e.nativeEvent.isComposing || isComposing.current))
       return false;
     return (
+      (config.submitKey === SubmitKey.AltEnter && e.altKey) ||
       (config.submitKey === SubmitKey.CtrlEnter && e.ctrlKey) ||
-      (config.submitKey === SubmitKey.ShiftEnter && e.shiftKey) ||
       (config.submitKey === SubmitKey.MetaEnter && e.metaKey) ||
       (config.submitKey === SubmitKey.Enter &&
+        !e.altKey &&
         !e.ctrlKey &&
         !e.shiftKey &&
         !e.metaKey)
@@ -264,11 +269,11 @@ function useSubmitHandler() {
   };
 }
 
-export type RenderPompt = Pick<Prompt, "title" | "content">;
+export type RenderPrompt = Pick<Prompt, "title" | "content">;
 
 export function PromptHints(props: {
-  prompts: RenderPompt[];
-  onPromptSelect: (prompt: RenderPompt) => void;
+  prompts: RenderPrompt[];
+  onPromptSelect: (prompt: RenderPrompt) => void;
 }) {
   const noPrompts = props.prompts.length === 0;
   const [selectIndex, setSelectIndex] = useState(0);
@@ -497,11 +502,32 @@ export function ChatActions(props: {
 
   // switch model
   const currentModel = chatStore.currentSession().mask.modelConfig.model;
+  const currentProviderName =
+    chatStore.currentSession().mask.modelConfig?.providerName ||
+    ServiceProvider.OpenAI;
   const allModels = useAllModels();
-  const models = useMemo(
-    () => allModels.filter((m) => m.available),
-    [allModels],
-  );
+  const models = useMemo(() => {
+    const filteredModels = allModels.filter((m) => m.available);
+    const defaultModel = filteredModels.find((m) => m.isDefault);
+
+    if (defaultModel) {
+      const arr = [
+        defaultModel,
+        ...filteredModels.filter((m) => m !== defaultModel),
+      ];
+      return arr;
+    } else {
+      return filteredModels;
+    }
+  }, [allModels]);
+  const currentModelName = useMemo(() => {
+    const model = models.find(
+      (m) =>
+        m.name == currentModel &&
+        m?.provider?.providerName == currentProviderName,
+    );
+    return model?.displayName ?? "";
+  }, [models, currentModel, currentProviderName]);
   const [showModelSelector, setShowModelSelector] = useState(false);
   const [showUploadImage, setShowUploadImage] = useState(false);
   const [showUploadFile, setShowUploadFile] = useState(false);
@@ -516,7 +542,7 @@ export function ChatActions(props: {
   useEffect(() => {
     const show = isVisionModel(currentModel);
     setShowUploadImage(show);
-    setShowUploadFile(isEnableRAG && !show && isSupportRAGModel(currentModel));
+    setShowUploadFile(isEnableRAG && isSupportRAGModel(currentModel));
     if (!show) {
       props.setAttachImages([]);
       props.setUploading(false);
@@ -526,11 +552,18 @@ export function ChatActions(props: {
     // switch to first available model
     const isUnavaliableModel = !models.some((m) => m.name === currentModel);
     if (isUnavaliableModel && models.length > 0) {
-      const nextModel = models[0].name as ModelType;
-      chatStore.updateCurrentSession(
-        (session) => (session.mask.modelConfig.model = nextModel),
+      // show next model to default model if exist
+      let nextModel = models.find((model) => model.isDefault) || models[0];
+      chatStore.updateCurrentSession((session) => {
+        session.mask.modelConfig.model = nextModel.name;
+        session.mask.modelConfig.providerName = nextModel?.provider
+          ?.providerName as ServiceProvider;
+      });
+      showToast(
+        nextModel?.provider?.providerName == "ByteDance"
+          ? nextModel.displayName
+          : nextModel.name,
       );
-      showToast(nextModel);
     }
   }, [chatStore, currentModel, models]);
 
@@ -566,7 +599,6 @@ export function ChatActions(props: {
             icon={props.uploading ? <LoadingButtonIcon /> : <ImageIcon />}
           />
         )}
-
         {showUploadFile && (
           <ChatAction
             onClick={props.uploadFile}
@@ -589,6 +621,7 @@ export function ChatActions(props: {
             </>
           }
         />
+
         <ChatAction
           onClick={props.showPromptHints}
           text={Locale.Chat.InputActions.Prompt}
@@ -602,13 +635,6 @@ export function ChatActions(props: {
           text={Locale.Chat.InputActions.Masks}
           icon={<MaskIcon />}
         />
-
-        <ChatAction
-          onClick={() => setShowModelSelector(true)}
-          text={currentModel}
-          icon={<RobotIcon />}
-        />
-
         {config.pluginConfig.enable &&
           /^gpt(?!.*03\d{2}$).*$/.test(currentModel) &&
           currentModel != "gpt-4-vision-preview" && (
@@ -623,21 +649,43 @@ export function ChatActions(props: {
             />
           )}
 
+        <ChatAction
+          onClick={() => setShowModelSelector(true)}
+          text={currentModelName}
+          icon={<RobotIcon />}
+        />
+
         {showModelSelector && (
           <Selector
-            defaultSelectedValue={currentModel}
+            defaultSelectedValue={`${currentModel}@${currentProviderName}`}
             items={models.map((m) => ({
-              title: m.displayName,
-              value: m.name,
+              title: `${m.displayName}${
+                m?.provider?.providerName
+                  ? "(" + m?.provider?.providerName + ")"
+                  : ""
+              }`,
+              value: `${m.name}@${m?.provider?.providerName}`,
             }))}
             onClose={() => setShowModelSelector(false)}
             onSelection={(s) => {
               if (s.length === 0) return;
+              const [model, providerName] = s[0].split("@");
               chatStore.updateCurrentSession((session) => {
-                session.mask.modelConfig.model = s[0] as ModelType;
+                session.mask.modelConfig.model = model as ModelType;
+                session.mask.modelConfig.providerName =
+                  providerName as ServiceProvider;
                 session.mask.syncGlobalConfig = false;
               });
-              showToast(s[0]);
+              if (providerName == "ByteDance") {
+                const selectedModel = models.find(
+                  (m) =>
+                    m.name == model &&
+                    m?.provider?.providerName == providerName,
+                );
+                showToast(selectedModel?.displayName ?? "");
+              } else {
+                showToast(model);
+              }
             }}
           />
         )}
@@ -774,7 +822,7 @@ function _Chat() {
 
   // prompt hints
   const promptStore = usePromptStore();
-  const [promptHints, setPromptHints] = useState<RenderPompt[]>([]);
+  const [promptHints, setPromptHints] = useState<RenderPrompt[]>([]);
   const onSearch = useDebouncedCallback(
     (text: string) => {
       const matchedPrompts = promptStore.search(text);
@@ -887,7 +935,7 @@ function _Chat() {
     setAutoScroll(true);
   };
 
-  const onPromptSelect = (prompt: RenderPompt) => {
+  const onPromptSelect = (prompt: RenderPrompt) => {
     setTimeout(() => {
       setPromptHints([]);
 
@@ -1070,12 +1118,25 @@ function _Chat() {
       const config = useAppConfig.getState();
       setSpeechLoading(true);
       ttsPlayer.init();
-      const audioBuffer = await api.llm.speech({
-        model: config.ttsConfig.model,
-        input: text,
-        voice: config.ttsConfig.voice,
-        speed: config.ttsConfig.speed,
-      });
+      let audioBuffer: ArrayBuffer;
+      const { markdownToTxt } = require("markdown-to-txt");
+      const textContent = markdownToTxt(text);
+      if (config.ttsConfig.engine !== DEFAULT_TTS_ENGINE) {
+        const edgeVoiceName = accessStore.edgeVoiceName();
+        const tts = new MsEdgeTTS();
+        await tts.setMetadata(
+          edgeVoiceName,
+          OUTPUT_FORMAT.AUDIO_24KHZ_96KBITRATE_MONO_MP3,
+        );
+        audioBuffer = await tts.toArrayBuffer(textContent);
+      } else {
+        audioBuffer = await api.llm.speech({
+          model: config.ttsConfig.model,
+          input: textContent,
+          voice: config.ttsConfig.voice,
+          speed: config.ttsConfig.speed,
+        });
+      }
       setSpeechStatus(true);
       ttsPlayer
         .play(audioBuffer, () => {
@@ -1241,6 +1302,7 @@ function _Chat() {
             if (payload.url) {
               accessStore.update((access) => (access.openaiUrl = payload.url!));
             }
+            accessStore.update((access) => (access.useCustomConfig = true));
           });
         }
       } catch {
@@ -1287,7 +1349,7 @@ function _Chat() {
               ...(await new Promise<string[]>((res, rej) => {
                 setUploading(true);
                 const imagesData: string[] = [];
-                compressImage(file, 256 * 1024)
+                uploadImageRemote(file)
                   .then((dataUrl) => {
                     imagesData.push(dataUrl);
                     setUploading(false);
@@ -1329,7 +1391,7 @@ function _Chat() {
           const imagesData: string[] = [];
           for (let i = 0; i < files.length; i++) {
             const file = event.target.files[i];
-            compressImage(file, 256 * 1024)
+            uploadImageRemote(file)
               .then((dataUrl) => {
                 imagesData.push(dataUrl);
                 if (
@@ -1366,32 +1428,25 @@ function _Chat() {
         const fileInput = document.createElement("input");
         fileInput.type = "file";
         fileInput.accept = ".pdf,.txt,.md,.json,.csv,.docx,.srt,.mp3";
-        fileInput.multiple = true;
+        fileInput.multiple = false;
         fileInput.onchange = (event: any) => {
           setUploading(true);
-          const files = event.target.files;
+          const file = event.target.files[0];
           const api = new ClientApi();
           const fileDatas: FileInfo[] = [];
-          for (let i = 0; i < files.length; i++) {
-            const file = event.target.files[i];
-            api.file
-              .upload(file)
-              .then((fileInfo) => {
-                console.log(fileInfo);
-                fileDatas.push(fileInfo);
-                if (
-                  fileDatas.length === 3 ||
-                  fileDatas.length === files.length
-                ) {
-                  setUploading(false);
-                  res(fileDatas);
-                }
-              })
-              .catch((e) => {
-                setUploading(false);
-                rej(e);
-              });
-          }
+          api.file
+            .uploadForRag(file, session)
+            .then((fileInfo) => {
+              console.log(fileInfo);
+              fileDatas.push(fileInfo);
+              session.attachFiles.push(fileInfo);
+              setUploading(false);
+              res(fileDatas);
+            })
+            .catch((e) => {
+              setUploading(false);
+              rej(e);
+            });
         };
         fileInput.click();
       })),
@@ -1662,7 +1717,7 @@ function _Chat() {
                       parentRef={scrollRef}
                       defaultShow={i >= messages.length - 6}
                     />
-                    {message.fileInfos && message.fileInfos.length > 0 && (
+                    {/* {message.fileInfos && message.fileInfos.length > 0 && (
                       <nav
                         className={styles["chat-message-item-files"]}
                         style={
@@ -1684,7 +1739,7 @@ function _Chat() {
                           );
                         })}
                       </nav>
-                    )}
+                    )} */}
                     {getMessageImages(message).length == 1 && (
                       <img
                         className={styles["chat-message-item-image"]}

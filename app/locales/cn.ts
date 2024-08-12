@@ -354,6 +354,48 @@ const cn = {
           Title: "API 版本（仅适用于 gemini-pro）",
           SubTitle: "选择一个特定的 API 版本",
         },
+        GoogleSafetySettings: {
+          Title: "Google 安全过滤级别",
+          SubTitle: "设置内容过滤级别",
+        },
+      },
+      Baidu: {
+        ApiKey: {
+          Title: "API Key",
+          SubTitle: "使用自定义 Baidu API Key",
+          Placeholder: "Baidu API Key",
+        },
+        SecretKey: {
+          Title: "Secret Key",
+          SubTitle: "使用自定义 Baidu Secret Key",
+          Placeholder: "Baidu Secret Key",
+        },
+        Endpoint: {
+          Title: "接口地址",
+          SubTitle: "不支持自定义前往.env配置",
+        },
+      },
+      ByteDance: {
+        ApiKey: {
+          Title: "接口密钥",
+          SubTitle: "使用自定义 ByteDance API Key",
+          Placeholder: "ByteDance API Key",
+        },
+        Endpoint: {
+          Title: "接口地址",
+          SubTitle: "样例：",
+        },
+      },
+      Alibaba: {
+        ApiKey: {
+          Title: "接口密钥",
+          SubTitle: "使用自定义阿里云API Key",
+          Placeholder: "Alibaba Cloud API Key",
+        },
+        Endpoint: {
+          Title: "接口地址",
+          SubTitle: "样例：",
+        },
       },
       CustomModel: {
         Title: "自定义模型名",
@@ -399,13 +441,14 @@ const cn = {
     TTS: {
       Enable: {
         Title: "启用文本转语音",
-        SubTitle: "启用基于 OpenAI 的文本生成语音服务",
+        SubTitle: "启用文本生成语音服务",
       },
       Autoplay: {
         Title: "启用自动朗读",
         SubTitle: "自动生成语音并播放，需先开启文本转语音开关",
       },
       Model: "模型",
+      Engine: "转换引擎",
       Voice: {
         Title: "声音",
         SubTitle: "生成语音时使用的声音",

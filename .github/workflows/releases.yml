@@ -1,4 +1,4 @@
-name: Auto releases
+name: Auto Release
 
 on:
   push:
@@ -20,8 +20,8 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           body: |
-            Chào mừng bạn đến với phiên bản mới!
+            New version!
             - Tag: ${{ github.ref }}
-            - Ngày phát hành: ${{ github.event.head_commit.timestamp }}
+            - Release Date: ${{ github.event.head_commit.timestamp }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

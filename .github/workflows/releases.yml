@@ -27,8 +27,5 @@ jobs:
             This release includes new features and improvements.
 
             **Release Date:** ${{ env.RELEASE_DATE }}
-          files: |
-            path/to/source_code.zip
-            path/to/source_code.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

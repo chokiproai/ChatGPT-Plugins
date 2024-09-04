@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: "ChatGPT-Plugins",
   description: "Your personal ChatGPT Chat Bot.",
   appleWebApp: {
-    title: "ChatGPT-Plugins",
+    title: "NextChat",
     statusBarStyle: "default",
   },
 };

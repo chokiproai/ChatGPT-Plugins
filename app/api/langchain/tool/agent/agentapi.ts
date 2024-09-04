@@ -4,8 +4,18 @@ import { getServerSideConfig } from "@/app/config/server";
 import { BaseCallbackHandler } from "@langchain/core/callbacks/base";
 
 import { BufferMemory, ChatMessageHistory } from "langchain/memory";
-import { AgentExecutor, AgentStep } from "langchain/agents";
-import { ACCESS_CODE_PREFIX, ServiceProvider } from "@/app/constant";
+import {
+  AgentExecutor,
+  AgentStep,
+  createToolCallingAgent,
+  createReactAgent,
+} from "langchain/agents";
+import {
+  ACCESS_CODE_PREFIX,
+  ANTHROPIC_BASE_URL,
+  OPENAI_BASE_URL,
+  ServiceProvider,
+} from "@/app/constant";
 
 // import * as langchainTools from "langchain/tools";
 import * as langchainTools from "@/app/api/langchain-tools/langchian-tool-index";
@@ -28,7 +38,8 @@ import {
   ChatPromptTemplate,
   MessagesPlaceholder,
 } from "@langchain/core/prompts";
-import { ChatOpenAI } from "@langchain/openai";
+import { ChatOpenAI, OpenAIEmbeddings } from "@langchain/openai";
+import { ChatAnthropic } from "@langchain/anthropic";
 import {
   BaseMessage,
   FunctionMessage,
@@ -39,6 +50,7 @@ import {
 } from "@langchain/core/messages";
 import { MultimodalContent } from "@/app/client/api";
 import { GoogleCustomSearch } from "@/app/api/langchain-tools/langchian-tool-index";
+import { OllamaEmbeddings } from "@langchain/community/embeddings/ollama";
 
 export interface RequestMessage {
   role: string;
@@ -61,6 +73,7 @@ export interface RequestBody {
   maxIterations: number;
   returnIntermediateSteps: boolean;
   useTools: (undefined | string)[];
+  provider: ServiceProvider;
 }
 
 export class ResponseBody {
@@ -195,27 +208,137 @@ export class AgentApi {
     });
   }
 
-  async getOpenAIApiKey(token: string) {
+  getApiKey(token: string, provider: ServiceProvider) {
     const serverConfig = getServerSideConfig();
     const isApiKey = !token.startsWith(ACCESS_CODE_PREFIX);
 
-    let apiKey = serverConfig.apiKey;
     if (isApiKey && token) {
-      apiKey = token;
+      return token;
     }
-    return apiKey;
+    if (provider === ServiceProvider.OpenAI) return serverConfig.apiKey;
+    if (provider === ServiceProvider.Anthropic)
+      return serverConfig.anthropicApiKey;
+    throw new Error("Unsupported provider");
   }
 
-  async getOpenAIBaseUrl(reqBaseUrl: string | undefined) {
+  getBaseUrl(reqBaseUrl: string | undefined, provider: ServiceProvider) {
     const serverConfig = getServerSideConfig();
-    let baseUrl = "https://api.openai.com/v1";
-    if (serverConfig.baseUrl) baseUrl = serverConfig.baseUrl;
+    let baseUrl = "";
+    if (provider === ServiceProvider.OpenAI) {
+      baseUrl = OPENAI_BASE_URL;
+      if (serverConfig.baseUrl) baseUrl = serverConfig.baseUrl;
+    }
+    if (provider === ServiceProvider.Anthropic) {
+      baseUrl = ANTHROPIC_BASE_URL;
+      if (serverConfig.anthropicUrl) baseUrl = serverConfig.anthropicUrl;
+    }
     if (reqBaseUrl?.startsWith("http://") || reqBaseUrl?.startsWith("https://"))
       baseUrl = reqBaseUrl;
-    if (!baseUrl.endsWith("/v1"))
+    if (!baseUrl.endsWith("/v1") && provider === ServiceProvider.OpenAI)
       baseUrl = baseUrl.endsWith("/") ? `${baseUrl}v1` : `${baseUrl}/v1`;
-    console.log("[baseUrl]", baseUrl);
     return baseUrl;
+  }
+
+  getToolBaseLanguageModel(
+    reqBody: RequestBody,
+    apiKey: string,
+    baseUrl: string,
+  ) {
+    if (reqBody.provider === ServiceProvider.Anthropic) {
+      return new ChatAnthropic({
+        temperature: 0,
+        modelName: reqBody.model,
+        apiKey: apiKey,
+        clientOptions: {
+          baseURL: baseUrl,
+        },
+      });
+    }
+    return new ChatOpenAI(
+      {
+        temperature: 0,
+        modelName: reqBody.model,
+        openAIApiKey: apiKey,
+      },
+      { basePath: baseUrl },
+    );
+  }
+
+  getToolEmbeddings(reqBody: RequestBody, apiKey: string, baseUrl: string) {
+    if (reqBody.provider === ServiceProvider.Anthropic) {
+      if (process.env.OLLAMA_BASE_URL) {
+        return new OllamaEmbeddings({
+          model: process.env.RAG_EMBEDDING_MODEL,
+          baseUrl: process.env.OLLAMA_BASE_URL,
+        });
+      } else {
+        return null;
+      }
+    }
+    return new OpenAIEmbeddings(
+      {
+        openAIApiKey: apiKey,
+      },
+      { basePath: baseUrl },
+    );
+  }
+
+  getLLM(reqBody: RequestBody, apiKey: string, baseUrl: string) {
+    const serverConfig = getServerSideConfig();
+    if (reqBody.isAzure || serverConfig.isAzure) {
+      console.log("[use Azure ChatOpenAI]");
+      return new ChatOpenAI({
+        temperature: reqBody.temperature,
+        streaming: reqBody.stream,
+        topP: reqBody.top_p,
+        presencePenalty: reqBody.presence_penalty,
+        frequencyPenalty: reqBody.frequency_penalty,
+        azureOpenAIApiKey: apiKey,
+        azureOpenAIApiVersion: reqBody.isAzure
+          ? reqBody.azureApiVersion
+          : serverConfig.azureApiVersion,
+        azureOpenAIApiDeploymentName: reqBody.model,
+        azureOpenAIBasePath: baseUrl,
+      });
+    }
+    if (reqBody.provider === ServiceProvider.OpenAI) {
+      console.log("[use ChatOpenAI]");
+      return new ChatOpenAI(
+        {
+          modelName: reqBody.model,
+          openAIApiKey: apiKey,
+          temperature: reqBody.temperature,
+          streaming: reqBody.stream,
+          topP: reqBody.top_p,
+          presencePenalty: reqBody.presence_penalty,
+          frequencyPenalty: reqBody.frequency_penalty,
+        },
+        { basePath: baseUrl },
+      );
+    }
+    if (reqBody.provider === ServiceProvider.Anthropic) {
+      console.log("[use ChatAnthropic]");
+      return new ChatAnthropic({
+        model: reqBody.model,
+        apiKey: apiKey,
+        temperature: reqBody.temperature,
+        streaming: reqBody.stream,
+        topP: reqBody.top_p,
+        clientOptions: {
+          baseURL: baseUrl,
+        },
+      });
+    }
+    throw new Error("Unsupported model providers");
+  }
+
+  getAuthHeader(reqBody: RequestBody): string {
+    const serverConfig = getServerSideConfig();
+    return reqBody.isAzure || serverConfig.isAzure
+      ? "api-key"
+      : reqBody.provider === ServiceProvider.Anthropic
+        ? "x-api-key"
+        : "Authorization";
   }
 
   async getApiHandler(
@@ -224,29 +347,20 @@ export class AgentApi {
     customTools: any[],
   ) {
     try {
+      process.env.LANGCHAIN_CALLBACKS_BACKGROUND = "true";
       let useTools = reqBody.useTools ?? [];
       const serverConfig = getServerSideConfig();
 
       // const reqBody: RequestBody = await req.json();
       // ui set azure model provider
       const isAzure = reqBody.isAzure;
-      const authHeaderName = isAzure ? "api-key" : "Authorization";
+      const authHeaderName = this.getAuthHeader(reqBody);
       const authToken = req.headers.get(authHeaderName) ?? "";
       const token = authToken.trim().replaceAll("Bearer ", "").trim();
 
-      let apiKey = await this.getOpenAIApiKey(token);
+      let apiKey = this.getApiKey(token, reqBody.provider);
       if (isAzure) apiKey = token;
-      let baseUrl = "https://api.openai.com/v1";
-      if (serverConfig.baseUrl) baseUrl = serverConfig.baseUrl;
-      if (
-        reqBody.baseUrl?.startsWith("http://") ||
-        reqBody.baseUrl?.startsWith("https://")
-      ) {
-        baseUrl = reqBody.baseUrl;
-      }
-      if (!isAzure && !baseUrl.endsWith("/v1")) {
-        baseUrl = baseUrl.endsWith("/") ? `${baseUrl}v1` : `${baseUrl}/v1`;
-      }
+      let baseUrl = this.getBaseUrl(reqBody.baseUrl, reqBody.provider);
       if (!reqBody.isAzure && serverConfig.isAzure) {
         baseUrl = serverConfig.azureUrl || baseUrl;
       }
@@ -344,87 +458,38 @@ export class AgentApi {
             pastMessages.push(new AIMessage(message.content));
         });
 
-      let llm = new ChatOpenAI(
-        {
-          modelName: reqBody.model,
-          openAIApiKey: apiKey,
-          temperature: reqBody.temperature,
-          streaming: reqBody.stream,
-          topP: reqBody.top_p,
-          presencePenalty: reqBody.presence_penalty,
-          frequencyPenalty: reqBody.frequency_penalty,
-        },
-        { basePath: baseUrl },
-      );
+      let llm = this.getLLM(reqBody, apiKey, baseUrl);
 
-      if (reqBody.isAzure || serverConfig.isAzure) {
-        llm = new ChatOpenAI({
-          temperature: reqBody.temperature,
-          streaming: reqBody.stream,
-          topP: reqBody.top_p,
-          presencePenalty: reqBody.presence_penalty,
-          frequencyPenalty: reqBody.frequency_penalty,
-          azureOpenAIApiKey: apiKey,
-          azureOpenAIApiVersion: reqBody.isAzure
-            ? reqBody.azureApiVersion
-            : serverConfig.azureApiVersion,
-          azureOpenAIApiDeploymentName: reqBody.model,
-          azureOpenAIBasePath: baseUrl,
-        });
-      }
-      const memory = new BufferMemory({
-        memoryKey: "history",
-        inputKey: "question",
-        outputKey: "answer",
-        returnMessages: true,
-        chatHistory: new ChatMessageHistory(pastMessages),
-      });
       const MEMORY_KEY = "chat_history";
       const prompt = ChatPromptTemplate.fromMessages([
         new MessagesPlaceholder(MEMORY_KEY),
         new MessagesPlaceholder("input"),
         new MessagesPlaceholder("agent_scratchpad"),
       ]);
-      const modelWithTools = llm.bind({
-        tools: tools.map(convertToOpenAITool),
-      });
-      const runnableAgent = RunnableSequence.from([
-        {
-          input: (i) => i.input,
-          agent_scratchpad: (i: { input: string; steps: ToolsAgentStep[] }) => {
-            return formatToOpenAIToolMessages(i.steps);
-          },
-          chat_history: async (i: {
-            input: string;
-            steps: ToolsAgentStep[];
-          }) => {
-            const { history } = await memory.loadMemoryVariables({});
-            return history;
-          },
-        },
-        prompt,
-        modelWithTools,
-        new OpenAIToolsAgentOutputParser(),
-      ]).withConfig({ runName: "OpenAIToolsAgent" });
 
-      const executor = AgentExecutor.fromAgentAndTools({
-        agent: runnableAgent,
-        tools,
-      });
       const lastMessageContent = reqBody.messages.slice(-1)[0].content;
       const lastHumanMessage =
         typeof lastMessageContent === "string"
           ? new HumanMessage(lastMessageContent)
           : new HumanMessage({ content: lastMessageContent });
-      executor
+      const agent = createToolCallingAgent({
+        llm,
+        tools,
+        prompt,
+      });
+      const agentExecutor = new AgentExecutor({
+        agent,
+        tools,
+        maxIterations: reqBody.maxIterations,
+      });
+      agentExecutor
         .invoke(
           {
-            input: [lastHumanMessage],
+            input: lastHumanMessage,
+            chat_history: pastMessages,
             signal: this.controller.signal,
           },
-          {
-            callbacks: [handler],
-          },
+          { callbacks: [handler] },
         )
         .catch((error) => {
           if (this.controller.signal.aborted) {

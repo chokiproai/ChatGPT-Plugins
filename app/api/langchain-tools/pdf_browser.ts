@@ -1,5 +1,5 @@
 import axiosMod, { AxiosStatic } from "axios";
-import { WebPDFLoader } from "langchain/document_loaders/web/pdf";
+import { WebPDFLoader } from "@langchain/community/document_loaders/web/pdf";
 import { MemoryVectorStore } from "langchain/vectorstores/memory";
 import { Tool } from "@langchain/core/tools";
 import {
@@ -8,9 +8,9 @@ import {
 } from "langchain/text_splitter";
 
 import { CallbackManagerForToolRun } from "@langchain/core/callbacks/manager";
-import { BaseLanguageModel } from "langchain/dist/base_language";
+import { BaseLanguageModel } from "@langchain/core/language_models/base";
+import { Embeddings } from "@langchain/core/embeddings";
 import { formatDocumentsAsString } from "langchain/util/document";
-import { Embeddings } from "langchain/dist/embeddings/base.js";
 import { RunnableSequence } from "@langchain/core/runnables";
 import { StringOutputParser } from "@langchain/core/output_parsers";
 

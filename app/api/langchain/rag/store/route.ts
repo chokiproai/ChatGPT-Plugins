@@ -13,8 +13,6 @@ import { OpenAIWhisperAudio } from "langchain/document_loaders/fs/openai_whisper
 // import { PPTXLoader } from "langchain/document_loaders/fs/pptx";
 import { SRTLoader } from "langchain/document_loaders/fs/srt";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
-import { Pinecone } from "@pinecone-database/pinecone";
-import { PineconeStore } from "@langchain/pinecone";
 import { getServerSideConfig } from "@/app/config/server";
 import { FileInfo } from "@/app/client/platforms/utils";
 import mime from "mime";
@@ -23,7 +21,7 @@ import S3FileStorage from "@/app/utils/s3_file_storage";
 import { OllamaEmbeddings } from "@langchain/community/embeddings/ollama";
 import { SupabaseVectorStore } from "@langchain/community/vectorstores/supabase";
 import { createClient } from "@supabase/supabase-js";
-import { Embeddings } from "langchain/dist/embeddings/base";
+import { Embeddings } from "@langchain/core/embeddings";
 
 interface RequestBody {
   sessionId: string;

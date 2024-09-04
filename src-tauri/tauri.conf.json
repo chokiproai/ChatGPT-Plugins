@@ -8,8 +8,8 @@
     "withGlobalTauri": true
   },
   "package": {
-    "productName": "NextChat",
-    "version": "2.13.1"
+    "productName": "ChatGPT-Plugins",
+    "version": "2.14.1"
   },
   "tauri": {
     "allowlist": {

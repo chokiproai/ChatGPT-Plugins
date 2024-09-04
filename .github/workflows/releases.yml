@@ -21,9 +21,9 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.ref }}
-          name: ${{ github.ref }} - Release
+          name: Release ${{ github.ref_name }}
           body: |
-            ## What's New
+            # What's New
             This release includes new features and improvements.
 
             **Release Date:** ${{ env.RELEASE_DATE }}

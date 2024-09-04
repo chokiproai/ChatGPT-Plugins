@@ -1,11 +1,11 @@
 [package]
-name = "nextchat"
+name = "chatgpt_plugins"
 version = "0.1.0"
 description = "A cross platform app for LLM ChatBot."
-authors = ["Yidadaa"]
+authors = ["chokiproai"]
 license = "mit"
 repository = ""
-default-run = "nextchat"
+default-run = "chatgpt_plugins"
 edition = "2021"
 rust-version = "1.60"
 

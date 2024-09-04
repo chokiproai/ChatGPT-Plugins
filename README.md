@@ -1,6 +1,6 @@
 <h1 align="center">ChatGPT Plugin</h1>
 
-> Original author: [ChatGPT-Next-Web](https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web) and [ChatGPT-Next-Web-LangChain](https://github.com/Hk-Gosuto/ChatGPT-Next-Web-LangChain)
+> Original author: [ChatGPT-Next-Web](https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web)
 
 ### Deploying
 

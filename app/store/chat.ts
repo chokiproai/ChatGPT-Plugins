@@ -563,8 +563,8 @@ export const useChatStore = createPersistStore(
 
         // system prompts, to get close to OpenAI Web ChatGPT
         const shouldInjectSystemPrompts =
-          modelConfig.enableInjectSystemPrompts // &&
-          // session.mask.modelConfig.model.startsWith("gpt-");
+          modelConfig.enableInjectSystemPrompts &&
+          session.mask.modelConfig.model.startsWith("gpt-");
 
         var systemPrompts: ChatMessage[] = [];
         var template = DEFAULT_SYSTEM_TEMPLATE;
@@ -833,18 +833,15 @@ ${file.partial}
       // Resolve issue of old sessions not automatically enabling.
       if (version < 3.1) {
         newState.sessions.forEach((s) => {
-          if (
-            // Exclude those already set by user
-            !s.mask.modelConfig.hasOwnProperty("enableInjectSystemPrompts")
-          ) {
-            // Because users may have changed this configuration,
-            // the user's current configuration is used instead of the default
+          if (!s.mask.modelConfig.hasOwnProperty("enableInjectSystemPrompts")) {
+            s.mask.modelConfig.enableInjectSystemPrompts = false;
+          } else {
             const config = useAppConfig.getState();
             s.mask.modelConfig.enableInjectSystemPrompts =
               config.modelConfig.enableInjectSystemPrompts;
           }
         });
-      }
+      }      
 
       return newState as any;
     },

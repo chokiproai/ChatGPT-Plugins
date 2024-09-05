@@ -1,6 +1,6 @@
 {
-  "name": "NextChat",
-  "short_name": "NextChat",
+  "name": "ChatGPT-Plugins",
+  "short_name": "ChatGPT-Plugins",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",

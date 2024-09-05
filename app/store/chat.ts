@@ -850,8 +850,3 @@ ${file.partial}
     },
   },
 );
-
-if (modelConfig.enableInjectSystemPrompts) {
-
-  console.log("enableInjectSystemPrompts.");
-}

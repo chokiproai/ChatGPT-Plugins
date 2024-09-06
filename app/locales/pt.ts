@@ -154,8 +154,8 @@ const pt: PartialLocaleType = {
       SubTitle: "Ajustar o tamanho da fonte do conteúdo do chat",
     },
     InjectSystemPrompts: {
-      Title: "Inserir Prompts de Sistema",
-      SubTitle: "Inserir um prompt de sistema global para cada requisição",
+      Title: "🅧",
+      SubTitle: "🅧",
     },
     InputTemplate: {
       Title: "Modelo de Entrada",

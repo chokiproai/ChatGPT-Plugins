@@ -72,9 +72,9 @@ const tr: PartialLocaleType = {
       SubTitle: "Sohbet içeriğinin yazı boyutunu ayarlayın",
     },
     InjectSystemPrompts: {
-      Title: "Sistem İpucu Ekleyin",
+      Title: "🅧",
       SubTitle:
-        "Her istek için ileti listesinin başına simüle edilmiş bir ChatGPT sistem ipucu ekleyin",
+        "🅧",
     },
     Update: {
       Version: (x: string) => `Sürüm: ${x}`,

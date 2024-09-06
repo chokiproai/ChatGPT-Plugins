@@ -27,5 +27,6 @@ jobs:
             This release includes new features and improvements.
 
             **Release Date:** ${{ env.RELEASE_DATE }}
+            **Commit:** [${{ github.sha }}](https://github.com/${{ github.repository }}/commit/${{ github.sha }})
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

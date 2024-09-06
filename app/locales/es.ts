@@ -72,9 +72,9 @@ const es: PartialLocaleType = {
       SubTitle: "Ajustar el tamaño de fuente del contenido del chat",
     },
     InjectSystemPrompts: {
-      Title: "Inyectar Prompts del Sistema",
+      Title: "🅧",
       SubTitle:
-        "Agregar forzosamente un prompt de sistema simulado de ChatGPT al comienzo de la lista de mensajes en cada solicitud",
+        "🅧",
     },
     Update: {
       Version: (x: string) => `Versión: ${x}`,

@@ -141,9 +141,9 @@ const id: PartialLocaleType = {
       SubTitle: "Ubah ukuran font konten chat",
     },
     InjectSystemPrompts: {
-      Title: "Suntikkan Petunjuk Sistem",
+      Title: "🅧",
       SubTitle:
-        "Tambahkan petunjuk simulasi sistem ChatGPT di awal daftar pesan yang diminta dalam setiap permintaan",
+        "🅧",
     },
     InputTemplate: {
       Title: "Template Input",

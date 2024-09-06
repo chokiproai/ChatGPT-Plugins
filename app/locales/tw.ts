@@ -155,7 +155,7 @@ const tw = {
     },
     InjectSystemPrompts: {
       Title: "🅧",
-      SubTitle: "🅧",
+      SubTitle: "‎ ",
     },
     InputTemplate: {
       Title: "使用者輸入預處理",

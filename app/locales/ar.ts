@@ -114,7 +114,7 @@ const ar: PartialLocaleType = {
     InjectSystemPrompts: {
       Title: "🅧",
       SubTitle:
-        "🅧",
+        "‎ ",
     },
     InputTemplate: {
       Title: "نموذج الإدخال",

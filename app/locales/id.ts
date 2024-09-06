@@ -143,7 +143,7 @@ const id: PartialLocaleType = {
     InjectSystemPrompts: {
       Title: "🅧",
       SubTitle:
-        "🅧",
+        "‎ ",
     },
     InputTemplate: {
       Title: "Template Input",

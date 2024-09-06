@@ -157,7 +157,7 @@ const sk: PartialLocaleType = {
     },
     InjectSystemPrompts: {
       Title: "🅧",
-      SubTitle: "🅧",
+      SubTitle: "‎ ",
     },
     InputTemplate: {
       Title: "Šablóna vstupu",

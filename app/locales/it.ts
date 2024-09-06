@@ -74,7 +74,7 @@ const it: PartialLocaleType = {
     InjectSystemPrompts: {
       Title: "🅧",
       SubTitle:
-        "🅧",
+        "‎ ",
     },
     Update: {
       Version: (x: string) => `Versione: ${x}`,

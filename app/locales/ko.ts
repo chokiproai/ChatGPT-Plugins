@@ -75,7 +75,7 @@ const ko: PartialLocaleType = {
     InjectSystemPrompts: {
       Title: "🅧",
       SubTitle:
-        "🅧",
+        "‎ ",
     },
     Update: {
       Version: (x: string) => `버전: ${x}`,

@@ -162,7 +162,7 @@ const cn = {
     },
     InjectSystemPrompts: {
       Title: "🅧",
-      SubTitle: "🅧",
+      SubTitle: "‎ ",
     },
     InputTemplate: {
       Title: "用户输入预处理",

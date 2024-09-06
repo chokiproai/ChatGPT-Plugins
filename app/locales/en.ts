@@ -164,7 +164,7 @@ const en: LocaleType = {
     },
     InjectSystemPrompts: {
       Title: "🅧",
-      SubTitle: "🅧",
+      SubTitle: "‎ ",
     },
     InputTemplate: {
       Title: "Input Template",

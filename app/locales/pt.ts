@@ -155,7 +155,7 @@ const pt: PartialLocaleType = {
     },
     InjectSystemPrompts: {
       Title: "🅧",
-      SubTitle: "🅧",
+      SubTitle: "‎ ",
     },
     InputTemplate: {
       Title: "Modelo de Entrada",

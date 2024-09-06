@@ -121,7 +121,7 @@ const jp: PartialLocaleType = {
     InjectSystemPrompts: {
       Title: "🅧",
       SubTitle:
-        "🅧",
+        "‎ ",
     },
     InputTemplate: {
       Title: "入力の前処理",

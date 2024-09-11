@@ -1,0 +1,10 @@
+services:
+  ChatGPT-Plugins:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - OPENAI_API_KEY=
+      - CODE=
+    ports:
+      - 3000:3000

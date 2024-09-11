@@ -154,8 +154,8 @@ export const usePromptStore = createPersistStore(
       fetch(PROMPT_URL)
         .then((res) => res.json())
         .then((res) => {
-          let fetchPrompts = [res.en, res.tw, res.cn];
-          if (getLang() === "cn") {
+          let fetchPrompts = [res.en, res.vn];
+          if (getLang() === "en") {
             fetchPrompts = fetchPrompts.reverse();
           }
           const builtinPrompts = fetchPrompts.map((promptList: PromptList) => {
@@ -176,7 +176,7 @@ export const usePromptStore = createPersistStore(
             .reduce((pre, cur) => pre.concat(cur), [])
             .filter((v) => !!v.title && !!v.content);
           SearchService.count.builtin =
-            res.en.length + res.cn.length + res.tw.length;
+            res.en.length + res.vn.length;
           SearchService.init(allPromptsForSearch, userPrompts);
         });
     },

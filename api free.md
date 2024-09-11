@@ -1,9 +1,8 @@
 ## Proxy API
 - Host 1: `https://api.chatanywhere.tech`
-- Host 2: `https://api.chatanywhere.com.cn`
-- Host 3: `https://api.chatanywhere.cn`
+- Host 2: `https://api.chatanywhere.org`
 
 ## Get key
 - `https://api.chatanywhere.org/v1/oauth/free/github/render`
 
-### Free API Keys are limited to 60 requests/hour/IP&Key call frequency. That is, if you use multiple Keys under one IP, the total number of requests per hour for all Keys cannot exceed 60; Similarly, if you use When using one Key for multiple IPs, the number of requests per hour for this Key cannot exceed 60.
+### The free API Key is limited to 200 requests/day/IP&Key call frequency (gpt and embedding are calculated separately, 200 times each). That is to say, if you use multiple keys under one IP, the total number of requests per day for all keys cannot exceed 200; similarly, if you use one key for multiple IPs, the number of requests per day for this key cannot exceed 200.

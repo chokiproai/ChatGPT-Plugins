@@ -168,7 +168,7 @@ export function PluginPage() {
   const chatStore = useChatStore();
 
   const currentLang = getLang();
-  const supportedLangs = ["cn", "ru"];
+  const supportedLangs = ["vi"];
   const allPlugins = pluginStore
     .getAll()
     .filter((m) =>

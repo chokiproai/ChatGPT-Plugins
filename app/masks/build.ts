@@ -6,7 +6,7 @@ import { EN_MASKS } from "./en";
 import { type BuiltinMask } from "./typing";
 
 const BUILTIN_MASKS: Record<string, BuiltinMask[]> = {
-  cn: VI_MASKS,
+  vi: VI_MASKS,
   en: EN_MASKS,
 };
 

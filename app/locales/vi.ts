@@ -4,8 +4,7 @@ import type { PartialLocaleType } from "./index";
 const vi: PartialLocaleType = {
   WIP: "Sắp ra mắt...",
   Error: {
-    Unauthorized:
-      "Truy cập chưa xác thực, vui lòng nhập mã truy cập trong trang cài đặt.",
+    Unauthorized: "Truy cập chưa xác thực, vui lòng nhập mã truy cập trong trang cài đặt.",
   },
   ChatItem: {
     ChatItemCount: (count: number) => `${count} tin nhắn`,
@@ -49,8 +48,7 @@ const vi: PartialLocaleType = {
     Send: "Gửi tin nhắn trong quá khứ",
     Copy: "Sao chép tin nhắn trong quá khứ",
     Reset: "Đặt lại phiên",
-    ResetConfirm:
-      "Đặt lại sẽ xóa toàn bộ lịch sử trò chuyện hiện tại và bộ nhớ. Bạn có chắc chắn muốn đặt lại không?",
+    ResetConfirm: "Đặt lại sẽ xóa toàn bộ lịch sử trò chuyện hiện tại và bộ nhớ. Bạn có chắc chắn muốn đặt lại không?",
   },
   Home: {
     NewChat: "Cuộc trò chuyện mới",
@@ -61,7 +59,6 @@ const vi: PartialLocaleType = {
   Settings: {
     Title: "Cài đặt",
     SubTitle: "Tất cả cài đặt",
-
     Lang: {
       Name: "Language", // ATTENTION: if you wanna add a new translation, please do not translate this value, leave it as `Language`
       All: "Tất cả ngôn ngữ",
@@ -73,8 +70,7 @@ const vi: PartialLocaleType = {
     },
     InjectSystemPrompts: {
       Title: "🅧",
-      SubTitle:
-        "‎ ",
+      SubTitle: "‎ ",
     },
     Update: {
       Version: (x: string) => `Phiên bản: ${x}`,
@@ -103,8 +99,7 @@ const vi: PartialLocaleType = {
         SubTitle: "Nhập / để kích hoạt chức năng tự động hoàn thành",
       },
       List: "Danh sách mẫu gợi ý",
-      ListCount: (builtin: number, custom: number) =>
-        `${builtin} có sẵn, ${custom} do người dùng xác định`,
+      ListCount: (builtin: number, custom: number) => `${builtin} có sẵn, ${custom} do người dùng xác định`,
       Edit: "Chỉnh sửa",
       Modal: {
         Title: "Danh sách mẫu gợi ý",
@@ -123,7 +118,6 @@ const vi: PartialLocaleType = {
       Title: "Ngưỡng nén lịch sử tin nhắn",
       SubTitle: "Thực hiện nén nếu số lượng tin nhắn chưa nén vượt quá ngưỡng",
     },
-
     Usage: {
       Title: "Hạn mức tài khoản",
       SubTitle(used: any, total: any) {
@@ -133,7 +127,6 @@ const vi: PartialLocaleType = {
       Check: "Kiểm tra",
       NoAccess: "Nhập API Key để kiểm tra hạn mức",
     },
-
     Model: "Mô hình",
     Temperature: {
       Title: "Tính ngẫu nhiên (temperature)",
@@ -157,18 +150,14 @@ const vi: PartialLocaleType = {
     BotHello: "Xin chào! Mình có thể giúp gì cho bạn?",
     Error: "Có lỗi xảy ra, vui lòng thử lại sau.",
     Prompt: {
-      History: (content: string) =>
-        "Tóm tắt ngắn gọn cuộc trò chuyện giữa người dùng và AI: " + content,
-      Topic:
-        "Sử dụng 4 đến 5 từ tóm tắt cuộc trò chuyện này mà không có phần mở đầu, dấu chấm câu, dấu ngoặc kép, dấu chấm, ký hiệu hoặc văn bản bổ sung nào. Loại bỏ các dấu ngoặc kép kèm theo.",
-      Summarize:
-        "Tóm tắt cuộc trò chuyện này một cách ngắn gọn trong 200 từ hoặc ít hơn để sử dụng làm gợi ý cho ngữ cảnh tiếp theo.",
+      History: (content: string) => "Tóm tắt ngắn gọn cuộc trò chuyện giữa người dùng và AI: " + content,
+      Topic: "Sử dụng 4 đến 5 từ tóm tắt cuộc trò chuyện này mà không có phần mở đầu, dấu chấm câu, dấu ngoặc kép, dấu chấm, ký hiệu hoặc văn bản bổ sung nào. Loại bỏ các dấu ngoặc kép kèm theo.",
+      Summarize: "Tóm tắt cuộc trò chuyện này một cách ngắn gọn trong 200 từ hoặc ít hơn để sử dụng làm gợi ý cho ngữ cảnh tiếp theo.",
     },
   },
   Copy: {
     Success: "Sao chép vào bộ nhớ tạm",
-    Failed:
-      "Sao chép không thành công, vui lòng cấp quyền truy cập vào bộ nhớ tạm",
+    Failed: "Sao chép không thành công, vui lòng cấp quyền truy cập vào bộ nhớ tạm",
   },
   Context: {
     Toast: (x: any) => `Sử dụng ${x} tin nhắn chứa ngữ cảnh`,
@@ -198,8 +187,7 @@ const vi: PartialLocaleType = {
       DeleteConfirm: "Xác nhận xóa?",
     },
     EditModal: {
-      Title: (readonly: boolean) =>
-        `Chỉnh sửa mẫu ${readonly ? "(chỉ xem)" : ""}`,
+      Title: (readonly: boolean) => `Chỉnh sửa mẫu ${readonly ? "(chỉ xem)" : ""}`,
       Download: "Tải xuống",
       Clone: "Tạo bản sao",
     },
@@ -217,7 +205,6 @@ const vi: PartialLocaleType = {
     NotShow: "Không hiển thị lại",
     ConfirmNoShow: "Xác nhận tắt? Bạn có thể bật lại trong phần cài đặt.",
   },
-
   UI: {
     Confirm: "Xác nhận",
     Cancel: "Hủy",

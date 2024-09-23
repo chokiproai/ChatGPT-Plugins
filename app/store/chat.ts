@@ -394,7 +394,7 @@ export const useChatStore = createPersistStore(
           .filter(
             (m) =>
               (!getLang() ||
-                m.lang === (getLang() == "cn" ? getLang() : "en")) &&
+                m.lang === (getLang() == "vi" ? getLang() : "en")) &&
               m.enable,
           );
 

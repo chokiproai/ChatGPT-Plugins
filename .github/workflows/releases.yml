@@ -33,11 +33,10 @@ jobs:
             # 📌 What's New
             🌟 This release includes new features and improvements.
 
-            **Release Date:** ${{ env.RELEASE_DATE }}
+            **👉 Release Date:** ${{ env.RELEASE_DATE }}
 
-            **Commit:** [${{ env.COMMIT_SHA }}](https://github.com/${{ env.REPO_NAME }}/commit/${{ env.COMMIT_SHA }})
+            **👉 Recent Commit:** ${{ github.event.head_commit.message }}
 
-            ## 📌 Recent Commits
-            ${{ github.event.head_commit.message }}
+            **👉 Commit:** [${{ env.COMMIT_SHA }}](https://github.com/${{ env.REPO_NAME }}/commit/${{ env.COMMIT_SHA }})
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

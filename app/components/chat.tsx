@@ -45,6 +45,12 @@ import BottomIcon from "../icons/bottom.svg";
 import StopIcon from "../icons/pause.svg";
 import RobotIcon from "../icons/robot.svg";
 import CheckmarkIcon from "../icons/checkmark.svg";
+import SizeIcon from "../icons/size.svg";
+import QualityIcon from "../icons/hd.svg";
+import StyleIcon from "../icons/palette.svg";
+import PluginIcon from "../icons/plugin.svg";
+import ShortcutkeyIcon from "../icons/shortcutkey.svg";
+import ReloadIcon from "../icons/reload.svg";
 
 import {
   ChatMessage,

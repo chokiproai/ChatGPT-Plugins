@@ -2,8 +2,9 @@ import {
   trimTopic,
   getMessageTextContent,
   isFunctionCallModel,
+  isDalle3,
+  safeLocalStorage,
 } from "../utils";
-
 import Locale, { getLang } from "../locales";
 import { showToast } from "../components/ui-lib";
 import { ModelConfig, ModelType, useAppConfig } from "./config";
@@ -18,7 +19,6 @@ import {
   GEMINI_SUMMARIZE_MODEL,
   MYFILES_BROWSER_TOOLS_SYSTEM_PROMPT,
 } from "../constant";
-import { isDalle3, safeLocalStorage } from "../utils";
 import { getClientApi } from "../client/api";
 import type {
   ClientApi,
@@ -31,17 +31,10 @@ import { estimateTokenLength } from "../utils/token";
 import { nanoid } from "nanoid";
 import { Plugin, usePluginStore } from "../store/plugin";
 
-export interface ChatToolMessage {
-  toolName: string;
-  toolInput?: string;
-}
-import { createPersistStore } from "../utils/store";
-import { FileInfo } from "../client/platforms/utils";
-import { collectModelsWithDefaultModel } from "../utils/model";
-import { useAccessStore } from "./access";
-
+// Add the localStorage constant
 const localStorage = safeLocalStorage();
 
+// Add the ChatMessageTool type
 export type ChatMessageTool = {
   id: string;
   index?: number;
@@ -53,6 +46,11 @@ export type ChatMessageTool = {
   content?: string;
   isError?: boolean;
 };
+
+export interface ChatToolMessage {
+  toolName: string;
+  toolInput?: string;
+}
 
 export type ChatMessage = RequestMessage & {
   date: string;
@@ -83,16 +81,13 @@ export interface ChatStat {
 export interface ChatSession {
   id: string;
   topic: string;
-
   memoryPrompt: string;
   messages: ChatMessage[];
   stat: ChatStat;
   lastUpdate: number;
   lastSummarizeIndex: number;
   clearContextIndex?: number;
-
   mask: Mask;
-
   attachFiles: FileInfo[];
 }
 
@@ -115,9 +110,7 @@ function createEmptySession(): ChatSession {
     },
     lastUpdate: Date.now(),
     lastSummarizeIndex: 0,
-
     mask: createEmptyMask(),
-
     attachFiles: [],
   };
 }
@@ -130,10 +123,10 @@ function getSummarizeModel(currentModel: string) {
     const allModel = collectModelsWithDefaultModel(
       configStore.models,
       [configStore.customModels, accessStore.customModels].join(","),
-      accessStore.defaultModel,
+      accessStore.defaultModel
     );
     const summarizeModel = allModel.find(
-      (m) => m.name === SUMMARIZE_MODEL && m.available,
+      (m) => m.name === SUMMARIZE_MODEL && m.available
     );
     return summarizeModel?.name ?? currentModel;
   }
@@ -146,7 +139,7 @@ function getSummarizeModel(currentModel: string) {
 function countMessages(msgs: ChatMessage[]) {
   return msgs.reduce(
     (pre, cur) => pre + estimateTokenLength(getMessageTextContent(cur)),
-    0,
+    0
   );
 }
 
@@ -155,13 +148,11 @@ function fillTemplateWith(input: string, modelConfig: ModelConfig) {
     KnowledgeCutOffDate[modelConfig.model] ?? KnowledgeCutOffDate.default;
   // Find the model in the DEFAULT_MODELS array that matches the modelConfig.model
   const modelInfo = DEFAULT_MODELS.find((m) => m.name === modelConfig.model);
-
   var serviceProvider = "OpenAI";
   if (modelInfo) {
     // Directly use the providerName from the modelInfo
     serviceProvider = modelInfo.provider.providerName;
   }
-
   const vars = {
     ServiceProvider: serviceProvider,
     cutoff,
@@ -170,25 +161,20 @@ function fillTemplateWith(input: string, modelConfig: ModelConfig) {
     lang: getLang(),
     input: input,
   };
-
   let output = modelConfig.template ?? DEFAULT_INPUT_TEMPLATE;
-
   // remove duplicate
   if (input.startsWith(output)) {
     output = "";
   }
-
   // must contains {{input}}
   const inputVar = "{{input}}";
   if (!output.includes(inputVar)) {
     output += "\n" + inputVar;
   }
-
   Object.entries(vars).forEach(([name, value]) => {
     const regex = new RegExp(`{{${name}}}`, "g");
     output = output.replace(regex, value.toString()); // Ensure value is a string
   });
-
   return output;
 }
 
@@ -206,7 +192,6 @@ export const useChatStore = createPersistStore(
         ...methods,
       };
     }
-
     const methods = {
       clearSessions() {
         set(() => ({
@@ -214,23 +199,19 @@ export const useChatStore = createPersistStore(
           currentSessionIndex: 0,
         }));
       },
-
       selectSession(index: number) {
         set({
           currentSessionIndex: index,
         });
       },
-
       moveSession(from: number, to: number) {
         set((state) => {
           const { sessions, currentSessionIndex: oldIndex } = state;
-
           // move the session
           const newSessions = [...sessions];
           const session = newSessions[from];
           newSessions.splice(from, 1);
           newSessions.splice(to, 0, session);
-
           // modify current session id
           let newIndex = oldIndex === from ? to : oldIndex;
           if (oldIndex > from && oldIndex <= to) {
@@ -238,21 +219,17 @@ export const useChatStore = createPersistStore(
           } else if (oldIndex < from && oldIndex >= to) {
             newIndex += 1;
           }
-
           return {
             currentSessionIndex: newIndex,
             sessions: newSessions,
           };
         });
       },
-
       newSession(mask?: Mask) {
         const session = createEmptySession();
-
         if (mask) {
           const config = useAppConfig.getState();
           const globalModelConfig = config.modelConfig;
-
           session.mask = {
             ...mask,
             modelConfig: {
@@ -262,51 +239,41 @@ export const useChatStore = createPersistStore(
           };
           session.topic = mask.name;
         }
-
         set((state) => ({
           currentSessionIndex: 0,
           sessions: [session].concat(state.sessions),
         }));
       },
-
       nextSession(delta: number) {
         const n = get().sessions.length;
         const limit = (x: number) => (x + n) % n;
         const i = get().currentSessionIndex;
         get().selectSession(limit(i + delta));
       },
-
       deleteSession(index: number) {
         const deletingLastSession = get().sessions.length === 1;
         const deletedSession = get().sessions.at(index);
-
         if (!deletedSession) return;
-
         const sessions = get().sessions.slice();
         sessions.splice(index, 1);
-
         const currentIndex = get().currentSessionIndex;
         let nextIndex = Math.min(
           currentIndex - Number(index < currentIndex),
-          sessions.length - 1,
+          sessions.length - 1
         );
-
         if (deletingLastSession) {
           nextIndex = 0;
           sessions.push(createEmptySession());
         }
-
         // for undo delete action
         const restoreState = {
           currentSessionIndex: get().currentSessionIndex,
           sessions: get().sessions.slice(),
         };
-
         set(() => ({
           currentSessionIndex: nextIndex,
           sessions,
         }));
-
         showToast(
           Locale.Home.DeleteToast,
           {
@@ -315,24 +282,19 @@ export const useChatStore = createPersistStore(
               set(() => restoreState);
             },
           },
-          5000,
+          5000
         );
       },
-
       currentSession() {
         let index = get().currentSessionIndex;
         const sessions = get().sessions;
-
         if (index < 0 || index >= sessions.length) {
           index = Math.min(sessions.length - 1, Math.max(0, index));
           set(() => ({ currentSessionIndex: index }));
         }
-
         const session = sessions[index];
-
         return session;
       },
-
       onNewMessage(message: ChatMessage) {
         get().updateCurrentSession((session) => {
           session.messages = session.messages.concat();
@@ -341,20 +303,16 @@ export const useChatStore = createPersistStore(
         get().updateStat(message);
         get().summarizeSession();
       },
-
       async onUserInput(
         content: string,
         attachImages?: string[],
-        attachFiles?: FileInfo[],
+        attachFiles?: FileInfo[]
       ) {
         const session = get().currentSession();
         const modelConfig = session.mask.modelConfig;
-
         const userContent = fillTemplateWith(content, modelConfig);
         console.log("[User Input] after template: ", userContent);
-
         let mContent: string | MultimodalContent[] = userContent;
-
         if (attachImages && attachImages.length > 0) {
           mContent = [
             {
@@ -370,12 +328,12 @@ export const useChatStore = createPersistStore(
                   url: url,
                 },
               };
-            }),
+            })
           );
         }
         // add file link
         if (attachFiles && attachFiles.length > 0) {
-          mContent += ` [${attachFiles[0].originalFilename}](${attachFiles[0].filePath})`;
+          mContent += ` ${attachFiles.originalFilename}`;
         }
         let userMessage: ChatMessage = createMessage({
           role: "user",
@@ -395,7 +353,6 @@ export const useChatStore = createPersistStore(
         const recentMessages = get().getMessagesWithMemory();
         const sendMessages = recentMessages.concat(userMessage);
         const messageIndex = get().currentSession().messages.length + 1;
-
         const config = useAppConfig.getState();
         const pluginConfig = useAppConfig.getState().pluginConfig;
         const pluginStore = usePluginStore.getState();
@@ -403,9 +360,8 @@ export const useChatStore = createPersistStore(
           .getAll()
           .filter(
             (m) =>
-              (!getLang() ||
-                m.lang === (getLang() == "vi" ? getLang() : "en")) &&
-              m.enable,
+              (!getLang() || m.lang === (getLang() == "vi" ? getLang() : "en")) &&
+              m.enable
           );
         // save user's and bot's message
         get().updateCurrentSession((session) => {
@@ -481,9 +437,8 @@ export const useChatStore = createPersistStore(
                 });
                 ChatControllerPool.remove(
                   session.id,
-                  botMessage.id ?? messageIndex,
+                  botMessage.id ?? messageIndex
                 );
-
                 console.error("[Chat] failed ", error);
               },
               onController(controller) {
@@ -491,7 +446,7 @@ export const useChatStore = createPersistStore(
                 ChatControllerPool.addController(
                   session.id,
                   botMessage.id ?? messageIndex,
-                  controller,
+                  controller
                 );
               },
             });
@@ -535,9 +490,8 @@ export const useChatStore = createPersistStore(
               });
               ChatControllerPool.remove(
                 session.id,
-                botMessage.id ?? messageIndex,
+                botMessage.id ?? messageIndex
               );
-
               console.error("[Chat] failed ", error);
             },
             onController(controller) {
@@ -545,16 +499,14 @@ export const useChatStore = createPersistStore(
               ChatControllerPool.addController(
                 session.id,
                 botMessage.id ?? messageIndex,
-                controller,
+                controller
               );
             },
           });
         }
       },
-
       getMemoryPrompt() {
         const session = get().currentSession();
-
         if (session.memoryPrompt.length) {
           return {
             role: "system",
@@ -563,29 +515,22 @@ export const useChatStore = createPersistStore(
           } as ChatMessage;
         }
       },
-
       getMessagesWithMemory() {
         const session = get().currentSession();
         const modelConfig = session.mask.modelConfig;
         const clearContextIndex = session.clearContextIndex ?? 0;
         const messages = session.messages.slice();
         const totalMessageCount = session.messages.length;
-
         // in-context prompts
         const contextPrompts = session.mask.context.slice();
-
         var systemPrompts: ChatMessage[] = [];
         var template = DEFAULT_SYSTEM_TEMPLATE;
         if (session.attachFiles && session.attachFiles.length > 0) {
           template += MYFILES_BROWSER_TOOLS_SYSTEM_PROMPT;
           session.attachFiles.forEach((file) => {
-            template += `filename: \`${file.originalFilename}\`
-partialDocument: \`\`\`
-${file.partial}
-\`\`\``;
+            template += `filename: \`${file.originalFilename}\`\npartialDocument: \`\`\`\n${file.partial}\n\`\`\``;
           });
         }
-
         const memoryPrompt = get().getMemoryPrompt();
         // long term memory
         const shouldSendLongTermMemory =
@@ -596,13 +541,11 @@ ${file.partial}
         const longTermMemoryPrompts =
           shouldSendLongTermMemory && memoryPrompt ? [memoryPrompt] : [];
         const longTermMemoryStartIndex = session.lastSummarizeIndex;
-
         // short term memory
         const shortTermMemoryStartIndex = Math.max(
           0,
-          totalMessageCount - modelConfig.historyMessageCount,
+          totalMessageCount - modelConfig.historyMessageCount
         );
-
         // lets concat send messages, including 4 parts:
         // 0. system prompt: to get close to OpenAI Web ChatGPT
         // 1. long term memory: summarized memory messages
@@ -615,7 +558,6 @@ ${file.partial}
         // and if user has cleared history messages, we should exclude the memory too.
         const contextStartIndex = Math.max(clearContextIndex, memoryStartIndex);
         const maxTokenThreshold = modelConfig.max_tokens;
-
         // get recent messages as much as possible
         const reversedRecentMessages = [];
         for (
@@ -635,14 +577,12 @@ ${file.partial}
           ...contextPrompts,
           ...reversedRecentMessages.reverse(),
         ];
-
         return recentMessages;
       },
-
       updateMessage(
         sessionIndex: number,
         messageIndex: number,
-        updater: (message?: ChatMessage) => void,
+        updater: (message?: ChatMessage) => void
       ) {
         const sessions = get().sessions;
         const session = sessions.at(sessionIndex);
@@ -650,28 +590,25 @@ ${file.partial}
         updater(messages?.at(messageIndex));
         set(() => ({ sessions }));
       },
-
       resetSession() {
         get().updateCurrentSession((session) => {
           session.messages = [];
           session.memoryPrompt = "";
         });
       },
-
       summarizeSession() {
         const config = useAppConfig.getState();
         const session = get().currentSession();
         const modelConfig = session.mask.modelConfig;
-        // skip summarize when using dalle3?
+        const api: ClientApi = getClientApi(modelConfig.providerName);
+
+        // skip summarize when using dalle3
         if (isDalle3(modelConfig.model)) {
           return;
         }
 
-        const api: ClientApi = getClientApi(modelConfig.providerName);
-
         // remove error messages if any
         const messages = session.messages;
-
         // should summarize topic after chatting more than 50 words
         const SUMMARIZE_MIN_LEN = 50;
         if (
@@ -684,7 +621,7 @@ ${file.partial}
             createMessage({
               role: "user",
               content: Locale.Store.Prompt.Topic,
-            }),
+            })
           );
           api.llm.chat({
             messages: topicMessages,
@@ -696,25 +633,23 @@ ${file.partial}
               get().updateCurrentSession(
                 (session) =>
                   (session.topic =
-                    message.length > 0 ? trimTopic(message) : DEFAULT_TOPIC),
+                    message.length > 0 ? trimTopic(message) : DEFAULT_TOPIC)
               );
             },
           });
         }
         const summarizeIndex = Math.max(
           session.lastSummarizeIndex,
-          session.clearContextIndex ?? 0,
+          session.clearContextIndex ?? 0
         );
         let toBeSummarizedMsgs = messages
           .filter((msg) => !msg.isError)
           .slice(summarizeIndex);
-
         const historyMsgLength = countMessages(toBeSummarizedMsgs);
-
         if (historyMsgLength > modelConfig?.max_tokens ?? 4000) {
           const n = toBeSummarizedMsgs.length;
           toBeSummarizedMsgs = toBeSummarizedMsgs.slice(
-            Math.max(0, n - modelConfig.historyMessageCount),
+            Math.max(0, n - modelConfig.historyMessageCount)
           );
         }
         const memoryPrompt = get().getMemoryPrompt();
@@ -722,16 +657,13 @@ ${file.partial}
           // add memory prompt
           toBeSummarizedMsgs.unshift(memoryPrompt);
         }
-
         const lastSummarizeIndex = session.messages.length;
-
         console.log(
           "[Chat History] ",
           toBeSummarizedMsgs,
           historyMsgLength,
-          modelConfig.compressMessageLengthThreshold,
+          modelConfig.compressMessageLengthThreshold
         );
-
         if (
           !process.env.NEXT_PUBLIC_DISABLE_SENDMEMORY &&
           historyMsgLength > modelConfig.compressMessageLengthThreshold &&
@@ -747,7 +679,7 @@ ${file.partial}
                 role: "system",
                 content: Locale.Store.Prompt.Summarize,
                 date: "",
-              }),
+              })
             ),
             config: {
               ...modelcfg,
@@ -769,27 +701,23 @@ ${file.partial}
           });
         }
       },
-
       updateStat(message: ChatMessage) {
         get().updateCurrentSession((session) => {
           session.stat.charCount += message.content.length;
           // TODO: should update chat count and word count
         });
       },
-
       updateCurrentSession(updater: (session: ChatSession) => void) {
         const sessions = get().sessions;
         const index = get().currentSessionIndex;
         updater(sessions[index]);
         set(() => ({ sessions }));
       },
-
       clearAllData() {
         localStorage.clear();
         location.reload();
       },
     };
-
     return methods;
   },
   {
@@ -798,12 +726,10 @@ ${file.partial}
     migrate(persistedState, version) {
       const state = persistedState as any;
       const newState = JSON.parse(
-        JSON.stringify(state),
+        JSON.stringify(state)
       ) as typeof DEFAULT_CHAT_STATE;
-
       if (version < 2) {
         newState.sessions = [];
-
         const oldSessions = state.sessions;
         for (const oldSession of oldSessions) {
           const newSession = createEmptySession();
@@ -815,7 +741,6 @@ ${file.partial}
           newState.sessions.push(newSession);
         }
       }
-
       if (version < 3) {
         // migrate id to nanoid
         newState.sessions.forEach((s) => {
@@ -823,8 +748,7 @@ ${file.partial}
           s.messages.forEach((m) => (m.id = nanoid()));
         });
       }
-
       return newState as any;
     },
-  },
+  }
 );

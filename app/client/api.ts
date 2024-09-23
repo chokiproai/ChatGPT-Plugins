@@ -6,7 +6,7 @@ import {
   ServiceProvider,
 } from "../constant";
 import { ChatMessage, ModelType, useAccessStore, useChatStore } from "../store";
-import { ChatGPTApi } from "./platforms/openai";
+import { ChatGPTApi, DalleRequestPayload } from "./platforms/openai";
 import { FileApi, FileInfo } from "./platforms/utils";
 import { GeminiProApi } from "./platforms/google";
 import { ClaudeApi } from "./platforms/anthropic";
@@ -43,6 +43,9 @@ export interface LLMConfig {
   stream?: boolean;
   presence_penalty?: number;
   frequency_penalty?: number;
+  size?: DalleRequestPayload["size"];
+  quality?: DalleRequestPayload["quality"];
+  style?: DalleRequestPayload["style"];
 }
 
 export interface LLMAgentConfig {
@@ -73,6 +76,7 @@ export interface TranscriptionOptions {
 export interface ChatOptions {
   messages: RequestMessage[];
   config: LLMConfig;
+
   onToolUpdate?: (toolName: string, toolInput: string) => void;
   onUpdate?: (message: string, chunk: string) => void;
   onFinish: (message: string) => void;
@@ -200,7 +204,7 @@ export class ClientApi {
             "Share from [ChatGPT Plugins]: https://github.com/chokiproai/ChatGPT-Plugins",
         },
       ]);
-    // 敬告二开开发者们，为了开源大模型的发展，请不要修改上述消息，此消息用于后续数据清洗使用
+    // Trust the second developer, in order to develop the development of large models, please do not modify the above news. This message is used for subsequent data cleaning and use
     // Please do not modify this message
 
     console.log("[Share]", messages, msgs);

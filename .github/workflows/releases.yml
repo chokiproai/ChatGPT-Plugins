@@ -17,16 +17,32 @@ jobs:
         id: get_date
         run: echo "RELEASE_DATE=$(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> $GITHUB_ENV
 
+      - name: Get commit messages with versions
+        id: get_commit_messages
+        run: |
+          COMMIT_MESSAGES=$(git log --pretty=format:"%s" --grep="$$v[0-9]*\.[0-9]*\.[0-9]*$$")
+          
+          VERSION_LIST=""
+          while IFS= read -r line; do
+            if [[ "$line" =~ $$v([0-9]+\.[0-9]+\.[0-9]+)$$ ]]; then
+              VERSION_LIST+="${BASH_REMATCH[1]}  \n"
+            fi
+          done <<< "$COMMIT_MESSAGES"
+
+          echo -e "VERSION_LIST=${VERSION_LIST}" >> $GITHUB_ENV
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.ref }}
           name: Release ${{ github.ref_name }}
           body: |
-            # What's New
-            This release includes new features and improvements.
+            # 📌 What's New
+            🌟 This release includes new features and improvements.
 
             **Release Date:** ${{ env.RELEASE_DATE }}
-            **Commit:** [${{ github.sha }}](https://github.com/${{ github.repository }}/commit/${{ github.sha }})
+
+            **Versions Found in Commits:**
+            ${{ env.VERSION_LIST }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

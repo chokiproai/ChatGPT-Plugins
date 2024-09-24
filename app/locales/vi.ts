@@ -1,5 +1,8 @@
 import { SubmitKey } from "../store/config";
-import type { PartialLocaleType } from "./index";
+import { PartialLocaleType } from "../locales/index";
+import { getClientConfig } from "../config/client";
+
+const isApp = !!getClientConfig()?.isApp;
 
 const vi: PartialLocaleType = {
 WIP: "Sắp ra mắt...",

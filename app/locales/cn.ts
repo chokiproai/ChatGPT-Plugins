@@ -161,7 +161,7 @@ const cn = {
       SubTitle: "聊天内容的字体大小",
     },
     InjectSystemPrompts: {
-      Title: "🅧",
+      Title: "Ⓧ",
       SubTitle: "‎ ",
     },
     InputTemplate: {

@@ -73,7 +73,7 @@ const ko: PartialLocaleType = {
       SubTitle: "채팅 내용의 글꼴 크기 조정",
     },
     InjectSystemPrompts: {
-      Title: "🅧",
+      Title: "Ⓧ",
       SubTitle:
         "‎ ",
     },

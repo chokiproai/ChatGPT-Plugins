@@ -137,7 +137,7 @@ const bn: PartialLocaleType = {
       SubTitle: "চ্যাট সামগ্রীর ফন্ট সাইজ সংশোধন করুন",
     },
     InjectSystemPrompts: {
-      Title: "🅧",
+      Title: "Ⓧ",
       SubTitle:
         "‎ ",
     },

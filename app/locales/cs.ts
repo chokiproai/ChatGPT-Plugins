@@ -72,7 +72,7 @@ const cs: PartialLocaleType = {
       SubTitle: "Nastavení velikosti písma obsahu chatu",
     },
     InjectSystemPrompts: {
-      Title: "🅧",
+      Title: "Ⓧ",
       SubTitle:
         "‎ ",
     },

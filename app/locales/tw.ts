@@ -154,7 +154,7 @@ const tw = {
       SubTitle: "聊天內容的字型大小",
     },
     InjectSystemPrompts: {
-      Title: "🅧",
+      Title: "Ⓧ",
       SubTitle: "‎ ",
     },
     InputTemplate: {

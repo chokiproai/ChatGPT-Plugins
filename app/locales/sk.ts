@@ -156,7 +156,7 @@ const sk: PartialLocaleType = {
       SubTitle: "Nastaviť veľkosť písma obsahu chatu",
     },
     InjectSystemPrompts: {
-      Title: "🅧",
+      Title: "Ⓧ",
       SubTitle: "‎ ",
     },
     InputTemplate: {

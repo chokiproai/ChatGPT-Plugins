@@ -119,7 +119,7 @@ const jp: PartialLocaleType = {
       SubTitle: "チャット内容のフォントサイズ",
     },
     InjectSystemPrompts: {
-      Title: "🅧",
+      Title: "Ⓧ",
       SubTitle:
         "‎ ",
     },

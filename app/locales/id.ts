@@ -141,7 +141,7 @@ const id: PartialLocaleType = {
       SubTitle: "Ubah ukuran font konten chat",
     },
     InjectSystemPrompts: {
-      Title: "🅧",
+      Title: "Ⓧ",
       SubTitle:
         "‎ ",
     },

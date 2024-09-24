@@ -154,7 +154,7 @@ const pt: PartialLocaleType = {
       SubTitle: "Ajustar o tamanho da fonte do conteúdo do chat",
     },
     InjectSystemPrompts: {
-      Title: "🅧",
+      Title: "Ⓧ",
       SubTitle: "‎ ",
     },
     InputTemplate: {

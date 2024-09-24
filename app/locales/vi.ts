@@ -162,7 +162,7 @@ Settings: {
         SubTitle: "Điều chỉnh kích thước chữ của nội dung trò chuyện",
     },
     InjectSystemPrompts: {
-        Title: "🅧",
+        Title: "Ⓧ",
         SubTitle: "‎ ",
     },
     InputTemplate: {

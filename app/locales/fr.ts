@@ -112,7 +112,7 @@ const fr: PartialLocaleType = {
       SubTitle: "Ajuste la taille de police du contenu de la conversation",
     },
     InjectSystemPrompts: {
-      Title: "🅧",
+      Title: "Ⓧ",
       SubTitle:
         "‎ ",
     },

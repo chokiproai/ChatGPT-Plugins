@@ -163,7 +163,7 @@ const en: LocaleType = {
       SubTitle: "Adjust font size of chat content",
     },
     InjectSystemPrompts: {
-      Title: "🅧",
+      Title: "Ⓧ",
       SubTitle: "‎ ",
     },
     InputTemplate: {

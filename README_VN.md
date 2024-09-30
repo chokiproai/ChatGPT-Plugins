@@ -25,7 +25,7 @@
 - Hỗ trợ TTS (Chuyển văn bản thành giọng nói)
   - (Miễn phí) Edge TTS
     - Biến môi trường (tùy chọn): `EDGE_TTS_VOICE_NAME`
-    - [EDGE_TTS_VOICE_NAME](https://github.com/chokiproai/ChatGPT-Plugins#-biến-môi-trường)
+    - [EDGE_TTS_VOICE_NAME](https://github.com/chokiproai/ChatGPT-Plugins/blob/main/README_VN.md#-biến-môi-trường)
   - (Có phí) OpenAI TTS
 
 - Hỗ trợ nhập liệu bằng giọng nói, cần sử dụng HTTPS để truy cập

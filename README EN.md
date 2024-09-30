@@ -31,8 +31,7 @@
 - Support for voice input, requires HTTPS access
 
 - Support for GPT-4V (Vision) model
-  - ~~Requires configuration of object storage service, please refer to [Object Storage Service Configuration Guide](./docs/s3-oss.md)~~
-  - The calling method for the vision model has been synchronized from the upstream repository (image compression), there is still a risk of LocalStorage overflow https://github.com/Hk-Gosuto/ChatGPT-Next-Web-LangChain/issues/77#issuecomment-1846410078, if similar issues arise, adjustments will be made to use object storage for images.
+  - The calling method for the vision model has been synchronized from the upstream repository (image compression), there is still a risk of LocalStorage overflow "The maximum capacity of Localstorage is that 5m seems to use other solutions to store images.", if similar issues arise, adjustments will be made to use object storage for images.
 
 - Plugin functionality based on [LangChain](https://github.com/hwchase17/langchainjs), currently supports the following plugins, more will be added in the future
   - Search (priority: `GoogleCustomSearch > SerpAPI > BingSerpAPI > ChooseSearchEngine > DuckDuckGo`)
@@ -40,7 +39,7 @@
     - [GoogleCustomSearch](https://api.js.langchain.com/classes/langchain_tools.GoogleCustomSearch.html)
   
       - Environment variables:
-        - ~~`GOOGLE_API_KEY`~~ `GOOGLE_SEARCH_API_KEY`
+        - `GOOGLE_SEARCH_API_KEY`
         - `GOOGLE_CSE_ID`
       - Registration reference: [Guide](https://stackoverflow.com/questions/37083058/programmatically-searching-google-in-python-using-custom-search)
   

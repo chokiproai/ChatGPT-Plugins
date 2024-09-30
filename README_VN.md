@@ -31,8 +31,7 @@
 - Hỗ trợ nhập liệu bằng giọng nói, cần sử dụng HTTPS để truy cập
 
 - Hỗ trợ mô hình GPT-4V (thị giác)
-  - ~~Cần cấu hình dịch vụ lưu trữ đối tượng, vui lòng tham khảo [Hướng dẫn cấu hình dịch vụ lưu trữ đối tượng](./docs/s3-oss.md)~~
-  - Đã đồng bộ cách gọi mô hình thị giác từ kho upstream (nén hình ảnh), vẫn có nguy cơ tràn LocalStorage https://github.com/Hk-Gosuto/ChatGPT-Next-Web-LangChain/issues/77#issuecomment-1846410078, nếu có vấn đề tương tự sẽ điều chỉnh để sử dụng dịch vụ lưu trữ đối tượng cho hình ảnh.
+  - Đã đồng bộ cách gọi mô hình thị giác từ kho upstream (nén hình ảnh), vẫn có nguy cơ tràn LocalStorage "Dung lượng tối đa của localStorage là 5m Có vẻ như cần sử dụng các giải pháp khác để lưu trữ hình ảnh.", nếu có vấn đề tương tự sẽ điều chỉnh để sử dụng dịch vụ lưu trữ đối tượng cho hình ảnh.
 
 - Chức năng plugin dựa trên [LangChain](https://github.com/hwchase17/langchainjs), hiện tại hỗ trợ các plugin sau, trong tương lai sẽ thêm nhiều hơn
   - Tìm kiếm (ưu tiên: `GoogleCustomSearch > SerpAPI > BingSerpAPI > ChooseSearchEngine > DuckDuckGo`)
@@ -40,7 +39,7 @@
     - [GoogleCustomSearch](https://api.js.langchain.com/classes/langchain_tools.GoogleCustomSearch.html)
   
       - Biến môi trường:
-        - ~~`GOOGLE_API_KEY`~~ `GOOGLE_SEARCH_API_KEY`
+        - `GOOGLE_SEARCH_API_KEY`
         - `GOOGLE_CSE_ID`
       - Tham khảo đăng ký: [Hướng dẫn](https://stackoverflow.com/questions/37083058/programmatically-searching-google-in-python-using-custom-search)
   

@@ -15,7 +15,76 @@
  - Automatically compress the history of chatting to support long conversations and save your notification code
  - I18N: English, 简体 中文, 繁体 中文, 日本語, Français, Español, Italiano, Türkçe, Deutsch, Vietnamese, русский, čeština, 한국어, Indonesia.
 
+ ## Main Features
+
+- RAG Functionality
+  - Please refer to the documentation [RAG Function Configuration Guide](./docs/rag.md)
+
+- In addition to plugin tools, maintain the features of the original project [Main Features of ChatGPT-Next-Web](https://github.com/Yidadaa/ChatGPT-Next-Web#features)
+
+- Support for TTS (Text-to-Speech)
+  - (Free) Edge TTS
+    - Environment variable (optional): `EDGE_TTS_VOICE_NAME`
+    - [EDGE_TTS_VOICE_NAME](https://github.com/chokiproai/ChatGPT-Plugins#-environmental-variation)
+  - (Paid) OpenAI TTS
+
+- Support for voice input, requires HTTPS access
+
+- Support for GPT-4V (Vision) model
+  - ~~Requires configuration of object storage service, please refer to [Object Storage Service Configuration Guide](./docs/s3-oss.md)~~
+  - The calling method for the vision model has been synchronized from the upstream repository (image compression), there is still a risk of LocalStorage overflow https://github.com/Hk-Gosuto/ChatGPT-Next-Web-LangChain/issues/77#issuecomment-1846410078, if similar issues arise, adjustments will be made to use object storage for images.
+
+- Plugin functionality based on [LangChain](https://github.com/hwchase17/langchainjs), currently supports the following plugins, more will be added in the future
+  - Search (priority: `GoogleCustomSearch > SerpAPI > BingSerpAPI > ChooseSearchEngine > DuckDuckGo`)
+  
+    - [GoogleCustomSearch](https://api.js.langchain.com/classes/langchain_tools.GoogleCustomSearch.html)
+  
+      - Environment variables:
+        - ~~`GOOGLE_API_KEY`~~ `GOOGLE_SEARCH_API_KEY`
+        - `GOOGLE_CSE_ID`
+      - Registration reference: [Guide](https://stackoverflow.com/questions/37083058/programmatically-searching-google-in-python-using-custom-search)
+  
+    - [SerpAPI](https://api.js.langchain.com/classes/langchain_tools.SerpAPI.html)
+  
+      - Environment variable: `SERPAPI_API_KEY`
+      - Registration address: [SerpApi: Google Search API](https://serpapi.com/)
+  
+    - [BingSerpAPI](https://api.js.langchain.com/classes/langchain_tools.BingSerpAPI.html)
+  
+      - Environment variable: `BING_SEARCH_API_KEY`
+      - Registration address: [Web Search API | Microsoft Bing](https://www.microsoft.com/en-us/bing/apis/bing-web-search-api)
+  
+    - ChooseSearchEngine (author: [hang666](https://github.com/hang666))
+  
+      - Environment variable: `CHOOSE_SEARCH_ENGINE`
+  
+        Options are as follows:
+  
+        - google
+        - baidu
+  
+      - Explanation: This option connects directly to the search engine, avoiding concerns about API trial limits, but may not be usable due to network issues.
+  
+      - ⚠ Note: It is known that there are unstable calling situations in the Vercel environment.
+  
+    - DuckDuckGo
+  
+  - Calculation
+    - [Calculator](https://api.js.langchain.com/classes/langchain_tools_calculator.Calculator.html)
+    - [WolframAlpha](https://api.js.langchain.com/classes/langchain_tools.WolframAlphaTool.html)
+      - Environment variable: `WOLFRAM_ALPHA_APP_ID`
+      - Registration address: [Wolfram LLM API](https://developer.wolframalpha.com/)
+    
+  - Network Requests
+    - [WebBrowser](https://api.js.langchain.com/classes/langchain_tools_webbrowser.WebBrowser.html)
+      - Requires using the embedding model `text-embedding-ada-002`
+    - PDFBrowser
+      - Requires using the embedding model `text-embedding-ada-002`
+      - ⚠ Only available when deployed outside of Vercel ⚠
+
 # **📌 Environmental variation**
+
+[Functional configuration guide](./.env.template)
 
 ### `Reverse Proxy`
 

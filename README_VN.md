@@ -15,7 +15,76 @@
 - Tự động nén lịch sử trò chuyện để hỗ trợ các cuộc trò chuyện dài đồng thời lưu mã thông báo của bạn
 - I18n: Tiếng Anh, 简体中文, 繁体中文, 日本語, Français, Español, Italiano, Türkçe, Deutsch, Tiếng Việt, Русский, Čeština, 한국어, Indonesia.
 
+## Chức năng chính
+
+- Chức năng RAG
+  - Vui lòng tham khảo tài liệu [Hướng dẫn cấu hình chức năng RAG](./docs/rag.md)
+
+- Ngoài các công cụ plugin, giữ nguyên tính năng của dự án gốc [Chức năng chính của ChatGPT-Next-Web](https://github.com/Yidadaa/ChatGPT-Next-Web#features)
+
+- Hỗ trợ TTS (Chuyển văn bản thành giọng nói)
+  - (Miễn phí) Edge TTS
+    - Biến môi trường (tùy chọn): `EDGE_TTS_VOICE_NAME`
+    - [EDGE_TTS_VOICE_NAME](https://github.com/chokiproai/ChatGPT-Plugins#-biến-môi-trường)
+  - (Có phí) OpenAI TTS
+
+- Hỗ trợ nhập liệu bằng giọng nói, cần sử dụng HTTPS để truy cập
+
+- Hỗ trợ mô hình GPT-4V (thị giác)
+  - ~~Cần cấu hình dịch vụ lưu trữ đối tượng, vui lòng tham khảo [Hướng dẫn cấu hình dịch vụ lưu trữ đối tượng](./docs/s3-oss.md)~~
+  - Đã đồng bộ cách gọi mô hình thị giác từ kho upstream (nén hình ảnh), vẫn có nguy cơ tràn LocalStorage https://github.com/Hk-Gosuto/ChatGPT-Next-Web-LangChain/issues/77#issuecomment-1846410078, nếu có vấn đề tương tự sẽ điều chỉnh để sử dụng dịch vụ lưu trữ đối tượng cho hình ảnh.
+
+- Chức năng plugin dựa trên [LangChain](https://github.com/hwchase17/langchainjs), hiện tại hỗ trợ các plugin sau, trong tương lai sẽ thêm nhiều hơn
+  - Tìm kiếm (ưu tiên: `GoogleCustomSearch > SerpAPI > BingSerpAPI > ChooseSearchEngine > DuckDuckGo`)
+  
+    - [GoogleCustomSearch](https://api.js.langchain.com/classes/langchain_tools.GoogleCustomSearch.html)
+  
+      - Biến môi trường:
+        - ~~`GOOGLE_API_KEY`~~ `GOOGLE_SEARCH_API_KEY`
+        - `GOOGLE_CSE_ID`
+      - Tham khảo đăng ký: [Hướng dẫn](https://stackoverflow.com/questions/37083058/programmatically-searching-google-in-python-using-custom-search)
+  
+    - [SerpAPI](https://api.js.langchain.com/classes/langchain_tools.SerpAPI.html)
+  
+      - Biến môi trường: `SERPAPI_API_KEY`
+      - Địa chỉ đăng ký: [SerpApi: Google Search API](https://serpapi.com/)
+  
+    - [BingSerpAPI](https://api.js.langchain.com/classes/langchain_tools.BingSerpAPI.html)
+  
+      - Biến môi trường: `BING_SEARCH_API_KEY`
+      - Địa chỉ đăng ký: [Web Search API | Microsoft Bing](https://www.microsoft.com/en-us/bing/apis/bing-web-search-api)
+  
+    - ChooseSearchEngine (tác giả: [hang666](https://github.com/hang666))
+  
+      - Biến môi trường: `CHOOSE_SEARCH_ENGINE`
+  
+        Các tùy chọn như sau:
+  
+        - google
+        - baidu
+  
+      - Giải thích: Tùy chọn này kết nối trực tiếp với công cụ tìm kiếm, giúp tránh lo lắng về giới hạn thử nghiệm API, nhưng có thể không sử dụng được do vấn đề mạng.
+  
+      - ⚠ Lưu ý: Đã biết có tình trạng gọi không ổn định trong môi trường vercel
+  
+    - DuckDuckGo
+  
+  - Tính toán
+    - [Calculator](https://api.js.langchain.com/classes/langchain_tools_calculator.Calculator.html)
+    - [WolframAlpha](https://api.js.langchain.com/classes/langchain_tools.WolframAlphaTool.html)
+      - Biến môi trường: `WOLFRAM_ALPHA_APP_ID`
+      - Địa chỉ đăng ký: [Wolfram LLM API](https://developer.wolframalpha.com/)
+    
+  - Yêu cầu mạng
+    - [WebBrowser](https://api.js.langchain.com/classes/langchain_tools_webbrowser.WebBrowser.html)
+      - Cần sử dụng mô hình nhúng `text-embedding-ada-002`
+    - PDFBrowser
+      - Cần sử dụng mô hình nhúng `text-embedding-ada-002`
+      - ⚠ Chỉ khả dụng khi triển khai không phải trên vercel ⚠
+
 ## **📌 Biến môi trường**
+
+[Hướng dẫn cấu hình chức năng](./.env.template)
 
 ### `Reverse Proxy`
 

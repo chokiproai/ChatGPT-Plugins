@@ -67,6 +67,11 @@
       - ⚠ Note: It is known that there are unstable calling situations in the Vercel environment.
   
     - DuckDuckGo
+        - Environmental variation: `DDG_API_PROXY_PREFIX`
+
+        - After configuration, the content of the configuration will be connected to the interfaces related to the Duckduckgo plugin. For example: `DDG_API_PROXY_PREFIX=https://example.com/` Then the last request will be: `https://example.com/https://duckduckgo.com`
+
+        - Can combine with proxy projects similar to 1234567Yang/CF-Proxy-Ex to perform proxy for interfaces related to Duckduckgo plugin.
   
   - Calculation
     - [Calculator](https://api.js.langchain.com/classes/langchain_tools_calculator.Calculator.html)

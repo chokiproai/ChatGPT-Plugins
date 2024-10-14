@@ -67,6 +67,11 @@
       - ⚠ Lưu ý: Đã biết có tình trạng gọi không ổn định trong môi trường vercel
   
     - DuckDuckGo
+        - Biến môi trường: `DDG_API_PROXY_PREFIX`
+
+        - Sau khi cấu hình, nội dung cấu hình sẽ được nối vào trước các giao diện liên quan đến plugin DuckDuckGo. Ví dụ: `DDG_API_PROXY_PREFIX=https://example.com/` thì yêu cầu cuối cùng sẽ là: `https://example.com/https://duckduckgo.com`
+
+       - Có thể kết hợp với các dự án proxy tương tự như 1234567Yang/cf-proxy-ex để thực hiện proxy cho các giao diện liên quan đến plugin DuckDuckGo.
   
   - Tính toán
     - [Calculator](https://api.js.langchain.com/classes/langchain_tools_calculator.Calculator.html)

@@ -14,7 +14,7 @@
 
 # Language selection | | Lựa chọn ngôn ngữ
 
-## ⭐ [README EN.md](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README%20EN.md)
+## ⭐ [README EN.md](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README_EN.md)
 ## ⭐ [README VN.md](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README_VN.md)
 
 [deploy-button-image]: https://vercel.com/button

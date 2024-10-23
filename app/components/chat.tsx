@@ -96,8 +96,8 @@ import {
   List,
   ListItem,
   Modal,
-  Selector,
   SearchSelector,
+  Selector,
   showConfirm,
   showPrompt,
   showToast,
@@ -521,6 +521,7 @@ export function ChatActions(props: {
   const models = useMemo(() => {
     const filteredModels = allModels.filter((m) => m.available);
     const defaultModel = filteredModels.find((m) => m.isDefault);
+    
     const groupedModels = filteredModels.sort((a, b) => {
       const providerA = a.provider?.providerName || "";
       const providerB = b.provider?.providerName || "";

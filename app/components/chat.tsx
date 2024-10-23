@@ -97,6 +97,7 @@ import {
   ListItem,
   Modal,
   Selector,
+  SearchSelector,
   showConfirm,
   showPrompt,
   showToast,
@@ -520,17 +521,23 @@ export function ChatActions(props: {
   const models = useMemo(() => {
     const filteredModels = allModels.filter((m) => m.available);
     const defaultModel = filteredModels.find((m) => m.isDefault);
+    const groupedModels = filteredModels.sort((a, b) => {
+      const providerA = a.provider?.providerName || "";
+      const providerB = b.provider?.providerName || "";
+      return providerA.localeCompare(providerB);
+    });
 
     if (defaultModel) {
       const arr = [
         defaultModel,
-        ...filteredModels.filter((m) => m !== defaultModel),
+        ...groupedModels.filter((m) => m !== defaultModel),
       ];
       return arr;
     } else {
-      return filteredModels;
+      return groupedModels;
     }
   }, [allModels]);
+  
   const currentModelName = useMemo(() => {
     const model = models.find(
       (m) =>
@@ -678,7 +685,7 @@ export function ChatActions(props: {
         />
 
         {showModelSelector && (
-          <Selector
+          <SearchSelector
             defaultSelectedValue={`${currentModel}@${currentProviderName}`}
             items={models.map((m) => ({
               title: `${m.displayName}${

@@ -13,7 +13,15 @@ import MinIcon from "../icons/min.svg";
 import Locale from "../locales";
 
 import { createRoot } from "react-dom/client";
-import React, { HTMLProps, useEffect, useState } from "react";
+import React, {
+  CSSProperties,
+  HTMLProps,
+  MouseEvent,
+  useEffect,
+  useState,
+  useCallback,
+  useRef,
+} from "react";
 import { IconButton } from "./button";
 
 export function Popover(props: {
@@ -42,16 +50,21 @@ export function Card(props: { children: JSX.Element[]; className?: string }) {
 }
 
 export function ListItem(props: {
-  title: string;
-  subTitle?: string;
+  title?: string;
+  subTitle?: string | JSX.Element;
   children?: JSX.Element | JSX.Element[];
   icon?: JSX.Element;
   className?: string;
-  onClick?: () => void;
+  onClick?: (e: MouseEvent) => void;
+  vertical?: boolean;
 }) {
   return (
     <div
-      className={styles["list-item"] + ` ${props.className || ""}`}
+      className={
+        styles["list-item"] +
+        ` ${props.vertical ? styles["vertical"] : ""} ` +
+        ` ${props.className || ""}`
+      }
       onClick={props.onClick}
     >
       <div className={styles["list-header"]}>
@@ -252,9 +265,10 @@ export function Input(props: InputProps) {
   );
 }
 
-export function PasswordInput(props: HTMLProps<HTMLInputElement>) {
+export function PasswordInput(
+  props: HTMLProps<HTMLInputElement> & { aria?: string },
+) {
   const [visible, setVisible] = useState(false);
-
   function changeVisibility() {
     setVisible(!visible);
   }
@@ -262,6 +276,7 @@ export function PasswordInput(props: HTMLProps<HTMLInputElement>) {
   return (
     <div className={"password-input-container"}>
       <IconButton
+        aria={props.aria}
         icon={visible ? <EyeIcon /> : <EyeOffIcon />}
         onClick={changeVisibility}
         className={"password-eye"}
@@ -277,13 +292,19 @@ export function PasswordInput(props: HTMLProps<HTMLInputElement>) {
 
 export function Select(
   props: React.DetailedHTMLProps<
-    React.SelectHTMLAttributes<HTMLSelectElement>,
+    React.SelectHTMLAttributes<HTMLSelectElement> & {
+      align?: "left" | "center";
+    },
     HTMLSelectElement
   >,
 ) {
-  const { className, children, ...otherProps } = props;
+  const { className, children, align, ...otherProps } = props;
   return (
-    <div className={`${styles["select-with-icon"]} ${className}`}>
+    <div
+      className={`${styles["select-with-icon"]} ${
+        align === "left" ? styles["left-align-option"] : ""
+      } ${className}`}
+    >
       <select className={styles["select-with-icon-select"]} {...otherProps}>
         {children}
       </select>
@@ -420,49 +441,110 @@ export function showPrompt(content: any, value = "", rows = 3) {
   });
 }
 
-export function showImageModal(img: string) {
+export function showImageModal(
+  img: string,
+  defaultMax?: boolean,
+  style?: CSSProperties,
+  boxStyle?: CSSProperties,
+) {
   showModal({
     title: Locale.Export.Image.Modal,
+    defaultMax: defaultMax,
     children: (
-      <div>
+      <div style={{ display: "flex", justifyContent: "center", ...boxStyle }}>
         <img
           src={img}
           alt="preview"
-          style={{
-            maxWidth: "100%",
-          }}
+          style={
+            style ?? {
+              maxWidth: "100%",
+            }
+          }
         ></img>
       </div>
     ),
   });
 }
-
-export function Selector<T>(props: {
+export function SearchSelector<T>(props: {
   items: Array<{
     title: string;
     subTitle?: string;
     value: T;
+    disable?: boolean;
   }>;
-  defaultSelectedValue?: T;
+  defaultSelectedValue?: T[] | T;
   onSelection?: (selection: T[]) => void;
   onClose?: () => void;
   multiple?: boolean;
 }) {
+  const [selectedValues, setSelectedValues] = useState<T[]>(
+    Array.isArray(props.defaultSelectedValue)
+      ? props.defaultSelectedValue
+      : props.defaultSelectedValue !== undefined
+        ? [props.defaultSelectedValue]
+        : [],
+  );
+
+  // 添加搜索状态
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSelection = (e: MouseEvent, value: T) => {
+    if (props.multiple) {
+      e.stopPropagation();
+      const newSelectedValues = selectedValues.includes(value)
+        ? selectedValues.filter((v) => v !== value)
+        : [...selectedValues, value];
+      setSelectedValues(newSelectedValues);
+      props.onSelection?.(newSelectedValues);
+    } else {
+      setSelectedValues([value]);
+      props.onSelection?.([value]);
+      props.onClose?.();
+    }
+  };
+
+  // 过滤列表项
+  const filteredItems = props.items.filter(
+    (item) =>
+      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (item.subTitle &&
+        item.subTitle.toLowerCase().includes(searchQuery.toLowerCase())),
+  );
+
   return (
     <div className={styles["selector"]} onClick={() => props.onClose?.()}>
-      <div className={styles["selector-content"]}>
+      <div
+        className={styles["selector-content"]}
+        onClick={(e) => e.stopPropagation()}
+      >
         <List>
-          {props.items.map((item, i) => {
-            const selected = props.defaultSelectedValue === item.value;
+          {/* 搜索框 */}
+          <div className={styles["selector-search"]}>
+            <input
+              type="text"
+              className={styles["selector-search-input"]}
+              placeholder="search model"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
+          {filteredItems.map((item, i) => {
+            const selected = selectedValues.includes(item.value);
             return (
               <ListItem
-                className={styles["selector-item"]}
+                className={`${styles["selector-item"]} ${
+                  item.disable && styles["selector-item-disabled"]
+                }`}
                 key={i}
                 title={item.title}
                 subTitle={item.subTitle}
-                onClick={() => {
-                  props.onSelection?.([item.value]);
-                  props.onClose?.();
+                onClick={(e) => {
+                  if (item.disable) {
+                    e.stopPropagation();
+                  } else {
+                    handleSelection(e, item.value);
+                  }
                 }}
               >
                 {selected ? (
@@ -482,6 +564,118 @@ export function Selector<T>(props: {
           })}
         </List>
       </div>
+    </div>
+  );
+}
+export function Selector<T>(props: {
+  items: Array<{
+    title: string;
+    subTitle?: string;
+    value: T;
+    disable?: boolean;
+  }>;
+  defaultSelectedValue?: T[] | T;
+  onSelection?: (selection: T[]) => void;
+  onClose?: () => void;
+  multiple?: boolean;
+}) {
+  const [selectedValues, setSelectedValues] = useState<T[]>(
+    Array.isArray(props.defaultSelectedValue)
+      ? props.defaultSelectedValue
+      : props.defaultSelectedValue !== undefined
+        ? [props.defaultSelectedValue]
+        : [],
+  );
+
+  const handleSelection = (e: MouseEvent, value: T) => {
+    if (props.multiple) {
+      e.stopPropagation();
+      const newSelectedValues = selectedValues.includes(value)
+        ? selectedValues.filter((v) => v !== value)
+        : [...selectedValues, value];
+      setSelectedValues(newSelectedValues);
+      props.onSelection?.(newSelectedValues);
+    } else {
+      setSelectedValues([value]);
+      props.onSelection?.([value]);
+      props.onClose?.();
+    }
+  };
+
+  return (
+    <div className={styles["selector"]} onClick={() => props.onClose?.()}>
+      <div className={styles["selector-content"]}>
+        <List>
+          {props.items.map((item, i) => {
+            const selected = selectedValues.includes(item.value);
+            return (
+              <ListItem
+                className={`${styles["selector-item"]} ${
+                  item.disable && styles["selector-item-disabled"]
+                }`}
+                key={i}
+                title={item.title}
+                subTitle={item.subTitle}
+                onClick={(e) => {
+                  if (item.disable) {
+                    e.stopPropagation();
+                  } else {
+                    handleSelection(e, item.value);
+                  }
+                }}
+              >
+                {selected ? (
+                  <div
+                    style={{
+                      height: 10,
+                      width: 10,
+                      backgroundColor: "var(--primary)",
+                      borderRadius: 10,
+                    }}
+                  ></div>
+                ) : (
+                  <></>
+                )}
+              </ListItem>
+            );
+          })}
+        </List>
+      </div>
+    </div>
+  );
+}
+export function FullScreen(props: any) {
+  const { children, right = 10, top = 10, ...rest } = props;
+  const ref = useRef<HTMLDivElement>();
+  const [fullScreen, setFullScreen] = useState(false);
+  const toggleFullscreen = useCallback(() => {
+    if (!document.fullscreenElement) {
+      ref.current?.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  }, []);
+  useEffect(() => {
+    const handleScreenChange = (e: any) => {
+      if (e.target === ref.current) {
+        setFullScreen(!!document.fullscreenElement);
+      }
+    };
+    document.addEventListener("fullscreenchange", handleScreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", handleScreenChange);
+    };
+  }, []);
+  return (
+    <div ref={ref} style={{ position: "relative" }} {...rest}>
+      <div style={{ position: "absolute", right, top }}>
+        <IconButton
+          icon={fullScreen ? <MinIcon /> : <MaxIcon />}
+          onClick={toggleFullscreen}
+          bordered
+        />
+      </div>
+      {children}
     </div>
   );
 }

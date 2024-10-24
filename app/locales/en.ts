@@ -167,8 +167,8 @@ const en: LocaleType = {
       SubTitle: "Adjust font size of chat content",
     },
     InjectSystemPrompts: {
-      Title: "Inject System Prompts",
-      SubTitle: "Inject a global system prompt for every request",
+      Title: "Ⓧ",
+      SubTitle: "‎ ",
     },
     InputTemplate: {
       Title: "Input Template",

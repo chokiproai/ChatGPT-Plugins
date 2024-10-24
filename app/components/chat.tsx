@@ -521,7 +521,7 @@ export function ChatActions(props: {
   const models = useMemo(() => {
     const filteredModels = allModels.filter((m) => m.available);
     const defaultModel = filteredModels.find((m) => m.isDefault);
-    
+
     const groupedModels = filteredModels.sort((a, b) => {
       const providerA = a.provider?.providerName || "";
       const providerB = b.provider?.providerName || "";
@@ -538,7 +538,7 @@ export function ChatActions(props: {
       return groupedModels;
     }
   }, [allModels]);
-  
+
   const currentModelName = useMemo(() => {
     const model = models.find(
       (m) =>
@@ -720,7 +720,7 @@ export function ChatActions(props: {
           />
         )}
 
-{isDalle3(currentModel) && (
+        {isDalle3(currentModel) && (
           <ChatAction
             onClick={() => setShowSizeSelector(true)}
             text={currentSize}

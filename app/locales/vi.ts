@@ -562,6 +562,14 @@ Mask: {
             Title: "Ẩn Lời Nhắc Ngữ Cảnh",
             SubTitle: "Không hiển thị lời nhắc ngữ cảnh trong trò chuyện",
         },
+        Artifacts: {
+          Title: "Kích hoạt Artifacts",
+          SubTitle: "Có thể hiển thị trang HTML khi kích hoạt Artifacts.",
+        },
+        CodeFold: {
+          Title: "Kích hoạt CodeFold",
+          SubTitle: "Tự động thu gọn/mở rộng các khối mã quá dài khi CodeFold được kích hoạt",
+        },
         Share: {
             Title: "Chia sẻ Mặt nạ này",
             SubTitle: "Tạo liên kết đến mặt nạ này",

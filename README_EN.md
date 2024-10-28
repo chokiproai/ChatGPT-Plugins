@@ -39,6 +39,7 @@
     - [GoogleCustomSearch](https://api.js.langchain.com/classes/langchain_tools.GoogleCustomSearch.html)
   
       - Environment variables:
+        - `GOOGLE_PLUGIN_API_PROXY_PREFIX` and `DDG_API_PROXY_PREFIX` use the same method
         - `GOOGLE_SEARCH_API_KEY`
         - `GOOGLE_CSE_ID`
       - Registration reference: [Guide](https://stackoverflow.com/questions/37083058/programmatically-searching-google-in-python-using-custom-search)
@@ -55,7 +56,9 @@
   
     - ChooseSearchEngine (author: [hang666](https://github.com/hang666))
   
-      - Environment variable: `CHOOSE_SEARCH_ENGINE`
+      - Environment variables:
+        - `CHOOSE_SEARCH_ENGINE`
+        - `GOOGLE_PLUGIN_API_PROXY_PREFIX` and `DDG_API_PROXY_PREFIX` use the same method, only proxy for google
   
         Options are as follows:
   

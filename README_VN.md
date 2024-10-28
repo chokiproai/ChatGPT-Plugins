@@ -39,6 +39,7 @@
     - [GoogleCustomSearch](https://api.js.langchain.com/classes/langchain_tools.GoogleCustomSearch.html)
   
       - Biến môi trường:
+        - `GOOGLE_PLUGIN_API_PROXY_PREFIX` và `DDG_API_PROXY_PREFIX` biến sử dụng phương pháp giống nhau
         - `GOOGLE_SEARCH_API_KEY`
         - `GOOGLE_CSE_ID`
       - Tham khảo đăng ký: [Hướng dẫn](https://stackoverflow.com/questions/37083058/programmatically-searching-google-in-python-using-custom-search)
@@ -55,7 +56,9 @@
   
     - ChooseSearchEngine (tác giả: [hang666](https://github.com/hang666))
   
-      - Biến môi trường: `CHOOSE_SEARCH_ENGINE`
+      - Biến môi trường:
+        - `CHOOSE_SEARCH_ENGINE`
+        - `GOOGLE_PLUGIN_API_PROXY_PREFIX` và `DDG_API_PROXY_PREFIX` biến sử dụng phương pháp giống nhau, chỉ sẽ proxy cho google
   
         Các tùy chọn như sau:
   

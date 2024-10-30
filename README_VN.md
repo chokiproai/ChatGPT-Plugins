@@ -236,7 +236,7 @@ Người dùng `-all` để vô hiệu hóa tất cả các mô hình mặc đ�
 
 Thay đổi mô hình mặc định
 
-### `WHITE_WEBDEV_ENDPOINTS` (tùy chọn)
+### `WHITE_WEBDAV_ENDPOINTS` (tùy chọn)
 
 Bạn có thể sử dụng tùy chọn này nếu muốn tăng số lượng địa chỉ dịch vụ webdav được phép truy cập, theo yêu cầu của định dạng:
 - Mỗi địa chỉ phải là điểm cuối hoàn chỉnh

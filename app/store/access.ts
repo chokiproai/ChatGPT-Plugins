@@ -91,9 +91,11 @@ const DEFAULT_ACCESS_STATE = {
   defaultModel: "",
 
   // tts config
-  edgeTTSVoiceName: "zh-CN-YunxiNeural",
+  edgeTTSVoiceName: "en-US-AndrewMultilingualNeural",
 
   isUseOpenAIEndpointForAllModels: false,
+
+  disableModelProviderDisplay: false,
 };
 
 export const useAccessStore = createPersistStore(
@@ -104,6 +106,12 @@ export const useAccessStore = createPersistStore(
       this.fetch();
 
       return get().needCode;
+    },
+
+    isDisableModelProviderDisplay() {
+      this.fetch();
+
+      return get().disableModelProviderDisplay;
     },
 
     useOpenAIEndpointForAllModels() {

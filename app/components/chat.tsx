@@ -571,6 +571,12 @@ export function ChatActions(props: {
     [],
   );
 
+  const isDisableModelProviderDisplay = useMemo(
+    () => accessStore.isDisableModelProviderDisplay(),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+
   useEffect(() => {
     const show = isVisionModel(currentModel);
     setShowUploadImage(show);
@@ -690,7 +696,7 @@ export function ChatActions(props: {
             defaultSelectedValue={`${currentModel}@${currentProviderName}`}
             items={models.map((m) => ({
               title: `${m.displayName}${
-                m?.provider?.providerName
+                m?.provider?.providerName && !isDisableModelProviderDisplay
                   ? "(" + m?.provider?.providerName + ")"
                   : ""
               }`,

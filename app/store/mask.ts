@@ -18,6 +18,8 @@ export type Mask = {
   lang: Lang;
   builtin: boolean;
   usePlugins?: boolean;
+  // Upstream plugin business parameters
+  plugin?: string[];
   enableArtifacts?: boolean;
   enableCodeFold?: boolean;
 };

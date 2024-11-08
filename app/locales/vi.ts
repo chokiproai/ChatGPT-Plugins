@@ -138,6 +138,7 @@ Home: {
 Settings: {
     Title: "Cài đặt",
     SubTitle: "Tất cả Cài đặt",
+    ShowPassword: "Hiển thị Mật khẩu",
     Danger: {
         Reset: {
             Title: "Đặt lại Tất cả Cài đặt",
@@ -161,6 +162,12 @@ Settings: {
         Title: "Kích thước Chữ",
         SubTitle: "Điều chỉnh kích thước chữ của nội dung trò chuyện",
     },
+    FontFamily: {
+        Title: "Phông chữ Trò chuyện",
+        SubTitle:
+          "Phông chữ của nội dung trò chuyện, để trống để áp dụng phông chữ mặc định toàn cầu",
+        Placeholder: "Tên Phông chữ",
+    },
     InjectSystemPrompts: {
         Title: "Ⓧ",
         SubTitle: "‎ ",
@@ -177,6 +184,8 @@ Settings: {
         IsChecking: "Đang kiểm tra cập nhật...",
         FoundUpdate: (x: string) => `Đã tìm thấy phiên bản mới: ${x}`,
         GoToUpdate: "Cập nhật",
+        Success: "Cập nhật Thành công.",
+        Failed: "Cập nhật Thất bại.",
     },
     SendKey: "Phím Gửi",
     Theme: "Chủ đề",
@@ -357,6 +366,22 @@ Settings: {
                 SubTitle: "không được hỗ trợ, cấu hình trong .env",
             },
         },
+        Tencent: {
+            ApiKey: {
+              Title: "Khóa API Tencent",
+              SubTitle: "Sử dụng Khóa API Tencent tùy chỉnh",
+              Placeholder: "Khóa API Tencent",
+            },
+            SecretKey: {
+              Title: "Khóa Bí mật Tencent",
+              SubTitle: "Sử dụng Khóa Bí mật Tencent tùy chỉnh",
+              Placeholder: "Khóa Bí mật Tencent",
+            },
+            Endpoint: {
+              Title: "Địa chỉ Điểm cuối",
+              SubTitle: "không được hỗ trợ, cấu hình trong .env",
+            },
+        },
         ByteDance: {
             ApiKey: {
                 Title: "Khóa API ByteDance",
@@ -379,6 +404,66 @@ Settings: {
                 SubTitle: "Ví dụ: ",
             },
         },
+        Moonshot: {
+            ApiKey: {
+              Title: "Khóa API Moonshot",
+              SubTitle: "Sử dụng Khóa API Moonshot tùy chỉnh",
+              Placeholder: "Khóa API Moonshot",
+            },
+            Endpoint: {
+              Title: "Địa chỉ Điểm cuối",
+              SubTitle: "Ví dụ: ",
+            },
+          },
+          XAI: {
+            ApiKey: {
+              Title: "Khóa API XAI",
+              SubTitle: "Sử dụng Khóa API XAI tùy chỉnh",
+              Placeholder: "Khóa API XAI",
+            },
+            Endpoint: {
+              Title: "Địa chỉ Điểm cuối",
+              SubTitle: "Ví dụ: ",
+            },
+          },
+          ChatGLM: {
+            ApiKey: {
+              Title: "Khóa API ChatGLM",
+              SubTitle: "Sử dụng Khóa API ChatGLM tùy chỉnh",
+              Placeholder: "Khóa API ChatGLM",
+            },
+            Endpoint: {
+              Title: "Địa chỉ Điểm cuối",
+              SubTitle: "Ví dụ: ",
+            },
+          },
+          Stability: {
+            ApiKey: {
+              Title: "Khóa API Stability",
+              SubTitle: "Sử dụng Khóa API Stability tùy chỉnh",
+              Placeholder: "Khóa API Stability",
+            },
+            Endpoint: {
+              Title: "Địa chỉ Điểm cuối",
+              SubTitle: "Ví dụ: ",
+            },
+          },
+          Iflytek: {
+            ApiKey: {
+              Title: "Khóa API Iflytek",
+              SubTitle: "Sử dụng Khóa API Iflytek",
+              Placeholder: "Khóa API Iflytek",
+            },
+            ApiSecret: {
+              Title: "Khóa Bí mật API Iflytek",
+              SubTitle: "Sử dụng Khóa Bí mật API Iflytek",
+              Placeholder: "Khóa Bí mật API Iflytek",
+            },
+            Endpoint: {
+              Title: "Địa chỉ Điểm cuối",
+              SubTitle: "Ví dụ: ",
+            },
+          },
         CustomModel: {
             Title: "Mô hình Tùy chỉnh",
             SubTitle: "Tùy chọn mô hình tùy chỉnh, phân tách bằng dấu phẩy",
@@ -387,7 +472,7 @@ Settings: {
             ApiKey: {
                 Title: "Khóa API",
                 SubTitle: "Lấy Khóa API của bạn từ Google AI",
-                Placeholder: "Nhập Khóa API Studio Google AI của bạn",
+                Placeholder: "Google AI API Key",
             },
 
             Endpoint: {
@@ -407,6 +492,10 @@ Settings: {
     },
 
     Model: "Mô hình",
+    CompressModel: {
+        Title: "Mô hình Tóm tắt",
+        SubTitle: "Mô hình được sử dụng để nén lịch sử và tạo tiêu đề",
+    },
     Temperature: {
         Title: "Nhiệt độ",
         SubTitle: "Giá trị lớn hơn tạo ra đầu ra ngẫu nhiên hơn",

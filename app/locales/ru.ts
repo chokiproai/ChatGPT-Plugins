@@ -71,11 +71,6 @@ const ru: PartialLocaleType = {
       Title: "Размер шрифта",
       SubTitle: "Настроить размер шрифта контента чата",
     },
-    InjectSystemPrompts: {
-      Title: "Ⓧ",
-      SubTitle:
-        "‎ ",
-    },
     Update: {
       Version: (x: string) => `Версия: ${x}`,
       IsLatest: "Последняя версия",

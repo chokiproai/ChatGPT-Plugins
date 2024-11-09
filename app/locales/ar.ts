@@ -111,11 +111,6 @@ const ar: PartialLocaleType = {
       Title: "حجم الخط",
       SubTitle: "ضبط حجم الخط لمحتوى الدردشة",
     },
-    InjectSystemPrompts: {
-      Title: "Ⓧ",
-      SubTitle:
-        "‎ ",
-    },
     InputTemplate: {
       Title: "نموذج الإدخال",
       SubTitle: "سيتم ملء أحدث رسالة في هذا النموذج",

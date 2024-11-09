@@ -153,10 +153,6 @@ const tw = {
       Title: "字型大小",
       SubTitle: "聊天內容的字型大小",
     },
-    InjectSystemPrompts: {
-      Title: "Ⓧ",
-      SubTitle: "‎ ",
-    },
     InputTemplate: {
       Title: "使用者輸入預處理",
       SubTitle: "使用者最新的一則訊息會填充到此範本",

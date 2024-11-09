@@ -173,10 +173,6 @@ const en: LocaleType = {
         "Font Family of the chat content, leave empty to apply global default font",
       Placeholder: "Font Family Name",
     },
-    InjectSystemPrompts: {
-      Title: "Inject System Prompts",
-      SubTitle: "Inject a global system prompt for every request",
-    },
     InputTemplate: {
       Title: "Input Template",
       SubTitle: "Newest message will be filled to this template",

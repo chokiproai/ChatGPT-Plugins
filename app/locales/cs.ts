@@ -71,11 +71,6 @@ const cs: PartialLocaleType = {
       Title: "Velikost písma",
       SubTitle: "Nastavení velikosti písma obsahu chatu",
     },
-    InjectSystemPrompts: {
-      Title: "Ⓧ",
-      SubTitle:
-        "‎ ",
-    },
     Update: {
       Version: (x: string) => `Verze: ${x}`,
       IsLatest: "Aktuální verze",

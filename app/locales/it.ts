@@ -71,11 +71,6 @@ const it: PartialLocaleType = {
       Title: "Dimensione carattere",
       SubTitle: "Regolare la dimensione dei caratteri del contenuto della chat",
     },
-    InjectSystemPrompts: {
-      Title: "Ⓧ",
-      SubTitle:
-        "‎ ",
-    },
     Update: {
       Version: (x: string) => `Versione: ${x}`,
       IsLatest: "Ultima versione",

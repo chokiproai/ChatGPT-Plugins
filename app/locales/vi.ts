@@ -168,10 +168,6 @@ Settings: {
           "Phông chữ của nội dung trò chuyện, để trống để áp dụng phông chữ mặc định toàn cầu",
         Placeholder: "Tên Phông chữ",
     },
-    InjectSystemPrompts: {
-        Title: "Ⓧ",
-        SubTitle: "‎ ",
-    },
     InputTemplate: {
         Title: "Mẫu Đầu vào",
         SubTitle: "Tin nhắn mới nhất sẽ được điền vào mẫu này",

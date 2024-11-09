@@ -111,11 +111,6 @@ const fr: PartialLocaleType = {
       Title: "Taille des polices",
       SubTitle: "Ajuste la taille de police du contenu de la conversation",
     },
-    InjectSystemPrompts: {
-      Title: "Ⓧ",
-      SubTitle:
-        "‎ ",
-    },
     InputTemplate: {
       Title: "Template",
       SubTitle: "Le message le plus récent sera ajouté à ce template.",

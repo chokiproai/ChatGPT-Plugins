@@ -140,11 +140,6 @@ const id: PartialLocaleType = {
       Title: "Ukuran Font",
       SubTitle: "Ubah ukuran font konten chat",
     },
-    InjectSystemPrompts: {
-      Title: "Ⓧ",
-      SubTitle:
-        "‎ ",
-    },
     InputTemplate: {
       Title: "Template Input",
       SubTitle: "Pesan baru akan diisi menggunakan template ini",

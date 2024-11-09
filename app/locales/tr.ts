@@ -71,11 +71,6 @@ const tr: PartialLocaleType = {
       Title: "Yazı Boyutu",
       SubTitle: "Sohbet içeriğinin yazı boyutunu ayarlayın",
     },
-    InjectSystemPrompts: {
-      Title: "Ⓧ",
-      SubTitle:
-        "‎ ",
-    },
     Update: {
       Version: (x: string) => `Sürüm: ${x}`,
       IsLatest: "En son sürüm",

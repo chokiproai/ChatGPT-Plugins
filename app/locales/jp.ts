@@ -118,11 +118,6 @@ const jp: PartialLocaleType = {
       Title: "フォントサイズ",
       SubTitle: "チャット内容のフォントサイズ",
     },
-    InjectSystemPrompts: {
-      Title: "Ⓧ",
-      SubTitle:
-        "‎ ",
-    },
     InputTemplate: {
       Title: "入力の前処理",
       SubTitle: "新規入力がこのテンプレートに埋め込まれます",

@@ -37,6 +37,10 @@ export interface SearchInputRef {
   inputElement: HTMLInputElement | null;
 }
 
+function escapeRegExp(search: string) {
+  return search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 function highlightAndShorten(str: string, search: string) {
   const index = str.toLowerCase().indexOf(search.toLowerCase());
   const head = Math.max(0, index - 10);
@@ -44,8 +48,10 @@ function highlightAndShorten(str: string, search: string) {
   // Remove code block syntax
   let result = str.slice(head, tail);
 
+  const safeSearch = escapeRegExp(search);
+
   // Use ** to highlight the search result
-  result = result.replace(new RegExp(`(${search})`), "**$1**");
+  result = result.replace(new RegExp(`(${safeSearch})`), "**$1**");
 
   if (head > 0) {
     result = "..." + result;

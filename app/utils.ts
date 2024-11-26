@@ -258,11 +258,17 @@ export function isVisionModel(model: string) {
   const visionKeywords = [
     "vision",
     "claude-3",
+    "gemini-1.5",
     "gemini-1.5-pro",
     "gemini-1.5-flash",
     "gpt-4o",
     "gpt-4o-mini",
+    "gemini-exp",
+    "learnlm",
+    "qwen-vl",
+    "qwen2-vl",
   ];
+
   const isGpt4Turbo =
     model.includes("gpt-4-turbo") && !model.includes("preview");
 
@@ -317,6 +323,9 @@ export function isFunctionCallModel(modelName: string) {
     "claude-3-opus-20240229",
     "claude-3-haiku-20240307",
     "claude-3-5-sonnet-20240620",
+    "claude-3-5-sonnet-20241022",
+    "claude-3-5-sonnet-latest",
+    "claude-3-5-haiku-latest",
   ];
   if (specialModels.some((keyword) => modelName === keyword)) return true;
   return DEFAULT_MODELS.filter(

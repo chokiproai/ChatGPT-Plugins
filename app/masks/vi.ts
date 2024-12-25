@@ -40,7 +40,7 @@ export const VI_MASKS: BuiltinMask[] = [
       historyMessageCount: 32,
       compressMessageLengthThreshold: 1000,
     },
-    lang: "en",
+    lang: "vi",
     builtin: true,
     createdAt: 1688899480510,
   },
@@ -65,7 +65,7 @@ export const VI_MASKS: BuiltinMask[] = [
        historyMessageCount: 4,
        compressMessageLengthThreshold: 1000
     },
-    lang: "en",
+    lang: "vi",
     builtin: true,
     createdAt: 1688899480511
   },
@@ -90,7 +90,7 @@ export const VI_MASKS: BuiltinMask[] = [
       historyMessageCount: 4,
       compressMessageLengthThreshold: 1000,
     },
-    lang: "en",
+    lang: "vi",
     builtin: true,
     createdAt: 1688899480512,
   },
@@ -115,7 +115,7 @@ export const VI_MASKS: BuiltinMask[] = [
       historyMessageCount: 4,
       compressMessageLengthThreshold: 1000
     },
-    lang: "en",
+    lang: "vi",
     builtin: true,
     createdAt: 1688899480513
   },
@@ -140,7 +140,7 @@ export const VI_MASKS: BuiltinMask[] = [
       historyMessageCount: 4,
       compressMessageLengthThreshold: 1000
     },
-    lang: "en",
+    lang: "vi",
     builtin: true,
     createdAt: 1688899480514
   },
@@ -165,7 +165,7 @@ export const VI_MASKS: BuiltinMask[] = [
       historyMessageCount: 4,
       compressMessageLengthThreshold: 1000
     },
-    lang: "en",
+    lang: "vi",
     builtin: true,
     createdAt: 1688899480524
   },
@@ -190,7 +190,7 @@ export const VI_MASKS: BuiltinMask[] = [
       historyMessageCount: 4,
       compressMessageLengthThreshold: 1000
     },
-    lang: "en",
+    lang: "vi",
     builtin: true,
     createdAt: 1688899480525
   },
@@ -215,7 +215,7 @@ export const VI_MASKS: BuiltinMask[] = [
       historyMessageCount: 0,
       compressMessageLengthThreshold: 1000
     },
-    lang: "en",
+    lang: "vi",
     builtin: true,
     createdAt: 1688899480534
   },
@@ -246,7 +246,7 @@ export const VI_MASKS: BuiltinMask[] = [
       historyMessageCount: 4,
       compressMessageLengthThreshold: 1000
     },
-    lang: "en",
+    lang: "vi",
     builtin: true,
     createdAt: 1688899480536
   },
@@ -271,7 +271,7 @@ export const VI_MASKS: BuiltinMask[] = [
       historyMessageCount: 4,
       compressMessageLengthThreshold: 1000
     },
-    lang: "en",
+    lang: "vi",
     builtin: true,
     createdAt: 1688899480536
   },
@@ -302,7 +302,7 @@ export const VI_MASKS: BuiltinMask[] = [
       historyMessageCount: 4,
       compressMessageLengthThreshold: 1000
     },
-    lang: "en",
+    lang: "vi",
     builtin: true,
     createdAt: 1688899480536
   },
@@ -333,7 +333,7 @@ export const VI_MASKS: BuiltinMask[] = [
       historyMessageCount: 4,
       compressMessageLengthThreshold: 1000
     },
-    lang: "en",
+    lang: "vi",
     builtin: true,
     createdAt: 1688899480537
   },
@@ -388,7 +388,7 @@ export const VI_MASKS: BuiltinMask[] = [
       historyMessageCount: 4,
       compressMessageLengthThreshold: 1000
     },
-    lang: "en",
+    lang: "vi",
     builtin: true,
     createdAt: 1688899480537
   },
@@ -420,7 +420,7 @@ export const VI_MASKS: BuiltinMask[] = [
       historyMessageCount: 4,
       compressMessageLengthThreshold: 1000,
     },
-    lang: "en",
+    lang: "vi",
     builtin: true,
     createdAt: 1688899480537,
   },

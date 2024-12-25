@@ -264,6 +264,7 @@ export function isVisionModel(model: string) {
     "gpt-4o",
     "gpt-4o-mini",
     "gemini-exp",
+    "gemini-2.0",
     "learnlm",
     "qwen-vl",
     "qwen2-vl",

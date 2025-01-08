@@ -95,7 +95,7 @@
 
 ### `Reverse Proxy`
 
-Có sẵn khi sử dụng `ChatGPTUnofficialProxyAPI` miễn phí. [Chi tiết](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/api%20free.md)
+Có sẵn khi sử dụng `ChatGPTUnofficialProxyAPI` miễn phí. [Chi tiết](./docs/api-free.md)
 
 ### `CODE` (tùy chọn)
 

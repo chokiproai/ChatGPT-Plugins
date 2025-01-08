@@ -95,7 +95,7 @@
 
 ### `Reverse Proxy`
 
-Available when using free `ChatGPTUnofficialProxyAPI`. [Details](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/api%20free.md)
+Available when using free `ChatGPTUnofficialProxyAPI`. [Details](./docs/api-free.md)
 
 ### `CODE` (optional)
 

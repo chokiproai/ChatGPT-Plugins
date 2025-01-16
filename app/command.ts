@@ -52,6 +52,7 @@ export function useChatCommand(commands: ChatCommands = {}) {
       return userInput.slice(1) as keyof ChatCommands;
     }
     return userInput as keyof ChatCommands;
+  }
 
   function search(userInput: string) {
     const input = extract(userInput);

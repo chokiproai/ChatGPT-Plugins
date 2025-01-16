@@ -241,7 +241,7 @@ export function OpenAIVoiceVisualizer({
     );
 
     if (!gl || !program) {
-      console.error("WebGL 初始化失败");
+      console.error("Webgl initialization failed");
       return;
     }
 
@@ -256,7 +256,7 @@ export function OpenAIVoiceVisualizer({
     (gl: WebGL2RenderingContext, program: WebGLProgram) => {
       const noiseTexture = gl.createTexture();
       if (!noiseTexture) {
-        console.error("创建噪声纹理失败");
+        console.error("Failure to create noise texture");
         return;
       }
 
@@ -330,7 +330,7 @@ export function OpenAIVoiceVisualizer({
         const image = await loadImage(NOISE_TEXTURE_OPTIONS.src);
         setNoiseTextureImage(image as unknown as HTMLImageElement);
       } catch (error) {
-        console.error("加载噪声纹理失败:", error);
+        console.error("Load noise texture failure:", error);
       }
     };
     loadNoiseTexture();

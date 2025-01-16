@@ -231,9 +231,32 @@ For Azure: use `modelName@azure=deploymentName` to customize model name and depl
 For ByteDance: use `modelName@bytedance=deploymentName` to customize model name and deployment name.
 > Example: `+Doubao-lite-4k@bytedance=ep-xxxxx-xxx` will show option `Doubao-lite-4k(ByteDance)` in model list.
 
-### `DEFAULT_MODEL` （optional）
+### `CUSTOM_MODELS` （optional）
 
-Change default model
+> For example: `+qwen-7b-chat,+glm-6b,-gpt-3.5-turbo,gpt-4-1106-preview=gpt-4-turbo` 
+means add `qwen-7b-chat` and `glm-6b` Go to the model list, and delete `gpt-3.5-turbo` out of the list 
+and display the model name `gpt-4-1106-preview` là `gpt-4-turbo`.
+
+> If you want to disable all models before activating a specific model, you can use `-all,+gpt-3.5-turbo`, 
+Means only activate the model `gpt-3.5-turbo`.
+
+Used to control the model list, use `+` To add a model, use `-` To hide a model, and use `modelName@azure=deploymentName` To customize the display name of the model, the items are separated by commas.  
+In Azure mode, support the model name and deployment name (deployment-name) by using the syntax `modelName@azure=deploymentName`.  
+
+> **For example**: `+gpt-3.5-turbo@azure=gpt35` Will display in the model list of an option `gpt35(Azure)`.  
+> If you can only use Azure mode, setup `-all,+gpt-3.5-turbo@azure=gpt35` will make the default conversation using the model `gpt35(Azure)`.
+
+In Bytedance mode, support the model name and deployment name (deployment-name) by using the syntax `modelName@bytedance=deploymentName`.  
+
+> **For example**: `+Doubao-lite-4k@bytedance=ep-xxxxx-xxx` Will display in the model list of an option `Doubao-lite-4k(ByteDance)`.
+
+### `DEFAULT_MODEL` (optional)  
+Change the default model.
+
+### `USE_REMOTE_MODELS` (optional)  
+If you want to use a remote model list, you can set the value of 1.  
+Can be used with parameters `CUSTOM_MODELS`.  
+Recommendation to use in conjunction with intermediate projects such as `one-api`.
 
 ### `WHITE_WEBDAV_ENDPOINTS` (optional)
 
@@ -274,7 +297,6 @@ After adding or modifying this environmental variation, please re -deploy the pr
 
 NodeJS >= 18, Docker >= 20
 
-
 ### 🌟 Local Development
 
 ```shell
@@ -284,7 +306,6 @@ NodeJS >= 18, Docker >= 20
 yarn install
 yarn dev
 ```
-
 ### 🌟 Dockerfile (Recommended)
 
 ```shell

@@ -43,6 +43,9 @@ Chat: {
         PinToastAction: "Xem",
         Delete: "Xóa",
         Edit: "Chỉnh sửa",
+        FullScreen: "Toàn màn hình",
+        RefreshTitle: "Làm mới tiêu đề",
+        RefreshToast: "Yêu cầu làm mới tiêu đề đã gửi",
         Speech: "Phát",
         StopSpeech: "Dừng Phát",
     },
@@ -52,6 +55,7 @@ Chat: {
         next: "Cuộc trò chuyện tiếp theo",
         prev: "Cuộc trò chuyện trước",
         clear: "Xóa Ngữ cảnh",
+        fork: "Sao chép trò chuyện",
         del: "Xóa Cuộc trò chuyện",
     },
     InputActions: {
@@ -88,6 +92,14 @@ Chat: {
         SaveAs: "Lưu dưới dạng Mặt nạ",
     },
     IsContext: "Lời nhắc Ngữ cảnh",
+    ShortcutKey: {
+        Title: "Phím tắt",
+        newChat: "Mở trò chuyện mới",
+        focusInput: "Tập trung vào trường đầu vào",
+        copyLastMessage: "Sao chép câu trả lời cuối cùng",
+        copyLastCode: "Sao chép khối mã cuối cùng",
+        showShortcutKey: "Hiển thị các phím tắt",
+      },
 },
 Export: {
     Title: "Xuất Tin nhắn",
@@ -558,6 +570,39 @@ Settings: {
             Title: "Động cơ STT",
             SubTitle: "Động cơ Chuyển văn bản thành giọng nói",
         },
+    },
+    Realtime: {
+      Enable: {
+        Title: "Trò chuyện thời gian thực",
+        SubTitle: "Bật tính năng trò chuyện thời gian thực",
+      },
+      Provider: {
+        Title: "Nhà cung cấp mô hình",
+        SubTitle: "Chuyển đổi giữa các nhà cung cấp khác nhau",
+      },
+      Model: {
+        Title: "Model",
+        SubTitle: "Chọn một mô hình",
+      },
+      ApiKey: {
+        Title: "API Key",
+        SubTitle: "API Key",
+        Placeholder: "API Key",
+      },
+      Azure: {
+        Endpoint: {
+          Title: "Endpoint",
+          SubTitle: "Endpoint",
+        },
+        Deployment: {
+          Title: "Tên triển khai",
+          SubTitle: "Tên triển khai",
+        },
+      },
+      Temperature: {
+        Title: "Tính ngẫu nhiên (nhiệt độ)",
+        SubTitle: "Giá trị cao hơn dẫn đến các phản hồi ngẫu nhiên hơn",
+      },
     },
 },
 Store: {

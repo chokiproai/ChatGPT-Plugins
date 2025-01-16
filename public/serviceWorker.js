@@ -1,5 +1,5 @@
-const CHATGPT_NEXT_WEB_CACHE = "chatgpt-next-web-cache";
-const CHATGPT_NEXT_WEB_FILE_CACHE = "chatgpt-next-web-file";
+const CHATGPT_NEXT_WEB_CACHE = "chatgpt-plugins-web-cache";
+const CHATGPT_NEXT_WEB_FILE_CACHE = "chatgpt-plugins-web-file";
 let a="useandom-26T198340PX75pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict";let nanoid=(e=21)=>{let t="",r=crypto.getRandomValues(new Uint8Array(e));for(let n=0;n<e;n++)t+=a[63&r[n]];return t};
 
 self.addEventListener("activate", function (event) {
@@ -14,6 +14,10 @@ self.addEventListener("install", function (event) {
     }),
   );
 });
+
+function jsonify(data) {
+  return new Response(JSON.stringify(data), { headers: { 'content-type': 'application/json' } })
+}
 
 async function upload(request, url) {
   const formData = await request.formData()
@@ -33,13 +37,13 @@ async function upload(request, url) {
       'server': 'ServiceWorker',
     }
   }))
-  return Response.json({ code: 0, data: fileUrl })
+  return jsonify({ code: 0, data: fileUrl })
 }
 
 async function remove(request, url) {
   const cache = await caches.open(CHATGPT_NEXT_WEB_FILE_CACHE)
   const res = await cache.delete(request.url)
-  return Response.json({ code: 0 })
+  return jsonify({ code: 0 })
 }
 
 self.addEventListener("fetch", (e) => {
@@ -56,4 +60,3 @@ self.addEventListener("fetch", (e) => {
     }
   }
 });
-

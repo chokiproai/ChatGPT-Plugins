@@ -130,8 +130,8 @@ const DEFAULT_ACCESS_STATE = {
   edgeTTSVoiceName: "en-US-AndrewMultilingualNeural",
 
   isUseOpenAIEndpointForAllModels: false,
-
   disableModelProviderDisplay: false,
+  isUseRemoteModels: false,
 };
 
 export const useAccessStore = createPersistStore(
@@ -154,6 +154,12 @@ export const useAccessStore = createPersistStore(
       this.fetch();
 
       return get().isUseOpenAIEndpointForAllModels;
+    },
+
+    useRemoteModels() {
+      this.fetch();
+
+      return get().isUseRemoteModels;
     },
 
     edgeVoiceName() {

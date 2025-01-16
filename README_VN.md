@@ -232,9 +232,32 @@ Người dùng `-all` để vô hiệu hóa tất cả các mô hình mặc đ�
 Đối với ByteDance: sử dụng `modelName@bytedance=deploymentName` để tùy chỉnh tên mô hình và tên triển khai.
 > Ví dụ: `+Doubao-lite-4k@bytedance=ep-xxxxx-xxx` sẽ hiển thị tùy chọn `Doubao-lite-4k(ByteDance)` trong danh sách mô hình.
 
-### `DEFAULT_MODEL` (tùy chọn)
+### `CUSTOM_MODELS` （Tùy chọn）
 
-Thay đổi mô hình mặc định
+> Ví dụ: `+qwen-7b-chat,+glm-6b,-gpt-3.5-turbo,gpt-4-1106-preview=gpt-4-turbo` 
+nghĩa là thêm `qwen-7b-chat` và `glm-6b` vào danh sách mô hình, đồng thời xóa `gpt-3.5-turbo` khỏi danh sách 
+và hiển thị tên mô hình `gpt-4-1106-preview` là `gpt-4-turbo`.
+
+> Nếu bạn muốn vô hiệu hóa tất cả các mô hình trước khi kích hoạt một mô hình cụ thể, bạn có thể sử dụng `-all,+gpt-3.5-turbo`, 
+nghĩa là chỉ kích hoạt mô hình `gpt-3.5-turbo`.
+
+Dùng để kiểm soát danh sách mô hình, sử dụng `+` để thêm một mô hình, sử dụng `-` để ẩn một mô hình, và sử dụng `tên_mô_hình=tên_hiển_thị` để tùy chỉnh tên hiển thị của mô hình, các mục được phân cách bằng dấu phẩy.  
+Trong chế độ Azure, hỗ trợ cấu hình tên mô hình và tên triển khai (deployment-name) bằng cách sử dụng cú pháp `modelName@azure=deploymentName`.  
+
+> **Ví dụ**: `+gpt-3.5-turbo@azure=gpt35` sẽ hiển thị trong danh sách mô hình một tùy chọn `gpt35(Azure)`.  
+> Nếu bạn chỉ có thể sử dụng chế độ Azure, việc thiết lập `-all,+gpt-3.5-turbo@azure=gpt35` sẽ khiến cuộc trò chuyện mặc định sử dụng mô hình `gpt35(Azure)`.
+
+Trong chế độ ByteDance, hỗ trợ cấu hình tên mô hình và tên triển khai (deployment-name) bằng cách sử dụng cú pháp `modelName@bytedance=deploymentName`.  
+
+> **Ví dụ**: `+Doubao-lite-4k@bytedance=ep-xxxxx-xxx` sẽ hiển thị trong danh sách mô hình một tùy chọn `Doubao-lite-4k(ByteDance)`.
+
+### `DEFAULT_MODEL` (Tùy chọn)  
+Thay đổi mô hình mặc định.
+
+### `USE_REMOTE_MODELS` (Tùy chọn)  
+Nếu bạn muốn sử dụng danh sách mô hình từ xa, có thể thiết lập giá trị là 1.  
+Có thể sử dụng cùng với tham số `CUSTOM_MODELS`.  
+Khuyến nghị sử dụng kết hợp với các dự án trung gian như `one-api`.
 
 ### `WHITE_WEBDAV_ENDPOINTS` (tùy chọn)
 
@@ -274,7 +297,6 @@ Sau khi thêm hoặc sửa đổi biến môi trường này, vui lòng triển 
 ## 🌟 Yêu cầu
 
 NodeJS >= 18, Docker >= 20
-
 
 ### 🌟 Local Development
 

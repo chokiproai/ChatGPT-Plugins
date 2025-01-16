@@ -5,7 +5,7 @@ import { getServerSideConfig } from "../../config/server";
 const serverConfig = getServerSideConfig();
 
 // Danger! Do not hard code any secret value here!
-// 警告！不要在这里写入任何敏感信息！
+// warn! Don't write any sensitive information here!
 const DANGER_CONFIG = {
   needCode: serverConfig.needCode,
   hideUserApiKey: serverConfig.hideUserApiKey,
@@ -18,6 +18,7 @@ const DANGER_CONFIG = {
   edgeTTSVoiceName: serverConfig.edgeTTSVoiceName,
   isUseOpenAIEndpointForAllModels: serverConfig.isUseOpenAIEndpointForAllModels,
   disableModelProviderDisplay: serverConfig.disableModelProviderDisplay,
+  isUseRemoteModels: serverConfig.isUseRemoteModels,
 };
 
 declare global {

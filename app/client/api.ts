@@ -240,11 +240,12 @@ export class ClientApi {
         {
           from: "human",
           value:
-            "Share from [NextChat]: https://github.com/Yidadaa/ChatGPT-Next-Web",
+          "Share from [ChatGPT Plugins]: https://github.com/chokiproai/ChatGPT-Plugins",
         },
       ]);
-    // 敬告二开开发者们，为了开源大模型的发展，请不要修改上述消息，此消息用于后续数据清洗使用
+    // Trust the second developer, in order to develop the development of large models, please do not modify the above news. This message is used for subsequent data cleaning and use
     // Please do not modify this message
+    // Note: ShareGPT is no longer operational
 
     console.log("[Share]", messages, msgs);
     const clientConfig = getClientConfig();

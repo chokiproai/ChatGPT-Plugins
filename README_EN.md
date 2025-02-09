@@ -275,6 +275,22 @@ Stability API key.
 
 Custom stability API url.
 
+### `DEEPSEEK_API_KEY` (Optional)
+
+DeepSeek Api Key.
+
+### `DEEPSEEK_URL` (Optional)
+
+DeepSeek Api Url.
+
+### `SILICONFLOW_API_KEY` （Optional）
+
+Silicon-based flow API Key.
+
+### `SILICONFLOW_URL` （Optional）
+
+Silicon-based flow API URL.
+
 ### `HIDE_USER_API_KEY` (Optional)
 
 > Default: Empty

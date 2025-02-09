@@ -1,7 +1,7 @@
 export const OWNER = "chokiproai";
 export const REPO = "ChatGPT-Plugins";
 export const REPO_URL = `https://github.com/${OWNER}/${REPO}`;
-export const PLUGINS_REPO_URL = `https://github.com/${OWNER}/NextChat-Awesome-Plugins`;
+export const PLUGINS_REPO_URL = `https://github.com/ChatGPTNextWeb/NextChat-Awesome-Plugins`;
 export const ISSUE_URL = `https://github.com/${OWNER}/${REPO}/issues`;
 export const UPDATE_URL = `${REPO_URL}#keep-updated`;
 export const RELEASE_URL = `${REPO_URL}/releases`;
@@ -28,9 +28,13 @@ export const TENCENT_BASE_URL = "https://hunyuan.tencentcloudapi.com";
 export const MOONSHOT_BASE_URL = "https://api.moonshot.cn";
 export const IFLYTEK_BASE_URL = "https://spark-api-open.xf-yun.com";
 
+export const DEEPSEEK_BASE_URL = "https://api.deepseek.com";
+
 export const XAI_BASE_URL = "https://api.x.ai";
 
 export const CHATGLM_BASE_URL = "https://open.bigmodel.cn";
+
+export const SILICONFLOW_BASE_URL = "https://api.siliconflow.cn";
 
 export const CACHE_URL_PREFIX = "/api/cache";
 export const UPLOAD_URL = `${CACHE_URL_PREFIX}/upload`;
@@ -62,6 +66,8 @@ export enum ApiPath {
   Artifacts = "/api/artifacts",
   XAI = "/api/xai",
   ChatGLM = "/api/chatglm",
+  DeepSeek = "/api/deepseek",
+  SiliconFlow = "/api/siliconflow",
 }
 
 export enum SlotID {
@@ -116,6 +122,8 @@ export enum ServiceProvider {
   Iflytek = "Iflytek",
   XAI = "XAI",
   ChatGLM = "ChatGLM",
+  DeepSeek = "DeepSeek",
+  SiliconFlow = "SiliconFlow",
 }
 
 // Google API safety settings, see https://ai.google.dev/gemini-api/docs/safety-settings
@@ -140,6 +148,8 @@ export enum ModelProvider {
   Iflytek = "Iflytek",
   XAI = "XAI",
   ChatGLM = "ChatGLM",
+  DeepSeek = "DeepSeek",
+  SiliconFlow = "SiliconFlow",
 }
 
 export const Stability = {
@@ -222,6 +232,11 @@ export const Iflytek = {
   ChatPath: "v1/chat/completions",
 };
 
+export const DeepSeek = {
+  ExampleEndpoint: DEEPSEEK_BASE_URL,
+  ChatPath: "chat/completions",
+};
+
 export const XAI = {
   ExampleEndpoint: XAI_BASE_URL,
   ChatPath: "v1/chat/completions",
@@ -230,6 +245,11 @@ export const XAI = {
 export const ChatGLM = {
   ExampleEndpoint: CHATGLM_BASE_URL,
   ChatPath: "/api/paas/v4/chat/completions",
+};
+
+export const SiliconFlow = {
+  ExampleEndpoint: SILICONFLOW_BASE_URL,
+  ChatPath: "v1/chat/completions",
 };
 
 export const DEFAULT_INPUT_TEMPLATE = `{{input}}`; // input / time / model / lang
@@ -252,6 +272,7 @@ Latex block: $$e=mc^2$$
 
 export const SUMMARIZE_MODEL = "gpt-4o-mini";
 export const GEMINI_SUMMARIZE_MODEL = "gemini-pro";
+export const DEEPSEEK_SUMMARIZE_MODEL = "deepseek-chat";
 
 export const KnowledgeCutOffDate: Record<string, string> = {
   default: "2021-09",
@@ -266,12 +287,20 @@ export const KnowledgeCutOffDate: Record<string, string> = {
   "gpt-4o-mini": "2023-10",
   "gpt-4o-mini-2024-07-18": "2023-10",
   "gpt-4-vision-preview": "2023-04",
+  "o1-mini-2024-09-12": "2023-10",
   "o1-mini": "2023-10",
+  "o1-preview-2024-09-12": "2023-10",
   "o1-preview": "2023-10",
+  "o1-2024-12-17": "2023-10",
+  "o1": "2023-10",
+  "o3-mini-2025-01-31": "2023-10",
+  "o3-mini": "2023-10",
   // After improvements,
   // it's now easier to add "KnowledgeCutOffDate" instead of stupid hardcoding it, as was done previously.
   "gemini-pro": "2023-12",
   "gemini-pro-vision": "2023-12",
+  "deepseek-chat": "2024-07",
+  "deepseek-coder": "2024-07",
 };
 
 export const DEFAULT_TTS_ENGINE = "OpenAI-TTS";
@@ -288,10 +317,29 @@ export const DEFAULT_TTS_VOICES = [
   "shimmer",
 ];
 
+export const VISION_MODEL_REGEXES = [
+  /vision/,
+  /gpt-4o/,
+  /claude-3/,
+  /gemini-1\.5/,
+  /gemini-exp/,
+  /gemini-2\.0/,
+  /learnlm/,
+  /qwen-vl/,
+  /qwen2-vl/,
+  /gpt-4-turbo(?!.*preview)/, // Matches "gpt-4-turbo" but not "gpt-4-turbo-preview"
+  /^dall-e-3$/, // Matches exactly "dall-e-3"
+  /glm-4v/,
+];
+
+export const EXCLUDE_VISION_MODEL_REGEXES = [/claude-3-5-haiku-20241022/];
+
 export const DEFAULT_STT_ENGINE = "WebAPI";
 export const DEFAULT_STT_ENGINES = ["WebAPI", "OpenAI Whisper"];
 export const FIREFOX_DEFAULT_STT_ENGINE = "OpenAI Whisper";
 const openaiModels = [
+  // As of July 2024, gpt-4o-mini should be used in place of gpt-3.5-turbo,
+  // as it is cheaper, more capable, multimodal, and just as fast. gpt-3.5-turbo is still available for use in the API.
   "gpt-3.5-turbo",
   "gpt-3.5-turbo-1106",
   "gpt-3.5-turbo-0125",
@@ -314,6 +362,7 @@ const openaiModels = [
   "dall-e-3",
   "o1-mini",
   "o1-preview",
+  "o3-mini",
 ];
 
 const googleModels = [
@@ -333,7 +382,9 @@ const googleModels = [
   "gemini-exp-1121",
   "gemini-exp-1206",
   "gemini-2.0-flash-exp",
+  "gemini-2.0-flash-thinking-exp",
   "gemini-2.0-flash-thinking-exp-1219",
+  "gemini-2.0-flash-thinking-exp-01-21",
 ];
 
 const anthropicModels = [
@@ -344,10 +395,11 @@ const anthropicModels = [
   "claude-3-opus-20240229",
   "claude-3-opus-latest",
   "claude-3-haiku-20240307",
+  "claude-3-5-haiku-20241022",
+  "claude-3-5-haiku-latest",
   "claude-3-5-sonnet-20240620",
   "claude-3-5-sonnet-20241022",
   "claude-3-5-sonnet-latest",
-  "claude-3-5-haiku-latest",
 ];
 
 const baiduModels = [
@@ -403,6 +455,8 @@ const iflytekModels = [
   "4.0Ultra",
 ];
 
+const deepseekModels = ["deepseek-chat", "deepseek-coder", "deepseek-reasoner"];
+
 const xAIModes = ["grok-beta"];
 
 const chatglmModels = [
@@ -414,9 +468,33 @@ const chatglmModels = [
   "glm-4-long",
   "glm-4-flashx",
   "glm-4-flash",
+  "glm-4v-plus",
+  "glm-4v",
+  "glm-4v-flash", // free
+  "cogview-3-plus",
+  "cogview-3",
+  "cogview-3-flash", // free
+  // Polling tasks cannot be adapted to
+  //   "cogvideox",
+  //   "cogvideox-flash", // free
 ];
 
-let seq = 1000; // 内置的模型序号生成器从1000开始
+const siliconflowModels = [
+  "Qwen/Qwen2.5-7B-Instruct",
+  "Qwen/Qwen2.5-72B-Instruct",
+  "deepseek-ai/DeepSeek-R1",
+  "deepseek-ai/DeepSeek-R1-Distill-Llama-70B",
+  "deepseek-ai/DeepSeek-R1-Distill-Llama-8B",
+  "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
+  "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B",
+  "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B",
+  "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
+  "deepseek-ai/DeepSeek-V3",
+  "meta-llama/Llama-3.3-70B-Instruct",
+  "THUDM/glm-4-9b-chat",
+];
+
+let seq = 1000; // Built-in model number generator starts at 1000
 export const DEFAULT_MODELS = [
   ...openaiModels.map((name) => ({
     name,
@@ -426,7 +504,7 @@ export const DEFAULT_MODELS = [
       id: "openai",
       providerName: "OpenAI",
       providerType: "openai",
-      sorted: 1, // 这里是固定的，确保顺序与之前内置的版本一致
+      sorted: 1, // Here is fixed, ensuring the order is consistent with the previous built-in version
     },
   })),
   ...openaiModels.map((name) => ({
@@ -548,6 +626,28 @@ export const DEFAULT_MODELS = [
       providerName: "ChatGLM",
       providerType: "chatglm",
       sorted: 12,
+    },
+  })),
+  ...deepseekModels.map((name) => ({
+    name,
+    available: true,
+    sorted: seq++,
+    provider: {
+      id: "deepseek",
+      providerName: "DeepSeek",
+      providerType: "deepseek",
+      sorted: 13,
+    },
+  })),
+  ...siliconflowModels.map((name) => ({
+    name,
+    available: true,
+    sorted: seq++,
+    provider: {
+      id: "siliconflow",
+      providerName: "SiliconFlow",
+      providerType: "siliconflow",
+      sorted: 14,
     },
   })),
 ] as const;

@@ -423,6 +423,17 @@ Settings: {
               SubTitle: "Ví dụ: ",
             },
           },
+          DeepSeek: {
+            ApiKey: {
+              Title: "DeepSeek API Key",
+              SubTitle: "Sử dụng khóa API DeepSeek tùy chỉnh",
+              Placeholder: "DeepSeek API Key",
+            },
+            Endpoint: {
+              Title: "Endpoint Address",
+              SubTitle: "Example: ",
+            },
+          },
           XAI: {
             ApiKey: {
               Title: "Khóa API XAI",
@@ -443,6 +454,17 @@ Settings: {
             Endpoint: {
               Title: "Địa chỉ Điểm cuối",
               SubTitle: "Ví dụ: ",
+            },
+          },
+          SiliconFlow: {
+            ApiKey: {
+              Title: "SiliconFlow API Key",
+              SubTitle: "Use a custom SiliconFlow API Key",
+              Placeholder: "SiliconFlow API Key",
+            },
+            Endpoint: {
+              Title: "Endpoint Address",
+              SubTitle: "Example: ",
             },
           },
           Stability: {

@@ -9,7 +9,7 @@
   },
   "package": {
     "productName": "ChatGPTPlugins",
-    "version": "2.15.8"
+    "version": "2.15.9"
   },
   "tauri": {
     "allowlist": {

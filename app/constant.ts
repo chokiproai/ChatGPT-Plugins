@@ -461,7 +461,16 @@ const iflytekModels = [
 
 const deepseekModels = ["deepseek-chat", "deepseek-coder", "deepseek-reasoner"];
 
-const xAIModes = ["grok-beta"];
+const xAIModes = [
+  "grok-beta",
+  "grok-2",
+  "grok-2-1212",
+  "grok-2-latest",
+  "grok-vision-beta",
+  "grok-2-vision-1212",
+  "grok-2-vision",
+  "grok-2-vision-latest",
+];
 
 const chatglmModels = [
   "glm-4-plus",
@@ -496,6 +505,8 @@ const siliconflowModels = [
   "deepseek-ai/DeepSeek-V3",
   "meta-llama/Llama-3.3-70B-Instruct",
   "THUDM/glm-4-9b-chat",
+  "Pro/deepseek-ai/DeepSeek-R1",
+  "Pro/deepseek-ai/DeepSeek-V3",
 ];
 
 let seq = 1000; // Built-in model number generator starts at 1000

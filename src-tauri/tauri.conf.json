@@ -55,7 +55,7 @@
     "bundle": {
       "active": true,
       "category": "DeveloperTool",
-      "copyright": "2023, Zhang Yifei All Rights Reserved.",
+      "copyright": "2023, Chokiproai All Rights Reserved.",
       "deb": {
         "depends": []
       },

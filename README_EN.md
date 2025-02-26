@@ -409,7 +409,7 @@ yarn dev
 FROM node:18
 
 # Clone the ChatGPT repository from GitHub
-RUN git clone [https://github.com/chokiproai/ChatGPT-Plugins.git](https://github.com/chokiproai/ChatGPT-Plugins.git)
+RUN git clone https://github.com/chokiproai/ChatGPT-Plugins.git
 
 # Set the working directory inside the container
 WORKDIR "ChatGPT-Plugins"

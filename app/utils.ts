@@ -250,11 +250,15 @@ ${result.content}
 `;
       })
       .join("\n");
-    const isZh = getLang() == "cn";
-    const promptTemplate = isZh
-      ? WEB_SEARCH_ANSWER_ZH_PROMPT
-      : WEB_SEARCH_ANSWER_EN_PROMPT;
-      : WEB_SEARCH_ANSWER_VI_PROMPT;
+    const lang = getLang();
+    let promptTemplate;
+    if (lang === "cn") {
+      promptTemplate = WEB_SEARCH_ANSWER_ZH_PROMPT;
+    } else if (lang === "vi") {
+      promptTemplate = WEB_SEARCH_ANSWER_VI_PROMPT;
+    } else {
+      promptTemplate = WEB_SEARCH_ANSWER_EN_PROMPT;
+    }
     prompt = promptTemplate
       .replace("{cur_date}", new Date().toLocaleString())
       .replace("{search_results}", searchResults)

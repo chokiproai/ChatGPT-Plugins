@@ -1,7 +1,14 @@
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
-
 import webpack from "webpack";
+
+let cryptoFallback;
+try {
+  cryptoFallback = require.resolve("crypto-browserify");
+} catch (err) {
+  console.error("Module 'crypto-browserify' not found. Please install it in your dependencies.");
+  process.exit(1);
+}
 
 const mode = process.env.BUILD_MODE ?? "standalone";
 console.log("[Next] build mode", mode);
@@ -11,14 +18,14 @@ console.log("[Next] build with chunk: ", !disableChunk);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  webpack(config, { isServer }) {
+  webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
       use: ["@svgr/webpack"],
     });
     config.module.rules.push({
       test: /\.(glsl|vs|fs|vert|frag)$/,
-      use: ["raw-loader"],
+      use: ["raw-loader"]
     });
     if (disableChunk) {
       config.plugins.push(
@@ -29,17 +36,8 @@ const nextConfig = {
     config.resolve.fallback = {
       ...config.resolve.fallback,
       child_process: false,
-      crypto: require.resolve("crypto-browserify"),
+      crypto: cryptoFallback,
     };
-
-    if (!isServer) {
-      config.plugins.push(
-        new webpack.ProvidePlugin({
-          process: "process/browser",
-          Buffer: ["buffer", "Buffer"],
-        })
-      );
-    }
 
     return config;
   },
@@ -70,12 +68,14 @@ const CorsHeaders = [
 ];
 
 if (mode !== "export") {
-  nextConfig.headers = async () => [
-    {
-      source: "/api/:path*",
-      headers: CorsHeaders,
-    },
-  ];
+  nextConfig.headers = async () => {
+    return [
+      {
+        source: "/api/:path*",
+        headers: CorsHeaders,
+      },
+    ];
+  };
 
   nextConfig.rewrites = async () => {
     const ret = [
@@ -110,7 +110,10 @@ if (mode !== "export") {
         destination: "https://sharegpt.com/api/conversations",
       },
     ];
-    return { beforeFiles: ret };
+
+    return {
+      beforeFiles: ret,
+    };
   };
 }
 

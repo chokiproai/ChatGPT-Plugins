@@ -8,7 +8,6 @@ import { ServiceProvider } from "./constant";
 import { fetch as tauriStreamFetch } from "./utils/stream";
 import {
   WEB_SEARCH_ANSWER_EN_PROMPT,
-  WEB_SEARCH_ANSWER_ZH_PROMPT,
   WEB_SEARCH_ANSWER_VI_PROMPT,
 } from "./prompt";
 

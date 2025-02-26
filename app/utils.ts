@@ -250,15 +250,10 @@ ${result.content}
 `;
       })
       .join("\n");
-    const lang = getLang();
-    let promptTemplate;
-    if (lang === "cn") {
-      promptTemplate = WEB_SEARCH_ANSWER_ZH_PROMPT;
-    } else if (lang === "vi") {
-      promptTemplate = WEB_SEARCH_ANSWER_VI_PROMPT;
-    } else {
-      promptTemplate = WEB_SEARCH_ANSWER_EN_PROMPT;
-    }
+    const isVi = getLang() == "vi";
+    const promptTemplate = isVi
+      ? WEB_SEARCH_ANSWER_VI_PROMPT
+      : WEB_SEARCH_ANSWER_EN_PROMPT;
     prompt = promptTemplate
       .replace("{cur_date}", new Date().toLocaleString())
       .replace("{search_results}", searchResults)

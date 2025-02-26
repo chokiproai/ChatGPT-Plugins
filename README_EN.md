@@ -291,6 +291,15 @@ Silicon-based flow API Key.
 
 Silicon-based flow API URL.
 
+### `TAVILY_API_KEY`
+
+Tavily API Key for universal search capabilities
+Get the address: https://tavily.com
+
+### `TAVILY_MAX_RETURNS` （Optional）
+
+The maximum number of results returned by the general search function, default is 10
+
 ### `HIDE_USER_API_KEY` (Optional)
 
 > Default: Empty

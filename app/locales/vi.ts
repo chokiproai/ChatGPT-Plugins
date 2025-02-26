@@ -74,9 +74,14 @@ Chat: {
         DisablePlugins: "Tắt Plugin",
         UploadImage: "Tải lên Hình ảnh",
         UploadFle: "Tải lên Tệp",
+        OpenWebSearch: "Bật tìm kiếm web",
+        CloseWebSearch: "Tắt tìm kiếm web",
+        EnableThinking: "Cho phép suy nghĩ",
+        DisableThinking: "Tắt suy nghĩ",
     },
     Rename: "Đổi tên Cuộc trò chuyện",
     Typing: "Đang gõ…",
+    Searching: "Tìm kiếm…",
     Input: (submitKey: string) => {
         var inputHints = `${submitKey} để gửi`;
         if (submitKey === String(SubmitKey.Enter)) {
@@ -547,6 +552,11 @@ Settings: {
         Title: "Hình phạt Tần suất",
         SubTitle:
             "Giá trị lớn hơn làm giảm khả năng lặp lại cùng một dòng",
+    },
+    BudgetTokens: {
+        Title: "Mã thông báo ngân sách",
+        SubTitle:
+          "Tham số BankS_Tokens xác định số lượng mã thông báo tối đa được phép sử dụng cho quy trình lý luận nội bộ của nó. Ngân sách_tokens phải luôn luôn nhỏ hơn MAX_TOKENS được chỉ định.",
     },
     Plugin: {
         Enable: {

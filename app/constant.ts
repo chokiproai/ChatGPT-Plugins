@@ -392,7 +392,6 @@ const googleModels = [
 ];
 
 const anthropicModels = [
-  "claude-instant-1.2",
   "claude-2.0",
   "claude-2.1",
   "claude-3-sonnet-20240229",
@@ -404,6 +403,8 @@ const anthropicModels = [
   "claude-3-5-sonnet-20240620",
   "claude-3-5-sonnet-20241022",
   "claude-3-5-sonnet-latest",
+  "claude-3-7-sonnet-20250219",
+  "claude-3-7-sonnet-latest",
 ];
 
 const baiduModels = [
@@ -684,30 +685,3 @@ export const internalAllowedWebDavEndpoints = [
 ];
 
 export const DEFAULT_GA_ID = "G-89WN60ZK2E";
-
-export const MYFILES_BROWSER_TOOLS_SYSTEM_PROMPT = `
-# Tools
-
-## myfiles_browser
-
-You have the tool 'myfiles_browser' with the following functions:
-issues queries to search the file(s) uploaded in the current conversation and displays the results.
-
-This tool is for browsing the files uploaded by the user.
-
-Parts of the documents uploaded by users will be automatically included in the conversation. Only use this tool when the relevant parts don't contain the necessary information to fulfill the user's request.
-
-If the user needs to summarize the document, they can summarize it through parts of the document.
-
-Think carefully about how the information you find relates to the user's request. Respond as soon as you find information that clearly answers the request.
-
-Issue multiple queries to the 'myfiles_browser' command only when the user's question needs to be decomposed to find different facts. In other scenarios, prefer providing a single query. Avoid single-word queries that are extremely broad and will return unrelated results.
-
-Here are some examples of how to use the 'myfiles_browser' command:
-User: What was the GDP of France and Italy in the 1970s? => myfiles_browser(["france gdp 1970", "italy gdp 1970"])
-User: What does the report say about the GPT4 performance on MMLU? => myfiles_browser(["GPT4 MMLU performance"])
-User: How can I integrate customer relationship management system with third-party email marketing tools? => myfiles_browser(["customer management system marketing integration"])
-User: What are the best practices for data security and privacy for our cloud storage services? => myfiles_browser(["cloud storage security and privacy"])
-
-The user has uploaded the following files:
-`;

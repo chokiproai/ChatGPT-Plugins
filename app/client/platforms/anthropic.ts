@@ -22,8 +22,13 @@ import {
 } from "@/app/store";
 import { getClientConfig } from "@/app/config/client";
 import { ANTHROPIC_BASE_URL } from "@/app/constant";
-import { getMessageTextContent, isVisionModel } from "@/app/utils";
-import { preProcessImageContent, stream } from "@/app/utils/chat";
+import {
+  getMessageTextContent,
+  getWebReferenceMessageTextContent,
+  isClaudeThinkingModel,
+  isVisionModel,
+} from "@/app/utils";
+import { preProcessImageContent, streamWithThink } from "@/app/utils/chat";
 import { cloudflareAIGatewayUrl } from "@/app/utils/cloudflare";
 import { RequestPayload } from "./openai";
 import { fetch } from "@/app/utils/stream";
@@ -58,6 +63,10 @@ export interface AnthropicChatRequest {
   top_k?: number; // Only sample from the top K options for each subsequent token.
   metadata?: object; // An object describing metadata about the request.
   stream?: boolean; // Whether to incrementally stream the response using server-sent events.
+  thinking?: {
+    type: "enabled";
+    budget_tokens: number;
+  };
 }
 
 export interface ChatRequest {
@@ -265,10 +274,9 @@ export class ClaudeApi implements LLMApi {
     return res?.content?.[0]?.text;
   }
   async chat(options: ChatOptions): Promise<void> {
+    const thinkingModel = isClaudeThinkingModel(options.config.model);
     const visionModel = isVisionModel(options.config.model);
-
     const accessStore = useAccessStore.getState();
-
     const shouldStream = !!options.config.stream;
 
     const modelConfig = {
@@ -318,7 +326,7 @@ export class ClaudeApi implements LLMApi {
         if (!visionModel || typeof content === "string") {
           return {
             role: insideRole,
-            content: getMessageTextContent(v),
+            content: getWebReferenceMessageTextContent(v),
           };
         }
         return {
@@ -372,6 +380,21 @@ export class ClaudeApi implements LLMApi {
       top_k: 5,
     };
 
+    // extended-thinking
+    // https://docs.anthropic.com/zh-CN/docs/build-with-claude/extended-thinking
+    if (
+      thinkingModel &&
+      useChatStore.getState().currentSession().mask.claudeThinking
+    ) {
+      requestBody.thinking = {
+        type: "enabled",
+        budget_tokens: modelConfig.budget_tokens,
+      };
+      requestBody.temperature = undefined;
+      requestBody.top_p = undefined;
+      requestBody.top_k = undefined;
+    }
+
     const path = this.path(Anthropic.ChatPath);
 
     const controller = new AbortController();
@@ -386,7 +409,7 @@ export class ClaudeApi implements LLMApi {
       //   .getAsTools(
       //     useChatStore.getState().currentSession().mask?.plugin || [],
       //   );
-      return stream(
+      return streamWithThink(
         path,
         requestBody,
         {
@@ -414,8 +437,9 @@ export class ClaudeApi implements LLMApi {
                   name: string;
                 };
                 delta?: {
-                  type: "text_delta" | "input_json_delta";
+                  type: "text_delta" | "input_json_delta" | "thinking_delta";
                   text?: string;
+                  thinking?: string;
                   partial_json?: string;
                 };
                 index: number;
@@ -443,7 +467,24 @@ export class ClaudeApi implements LLMApi {
             runTools[index]["function"]["arguments"] +=
               chunkJson?.delta?.partial_json;
           }
-          return chunkJson?.delta?.text;
+
+          console.log("chunkJson", chunkJson);
+
+          const isThinking = chunkJson?.delta?.type === "thinking_delta";
+          const content = isThinking
+            ? chunkJson?.delta?.thinking
+            : chunkJson?.delta?.text;
+
+          if (!content || content.trim().length === 0) {
+            return {
+              isThinking: false,
+              content: "",
+            };
+          }
+          return {
+            isThinking,
+            content,
+          };
         },
         // processToolMessage, include tool_calls message and tool call results
         (

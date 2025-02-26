@@ -275,21 +275,30 @@ Khóa API ổn định.
 
 Tùy chỉnh url API ổn định.
 
-### `DEEPSEEK_API_KEY` (Optional)
+### `DEEPSEEK_API_KEY` (Tùy chọn)
 
 DeepSeek Api Key.
 
-### `DEEPSEEK_URL` (Optional)
+### `DEEPSEEK_URL` (Tùy chọn)
 
 DeepSeek Api Url.
 
-### `SILICONFLOW_API_KEY` （Optional）
+### `SILICONFLOW_API_KEY` （Tùy chọn）
 
 Silicon-based flow API Key.
 
-### `SILICONFLOW_URL` （Optional）
+### `SILICONFLOW_URL` （Tùy chọn）
 
 Silicon-based flow API URL.
+
+### `TAVILY_API_KEY`
+
+Khóa API Tavily cho khả năng tìm kiếm toàn cầu
+Nhận địa chỉ：https://tavily.com
+
+### `TAVILY_MAX_RETURNS` （Không bắt buộc）
+
+Số lượng kết quả tối đa được trả về bởi chức năng tìm kiếm chung, mặc định là 10
 
 ### `HIDE_USER_API_KEY` (Tùy chọn)
 

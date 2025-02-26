@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import { showToast } from "./components/ui-lib";
-import Locale from "./locales";
+import Locale, { getLang } from "./locales";
 import { RequestMessage } from "./client/api";
 import { DEFAULT_MODELS } from "./constant";
 import { ServiceProvider } from "./constant";
 // import { fetch as tauriFetch, ResponseType } from "@tauri-apps/api/http";
 import { fetch as tauriStreamFetch } from "./utils/stream";
+import {
+  WEB_SEARCH_ANSWER_EN_PROMPT,
+  WEB_SEARCH_ANSWER_ZH_PROMPT,
+  WEB_SEARCH_ANSWER_VI_PROMPT,
+} from "./prompt";
 
 export function trimTopic(topic: string) {
   // Fix an issue where double quotes still show in the Indonesian language
@@ -227,6 +232,37 @@ export function isMacOS(): boolean {
   return false;
 }
 
+export function getWebReferenceMessageTextContent(message: RequestMessage) {
+  let prompt = getMessageTextContent(message);
+  if (
+    message.webSearchReferences &&
+    message.webSearchReferences.results.length > 0
+  ) {
+    const searchResults = message.webSearchReferences.results
+      .map((result, index) => {
+        return `[webpage ${index + 1} begin]
+[webpage title]${result.title}
+[webpage url]${result.url}
+[webpage content begin]
+${result.content}
+[webpage content end]
+[webpage ${index + 1} end]
+`;
+      })
+      .join("\n");
+    const isZh = getLang() == "cn";
+    const promptTemplate = isZh
+      ? WEB_SEARCH_ANSWER_ZH_PROMPT
+      : WEB_SEARCH_ANSWER_EN_PROMPT;
+      : WEB_SEARCH_ANSWER_VI_PROMPT;
+    prompt = promptTemplate
+      .replace("{cur_date}", new Date().toLocaleString())
+      .replace("{search_results}", searchResults)
+      .replace("{question}", prompt);
+  }
+  return prompt;
+}
+
 export function getMessageTextContent(message: RequestMessage) {
   if (typeof message.content === "string") {
     return message.content;
@@ -241,6 +277,7 @@ export function getMessageTextContent(message: RequestMessage) {
 
 export function getMessageTextContentWithoutThinking(message: RequestMessage) {
   let content = "";
+
   if (typeof message.content === "string") {
     content = message.content;
   } else {
@@ -251,6 +288,7 @@ export function getMessageTextContentWithoutThinking(message: RequestMessage) {
       }
     }
   }
+
   // Filter out thinking lines (starting with "> ")
   return content
     .split("\n")
@@ -278,16 +316,11 @@ export function isVisionModel(model: string) {
   const visionKeywords = [
     "vision",
     "claude-3",
-    "gemini-1.5",
     "gemini-1.5-pro",
     "gemini-1.5-flash",
+    "gemini-exp-1114",
     "gpt-4o",
     "gpt-4o-mini",
-    "gemini-exp",
-    "gemini-2.0",
-    "learnlm",
-    "qwen-vl",
-    "qwen2-vl",
   ];
 
   var googleModels = DEFAULT_MODELS.filter(
@@ -370,11 +403,21 @@ export function isFunctionCallModel(modelName: string) {
     "claude-3-5-sonnet-20241022",
     "claude-3-5-sonnet-latest",
     "claude-3-5-haiku-latest",
+    "claude-3-7-sonnet-20250219",
+    "claude-3-7-sonnet-latest",
   ];
   if (specialModels.some((keyword) => modelName === keyword)) return true;
   return DEFAULT_MODELS.filter(
     (model) => model.provider.id === "openai" && !model.name.includes("o1"),
   ).some((model) => model.name === modelName);
+}
+
+export function isClaudeThinkingModel(modelName: string) {
+  const specialModels = [
+    "claude-3-7-sonnet-20250219",
+    "claude-3-7-sonnet-latest",
+  ];
+  return specialModels.some((keyword) => modelName === keyword);
 }
 
 export function fetch(

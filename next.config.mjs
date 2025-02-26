@@ -1,14 +1,4 @@
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
 import webpack from "webpack";
-
-let cryptoFallback;
-try {
-  cryptoFallback = require.resolve("crypto-browserify");
-} catch (err) {
-  console.error("Module 'crypto-browserify' not found. Please install it in your dependencies.");
-  process.exit(1);
-}
 
 const mode = process.env.BUILD_MODE ?? "standalone";
 console.log("[Next] build mode", mode);
@@ -34,9 +24,7 @@ const nextConfig = {
     }
 
     config.resolve.fallback = {
-      ...config.resolve.fallback,
       child_process: false,
-      crypto: cryptoFallback,
     };
 
     return config;
@@ -79,11 +67,13 @@ if (mode !== "export") {
 
   nextConfig.rewrites = async () => {
     const ret = [
+      // adjust for previous version directly using "/api/proxy/" as proxy base route
       {
         source: "/api/proxy/v1/:path*",
         destination: "https://api.openai.com/v1/:path*",
       },
       {
+        // https://{resource_name}.openai.azure.com/openai/deployments/{deploy_name}/chat/completions
         source:
           "/api/proxy/azure/:resource_name/deployments/:deploy_name/:path*",
         destination:

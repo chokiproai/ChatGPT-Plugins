@@ -25,6 +25,7 @@ const nextConfig = {
 
     config.resolve.fallback = {
       child_process: false,
+      crypto: require.resolve("crypto-browserify"),
     };
 
     return config;

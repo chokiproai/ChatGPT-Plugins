@@ -11,6 +11,7 @@ import {
 } from "@fortaine/fetch-event-source";
 import { prettyObject } from "./format";
 import { fetch as tauriFetch } from "./stream";
+import { getWebReferenceMessageTextContent } from "../utils";
 
 export function compressImage(file: Blob, maxSize: number): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -90,6 +91,16 @@ export async function preProcessImageContent(
     }
   }
   return result;
+}
+
+export async function preProcessImageAndWebReferenceContent(
+  message: RequestMessage,
+) {
+  const content = message.content;
+  if (typeof content === "string") {
+    return getWebReferenceMessageTextContent(message);
+  }
+  return preProcessImageContent(content);
 }
 
 const imageCaches: Record<string, string> = {};

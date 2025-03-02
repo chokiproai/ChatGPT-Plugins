@@ -17,7 +17,10 @@ import {
   usePluginStore,
   ChatMessageTool,
 } from "@/app/store";
-import { stream } from "@/app/utils/chat";
+import {
+  preProcessImageAndWebReferenceContent,
+  stream,
+} from "@/app/utils/chat";
 import { getClientConfig } from "@/app/config/client";
 import { GEMINI_BASE_URL } from "@/app/constant";
 
@@ -88,7 +91,7 @@ export class GeminiProApi implements LLMApi {
     // try get base64image from local cache image_url
     const _messages: ChatOptions["messages"] = [];
     for (const v of options.messages) {
-      const content = await preProcessImageContent(v.content);
+      const content = await preProcessImageAndWebReferenceContent(v);
       _messages.push({ role: v.role, content });
     }
     const messages = _messages.map((v) => {

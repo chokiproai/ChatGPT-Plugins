@@ -28,7 +28,11 @@ import {
   isClaudeThinkingModel,
   isVisionModel,
 } from "@/app/utils";
-import { preProcessImageContent, streamWithThink } from "@/app/utils/chat";
+import {
+  preProcessImageAndWebReferenceContent,
+  preProcessImageContent,
+  streamWithThink,
+} from "@/app/utils/chat";
 import { cloudflareAIGatewayUrl } from "@/app/utils/cloudflare";
 import { RequestPayload } from "./openai";
 import { fetch } from "@/app/utils/stream";
@@ -290,7 +294,7 @@ export class ClaudeApi implements LLMApi {
     // try get base64image from local cache image_url
     const messages: ChatOptions["messages"] = [];
     for (const v of options.messages) {
-      const content = await preProcessImageContent(v.content);
+      const content = await preProcessImageAndWebReferenceContent(v);
       messages.push({ role: v.role, content });
     }
 

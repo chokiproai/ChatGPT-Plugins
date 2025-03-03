@@ -53,6 +53,11 @@
 - Chức năng RAG
   - Vui lòng tham khảo tài liệu [Hướng dẫn cấu hình chức năng RAG](./docs/rag.md)
 
+- Hỗ trợ **Tìm Kiếm Chung** (mô hình không phải plugin hỗ trợ tìm kiếm trực tuyến)
+  - Biến môi trường:
+    - `TAVILY_API_KEY`
+  - Địa chỉ đăng ký: https://tavily.com
+
 - Ngoài các công cụ plugin, giữ nguyên tính năng của dự án gốc [Chức năng chính của ChatGPT-Next-Web](https://github.com/Yidadaa/ChatGPT-Next-Web#features)
 
 - Hỗ trợ TTS (Chuyển văn bản thành giọng nói)

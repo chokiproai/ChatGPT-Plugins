@@ -53,6 +53,11 @@
 - **RAG Functionality**
   - Please refer to the documentation [RAG Function Configuration Guide](./docs/rag.md)
 
+- Support **General Search** (Model is not a plugin to support online search)
+ - Environmental variable:
+    - `TAVILY_API_KEY`
+  - Registration address: https://tavily.com
+
 - In addition to plugin tools, retains the features of the original project [Main Features of ChatGPT-Next-Web](https://github.com/Yidadaa/ChatGPT-Next-Web#features)
 
 - Supports TTS (Text-to-Speech)

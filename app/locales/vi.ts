@@ -24,6 +24,9 @@ ChatItem: {
 },
 Chat: {
     SubTitle: (count: number) => `${count} tin nhắn`,
+    Thinking: {
+        Title: "Suy nghĩ",
+    },
     EditMessage: {
         Title: "Chỉnh sửa Tất cả Tin nhắn",
         Topic: {

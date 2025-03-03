@@ -25,7 +25,7 @@ const cn = {
     SubTitle: (count: number) => `共 ${count} 条对话`,
     Thinking: {
       Title: "深度思考",
-    }
+    },
     EditMessage: {
       Title: "编辑消息记录",
       Topic: {

@@ -39,7 +39,11 @@ import {
   ChatPromptTemplate,
   MessagesPlaceholder,
 } from "@langchain/core/prompts";
-import { ChatOpenAI, OpenAIEmbeddings } from "@langchain/openai";
+import {
+  AzureChatOpenAI,
+  ChatOpenAI,
+  OpenAIEmbeddings,
+} from "@langchain/openai";
 import { ChatAnthropic } from "@langchain/anthropic";
 import {
   BaseMessage,
@@ -74,6 +78,8 @@ export interface RequestBody {
   returnIntermediateSteps: boolean;
   useTools: (undefined | string)[];
   provider: ServiceProvider;
+  max_tokens?: number;
+  max_completion_tokens?: number;
 }
 
 export class ResponseBody {
@@ -254,14 +260,14 @@ export class AgentApi {
         },
       });
     }
-    return new ChatOpenAI(
-      {
-        temperature: 0,
-        modelName: reqBody.model,
-        openAIApiKey: apiKey,
+    return new ChatOpenAI({
+      temperature: 0,
+      modelName: reqBody.model,
+      openAIApiKey: apiKey,
+      configuration: {
+        baseURL: baseUrl,
       },
-      { basePath: baseUrl },
-    );
+    });
   }
 
   getToolEmbeddings(reqBody: RequestBody, apiKey: string, baseUrl: string) {
@@ -275,19 +281,19 @@ export class AgentApi {
         return null;
       }
     }
-    return new OpenAIEmbeddings(
-      {
-        openAIApiKey: apiKey,
+    return new OpenAIEmbeddings({
+      openAIApiKey: apiKey,
+      configuration: {
+        baseURL: baseUrl,
       },
-      { basePath: baseUrl },
-    );
+    });
   }
 
   getLLM(reqBody: RequestBody, apiKey: string, baseUrl: string) {
     const serverConfig = getServerSideConfig();
     if (reqBody.isAzure || serverConfig.isAzure) {
       console.log("[use Azure ChatOpenAI]");
-      return new ChatOpenAI({
+      return new AzureChatOpenAI({
         temperature: reqBody.temperature,
         streaming: reqBody.stream,
         topP: reqBody.top_p,
@@ -299,22 +305,26 @@ export class AgentApi {
           : serverConfig.azureApiVersion,
         azureOpenAIApiDeploymentName: reqBody.model,
         azureOpenAIBasePath: baseUrl,
+        maxTokens: reqBody.max_tokens,
+        maxCompletionTokens: reqBody.max_completion_tokens,
       });
     }
     if (reqBody.provider === ServiceProvider.OpenAI) {
       console.log("[use ChatOpenAI]");
-      return new ChatOpenAI(
-        {
-          modelName: reqBody.model,
-          openAIApiKey: apiKey,
-          temperature: reqBody.temperature,
-          streaming: reqBody.stream,
-          topP: reqBody.top_p,
-          presencePenalty: reqBody.presence_penalty,
-          frequencyPenalty: reqBody.frequency_penalty,
+      return new ChatOpenAI({
+        modelName: reqBody.model,
+        openAIApiKey: apiKey,
+        temperature: reqBody.temperature,
+        streaming: reqBody.stream,
+        topP: reqBody.top_p,
+        presencePenalty: reqBody.presence_penalty,
+        frequencyPenalty: reqBody.frequency_penalty,
+        maxTokens: reqBody.max_tokens,
+        maxCompletionTokens: reqBody.max_completion_tokens,
+        configuration: {
+          baseURL: baseUrl,
         },
-        { basePath: baseUrl },
-      );
+      });
     }
     if (reqBody.provider === ServiceProvider.Anthropic) {
       console.log("[use ChatAnthropic]");
@@ -440,10 +450,16 @@ export class AgentApi {
 
       const pastMessages = new Array();
 
+      const isO1OrO3 =
+      reqBody.model.startsWith("o1") || reqBody.model.startsWith("o3");
       reqBody.messages
         .slice(0, reqBody.messages.length - 1)
         .forEach((message) => {
-          if (message.role === "system" && typeof message.content === "string")
+          if (
+            !isO1OrO3 &&
+            message.role === "system" &&
+            typeof message.content === "string"
+          )
             pastMessages.push(new SystemMessage(message.content));
           if (message.role === "user")
             typeof message.content === "string"
@@ -457,6 +473,15 @@ export class AgentApi {
           )
             pastMessages.push(new AIMessage(message.content));
         });
+
+        reqBody.temperature = !isO1OrO3 ? reqBody.temperature : 1;
+        reqBody.presence_penalty = !isO1OrO3 ? reqBody.presence_penalty : 0;
+        reqBody.frequency_penalty = !isO1OrO3 ? reqBody.frequency_penalty : 0;
+        reqBody.top_p = !isO1OrO3 ? reqBody.top_p : 1;
+  
+        if (isO1OrO3) {
+          reqBody.max_completion_tokens = reqBody.max_tokens;
+        }
 
       let llm = this.getLLM(reqBody, apiKey, baseUrl);
 

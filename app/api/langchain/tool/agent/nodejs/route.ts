@@ -49,14 +49,11 @@ async function handle(req: NextRequest) {
         baseUrl: process.env.OLLAMA_BASE_URL,
       });
     } else {
-      ragEmbeddings = new OpenAIEmbeddings(
-        {
-          modelName:
-            process.env.RAG_EMBEDDING_MODEL ?? "text-embedding-3-large",
-          openAIApiKey: apiKey,
-        },
-        { basePath: baseUrl },
-      );
+      ragEmbeddings = new OpenAIEmbeddings({
+        modelName: process.env.RAG_EMBEDDING_MODEL ?? "text-embedding-3-large",
+        openAIApiKey: apiKey,
+        configuration: { baseURL: baseUrl },
+      });
     }
 
     var dalleCallback = async (data: string) => {

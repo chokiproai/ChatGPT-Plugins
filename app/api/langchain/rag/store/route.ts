@@ -94,13 +94,11 @@ async function handle(req: NextRequest) {
         baseUrl: process.env.OLLAMA_BASE_URL,
       });
     } else {
-      embeddings = new OpenAIEmbeddings(
-        {
-          modelName: serverConfig.ragEmbeddingModel,
-          openAIApiKey: apiKey,
-        },
-        { basePath: baseUrl },
-      );
+      embeddings = new OpenAIEmbeddings({
+        modelName: serverConfig.ragEmbeddingModel,
+        openAIApiKey: apiKey,
+        configuration: { baseURL: baseUrl },
+      });
     }
     // https://js.langchain.com/docs/integrations/vectorstores/pinecone
     // https://js.langchain.com/docs/integrations/vectorstores/qdrant
@@ -181,12 +179,10 @@ async function handle(req: NextRequest) {
 }
 
 function bufferToBlob(buffer: Buffer, mimeType?: string): Blob {
-  const arrayBuffer: ArrayBuffer = buffer.buffer.slice(
-    buffer.byteOffset,
-    buffer.byteOffset + buffer.byteLength,
-  );
+  const arrayBuffer = new Uint8Array(buffer).buffer;
   return new Blob([arrayBuffer], { type: mimeType || "" });
 }
+
 function getOpenAIApiKey(token: string) {
   const serverConfig = getServerSideConfig();
   const isApiKey = !token.startsWith(ACCESS_CODE_PREFIX);

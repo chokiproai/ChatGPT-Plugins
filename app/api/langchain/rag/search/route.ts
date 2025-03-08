@@ -31,13 +31,13 @@ async function handle(req: NextRequest) {
     // const pineconeIndex = pinecone.Index(serverConfig.pineconeIndex!);
     const apiKey = getOpenAIApiKey(token);
     const baseUrl = getOpenAIBaseUrl(reqBody.baseUrl);
-    const embeddings = new OpenAIEmbeddings(
-      {
-        modelName: serverConfig.ragEmbeddingModel ?? "text-embedding-3-large",
-        openAIApiKey: apiKey,
+    const embeddings = new OpenAIEmbeddings({
+      modelName: serverConfig.ragEmbeddingModel ?? "text-embedding-3-large",
+      openAIApiKey: apiKey,
+      configuration: {
+        baseURL: baseUrl,
       },
-      { basePath: baseUrl },
-    );
+    });
     // const vectorStore = await PineconeStore.fromExistingIndex(embeddings, {
     //   pineconeIndex,
     // });

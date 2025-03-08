@@ -250,7 +250,7 @@ export class ChatGPTApi implements LLMApi {
         const content = visionModel
           ? await preProcessImageAndWebReferenceContent(v)
           : getWebReferenceMessageTextContent(v);
-          if (!(isO1OrO3 && v.role === "system"))
+        if (!(isO1OrO3 && v.role === "system"))
           messages.push({ role: v.role, content });
       }
 
@@ -325,7 +325,6 @@ export class ChatGPTApi implements LLMApi {
         //   );
         const tools = null;
         const funcs: Record<string, Function> = {};
-        stream(
         // console.log("getAsTools", tools, funcs);
         streamWithThink(
           chatPath,
@@ -365,6 +364,7 @@ export class ChatGPTApi implements LLMApi {
                 runTools[index]["function"]["arguments"] += args;
               }
             }
+
             const reasoning = choices[0]?.delta?.reasoning_content;
             const content = choices[0]?.delta?.content;
 

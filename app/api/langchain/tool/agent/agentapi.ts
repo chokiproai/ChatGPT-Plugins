@@ -449,9 +449,8 @@ export class AgentApi {
       });
 
       const pastMessages = new Array();
-
       const isO1OrO3 =
-      reqBody.model.startsWith("o1") || reqBody.model.startsWith("o3");
+        reqBody.model.startsWith("o1") || reqBody.model.startsWith("o3");
       reqBody.messages
         .slice(0, reqBody.messages.length - 1)
         .forEach((message) => {
@@ -474,14 +473,14 @@ export class AgentApi {
             pastMessages.push(new AIMessage(message.content));
         });
 
-        reqBody.temperature = !isO1OrO3 ? reqBody.temperature : 1;
-        reqBody.presence_penalty = !isO1OrO3 ? reqBody.presence_penalty : 0;
-        reqBody.frequency_penalty = !isO1OrO3 ? reqBody.frequency_penalty : 0;
-        reqBody.top_p = !isO1OrO3 ? reqBody.top_p : 1;
-  
-        if (isO1OrO3) {
-          reqBody.max_completion_tokens = reqBody.max_tokens;
-        }
+      reqBody.temperature = !isO1OrO3 ? reqBody.temperature : 1;
+      reqBody.presence_penalty = !isO1OrO3 ? reqBody.presence_penalty : 0;
+      reqBody.frequency_penalty = !isO1OrO3 ? reqBody.frequency_penalty : 0;
+      reqBody.top_p = !isO1OrO3 ? reqBody.top_p : 1;
+
+      if (isO1OrO3) {
+        reqBody.max_completion_tokens = reqBody.max_tokens;
+      }
 
       let llm = this.getLLM(reqBody, apiKey, baseUrl);
 

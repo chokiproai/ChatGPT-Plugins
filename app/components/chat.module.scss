@@ -722,6 +722,15 @@
 .chat-input:focus {
 }
 
+.chat-input-stt {
+  background-color: var(--primary);
+  color: white;
+
+  position: absolute;
+  right: 70px;
+  bottom: 32px;
+}
+
 .chat-input-send {
   background-color: var(--primary);
   color: white;
@@ -736,8 +745,11 @@
     font-size: 16px;
   }
 
-  .chat-input-send {
+  .chat-input-send,
+  .chat-input-stt {
     bottom: 30px;
+    width: 30px;
+    height: 30px;
   }
 }
 

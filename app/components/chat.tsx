@@ -10,7 +10,8 @@ import React, {
 } from "react";
 
 import SendWhiteIcon from "../icons/send-white.svg";
-import VoiceWhiteIcon from "../icons/voice-white.svg";
+import VoiceOpenIcon from "../icons/voice-open.svg";
+import VoiceCloseIcon from "../icons/voice-close.svg";
 import BrainIcon from "../icons/brain.svg";
 import RenameIcon from "../icons/rename.svg";
 import ExportIcon from "../icons/share.svg";
@@ -1210,6 +1211,7 @@ function _Chat() {
 
   const startListening = async () => {
     if (speechApi) {
+      showToast(Locale.Settings.STT.StartListening);
       await speechApi.start();
       setIsListening(true);
     }
@@ -1219,6 +1221,7 @@ function _Chat() {
     if (speechApi) {
       if (config.sttConfig.engine !== DEFAULT_STT_ENGINE)
         setIsTranscription(true);
+      showToast(Locale.Settings.STT.StopListening);
       await speechApi.stop();
       setIsListening(false);
     }
@@ -2328,9 +2331,21 @@ function _Chat() {
                     })}
                   </div>
                 )}
+                {config.sttConfig.enable && (
+                   <IconButton
+                     icon={isListening ? <VoiceCloseIcon /> : <VoiceOpenIcon />}
+                     className={styles["chat-input-stt"]}
+                     type="secondary"
+                     onClick={async () =>
+                       isListening
+                         ? await stopListening()
+                         : await startListening()
+                     }
+                     loding={isTranscription}
+                   />
+                 )}
                 <IconButton
                   icon={<SendWhiteIcon />}
-                  text={Locale.Chat.Send}
                   className={styles["chat-input-send"]}
                   type="primary"
                   onClick={() => doSubmit(userInput)}

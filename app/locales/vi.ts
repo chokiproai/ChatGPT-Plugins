@@ -597,6 +597,8 @@ Settings: {
         Engine: "Động cơ TTS",
     },
     STT: {
+        StartListening: "Bắt đầu nghe",
+        StopListening: "Ngừng nghe",
         Enable: {
             Title: "Bật STT",
             SubTitle: "Bật Chuyển Giọng nói thành Văn bản",

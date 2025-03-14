@@ -28,6 +28,15 @@
     }
   }
 
+  &.secondary {
+    background-color: var(--second);
+    color: var(--primary);
+
+    path {
+      fill: var(--primary) !important;
+    }
+  }
+
   &.danger {
     color: rgba($color: red, $alpha: 0.8);
     border-color: rgba($color: red, $alpha: 0.5);

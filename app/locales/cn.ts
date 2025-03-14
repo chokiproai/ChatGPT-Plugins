@@ -594,6 +594,8 @@ const cn = {
       },
     },
     STT: {
+      StartListening: "开始听写",
+      StopListening: "结束听写",
       Enable: {
         Title: "启用语音转文本",
         SubTitle: "启用语音转文本",

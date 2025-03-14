@@ -3,7 +3,7 @@ import * as React from "react";
 import styles from "./button.module.scss";
 import { CSSProperties } from "react";
 
-export type ButtonType = "primary" | "danger" | null;
+export type ButtonType = "primary" | "secondary" | "danger" | null;
 
 import LoadingIcon from "../icons/three-dots-white.svg";
 

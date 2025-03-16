@@ -1,5 +1,6 @@
 import {
   getMessageTextContent,
+  getTextContent,
   isFunctionCallModel,
   trimTopic,
 } from "../utils";
@@ -90,7 +91,7 @@ export interface ChatSession {
   id: string;
   topic: string;
 
-  memoryPrompt: string;
+  memoryPrompt: string | MultimodalContent[];
   messages: ChatMessage[];
   stat: ChatStat;
   lastUpdate: number;
@@ -635,7 +636,9 @@ export const useChatStore = createPersistStore(
         if (session.memoryPrompt.length) {
           return {
             role: "system",
-            content: Locale.Store.Prompt.History(session.memoryPrompt),
+            content: Locale.Store.Prompt.History(
+              getTextContent(session.memoryPrompt),
+            ),
             date: "",
           } as ChatMessage;
         }
@@ -663,9 +666,9 @@ export const useChatStore = createPersistStore(
           template += MYFILES_BROWSER_TOOLS_SYSTEM_PROMPT;
           session.attachFiles.forEach((file) => {
             template += `filename: \`${file.originalFilename}\`
-             partialDocument: \`\`\`
-             ${file.partial}
-             \`\`\``;
+partialDocument: \`\`\`
+${file.partial}
+\`\`\``;
           });
         }
         systemPrompts = shouldInjectSystemPrompts
@@ -818,7 +821,9 @@ export const useChatStore = createPersistStore(
                   session,
                   (session) =>
                     (session.topic =
-                      message.length > 0 ? trimTopic(message) : DEFAULT_TOPIC),
+                      message.length > 0
+                        ? trimTopic(getTextContent(message))
+                        : DEFAULT_TOPIC),
                 );
               }
             },

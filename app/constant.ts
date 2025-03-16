@@ -106,6 +106,7 @@ export const STORAGE_KEY = "chatgpt-next-web";
 
 export const REQUEST_TIMEOUT_MS = 60000;
 export const REQUEST_TIMEOUT_MS_FOR_THINKING = REQUEST_TIMEOUT_MS * 5;
+export const REQUEST_TIMEOUT_MS_FOR_IMAGE_GENERATION = REQUEST_TIMEOUT_MS * 5;
 
 export const EXPORT_MESSAGE_CLASS_NAME = "export-markdown";
 
@@ -369,11 +370,13 @@ const openaiModels = [
 ];
 
 const googleModels = [
+  // https://ai.google.dev/gemini-api/docs/models/gemini?
   "gemini-2.0-flash",
   "gemini-2.0-flash-lite-preview-02-05",
   "gemini-1.5-flash",
   "gemini-1.5-flash-8b",
   "gemini-1.5-pro",
+  // https://ai.google.dev/gemini-api/docs/models/experimental-models?
   "gemini-2.0-pro-exp-02-05",
   "gemini-2.0-flash-thinking-exp-01-21",
   "gemini-2.0-flash-exp",
@@ -456,16 +459,7 @@ const iflytekModels = [
 
 const deepseekModels = ["deepseek-chat", "deepseek-coder", "deepseek-reasoner"];
 
-const xAIModes = [
-  "grok-beta",
-  "grok-2",
-  "grok-2-1212",
-  "grok-2-latest",
-  "grok-vision-beta",
-  "grok-2-vision-1212",
-  "grok-2-vision",
-  "grok-2-vision-latest",
-];
+const xAIModes = ["grok-beta"];
 
 const chatglmModels = [
   "glm-4-plus",
@@ -500,8 +494,6 @@ const siliconflowModels = [
   "deepseek-ai/DeepSeek-V3",
   "meta-llama/Llama-3.3-70B-Instruct",
   "THUDM/glm-4-9b-chat",
-  "Pro/deepseek-ai/DeepSeek-R1",
-  "Pro/deepseek-ai/DeepSeek-V3",
 ];
 
 let seq = 1000; // Built-in model number generator starts at 1000

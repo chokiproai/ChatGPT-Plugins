@@ -19,8 +19,6 @@ import {
 import { collectModelsWithDefaultModel } from "@/app/utils/model";
 import {
   preProcessImageAndWebReferenceContent,
-  preProcessImageContent,
-  stream,
   streamWithThink,
 } from "@/app/utils/chat";
 import { cloudflareAIGatewayUrl } from "@/app/utils/cloudflare";
@@ -344,6 +342,7 @@ export class ChatGPTApi implements LLMApi {
                 reasoning_content: string | null;
               };
             }>;
+
             if (!choices?.length) return { isThinking: false, content: "" };
             const tool_calls = choices[0]?.delta?.tool_calls;
             if (tool_calls?.length > 0) {

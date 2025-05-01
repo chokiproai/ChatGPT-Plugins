@@ -327,6 +327,8 @@ export function isVisionModel(model: string) {
     "gemini-1.5-pro",
     "gemini-1.5-flash",
     "gemini-exp-1114",
+    "gemini-2.5-flash-preview-04-17",
+    "gemini-2.5-pro-preview-03-25	",
     "gpt-4o",
     "gpt-4o-mini",
     "gpt-4.5-preview",
@@ -334,6 +336,9 @@ export function isVisionModel(model: string) {
     "gpt-4.1",
     "gpt-4.1-mini",
     "gpt-4.1-nano",
+    "o1",
+    "o3",
+    "o4-mini",
   ];
 
   var googleModels = DEFAULT_MODELS.filter(
@@ -346,9 +351,18 @@ export function isVisionModel(model: string) {
   return (
     visionKeywords.some((keyword) => model.includes(keyword)) ||
     isGpt4Turbo ||
-    isDalle3(model) ||
+    isOpenAIImageGenerationModel(model) ||
     googleModels.some((keyword) => model.includes(keyword))
   );
+}
+
+export function isOpenAIImageGenerationModel(model: string) {
+  const specialModels = ["dall-e-3", "gpt-image-1"];
+  return specialModels.some((keyword) => model === keyword);
+}
+
+export function isGPTImageModel(model: string) {
+  return "gpt-image-1" === model;
 }
 
 export function isDalle3(model: string) {
@@ -365,6 +379,7 @@ export function getTimeoutMSByModel(model: string) {
     model.startsWith("dalle") ||
     model.startsWith("o1") ||
     model.startsWith("o3") ||
+    model.startsWith("o4") ||
     model.includes("deepseek-r") ||
     model.includes("-thinking")
   )
@@ -409,7 +424,7 @@ export function isSupportRAGModel(modelName: string) {
 }
 
 export function isFunctionCallModel(modelName: string) {
-  if (isDalle3(modelName)) {
+  if (isOpenAIImageGenerationModel(modelName)) {
     return false;
   }
   const specialModels = [
@@ -439,10 +454,13 @@ export function isFunctionCallModel(modelName: string) {
     "claude-3-5-haiku-latest",
     "claude-3-7-sonnet-20250219",
     "claude-3-7-sonnet-latest",
+    "o1",
+    "o3",
+    "gpt-4.1",
   ];
   if (specialModels.some((keyword) => modelName === keyword)) return true;
   return DEFAULT_MODELS.filter(
-    (model) => model.provider.id === "openai" && !model.name.includes("o1"),
+    (model) => model.provider.id === "openai" && !model.name.includes("o4-mini"),
   ).some((model) => model.name === modelName);
 }
 

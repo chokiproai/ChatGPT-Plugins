@@ -331,17 +331,23 @@ export const DEFAULT_TTS_VOICES = [
 export const VISION_MODEL_REGEXES = [
   /vision/,
   /gpt-4o/,
+  /gpt-4o-mini/,
+  /gpt-4\.1/,
+  /gpt-4\.1-mini/,
+  /gpt-4\.1-nano/,
+  /gpt-4\.5-preview/,
+  /gpt-4\.5-preview-2025-02-27/,
   /gpt-4\.1/,
   /claude-3/,
-  /gemini-1\.5/,
-  /gemini-exp/,
-  /gemini-2\.0/,
+  /gemini-(.*)/,
   /learnlm/,
   /qwen-vl/,
   /qwen2-vl/,
   /gpt-4-turbo(?!.*preview)/, // Matches "gpt-4-turbo" but not "gpt-4-turbo-preview"
   /^dall-e-3$/, // Matches exactly "dall-e-3"
+  /^gpt-image-1$/,
   /glm-4v/,
+  /vl/i,
   /o4-mini/,
   /o1/,
   /o3/,
@@ -399,7 +405,7 @@ const openaiModels = [
 const googleModels = [
   // https://ai.google.dev/gemini-api/docs/models/gemini?
   "gemini-2.0-flash",
-  "gemini-2.0-flash-lite-preview-02-05",
+  "gemini-2.0-flash-lite",
   "gemini-1.5-flash",
   "gemini-1.5-flash-8b",
   "gemini-1.5-pro",

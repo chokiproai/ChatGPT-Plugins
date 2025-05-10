@@ -240,6 +240,8 @@ export function isModelNotavailableInServer(
     return true;
   }
 
+  if (process.env.USE_OPENAI_ENDPOINT_FOR_ALL_MODELS === "1") return false;
+
   const modelTable = collectModelTable(DEFAULT_MODELS, customModels);
 
   const providerNamesArray = Array.isArray(providerNames)

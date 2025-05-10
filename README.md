@@ -1,8 +1,8 @@
 <h1 align="center">ChatGPT Plugin</h1>
 
-> Original author | | Tác giả gốc: [ChatGPT-Next-Web](https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web)
+> Combination of: [ChatGPT-Next-Web](https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web) | [ChatGPT-Next-Web-LangChain](https://github.com/Hk-Gosuto/ChatGPT-Next-Web-LangChain)
 
-# Deploying | | Triển khai
+# Deploying
 
 <div align="center">
 
@@ -12,7 +12,7 @@
 
 </div>
 
-# Language selection | | Lựa chọn ngôn ngữ
+# Language selection
 
 ## ⭐ [README EN.md](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README_EN.md)
 ## ⭐ [README VN.md](https://github.com/chokiproai/ChatGPT-Plugins/blob/master/README_VN.md)

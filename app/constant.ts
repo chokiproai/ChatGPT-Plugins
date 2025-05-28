@@ -302,7 +302,7 @@ export const KnowledgeCutOffDate: Record<string, string> = {
   "o1-preview-2024-09-12": "2023-10",
   "o1-preview": "2023-10",
   "o1-2024-12-17": "2023-10",
-  "o1": "2023-10",
+  o1: "2023-10",
   "o1-pro": "2023-10",
   "o3-mini-2025-01-31": "2023-10",
   "o3-mini": "2023-10",
@@ -338,7 +338,7 @@ export const VISION_MODEL_REGEXES = [
   /gpt-4\.5-preview/,
   /gpt-4\.5-preview-2025-02-27/,
   /gpt-4\.1/,
-  /claude-3/,
+  /claude/,
   /gemini-(.*)/,
   /learnlm/,
   /qwen-vl/,
@@ -354,7 +354,7 @@ export const VISION_MODEL_REGEXES = [
   /o4/,
 ];
 
-export const EXCLUDE_VISION_MODEL_REGEXES = [/claude-3-5-haiku-20241022/];
+export const EXCLUDE_VISION_MODEL_REGEXES = [/claude-2/];
 
 export const DEFAULT_STT_ENGINE = "WebAPI";
 export const DEFAULT_STT_ENGINES = ["WebAPI", "OpenAI Whisper"];
@@ -431,6 +431,8 @@ const anthropicModels = [
   "claude-3-5-sonnet-latest",
   "claude-3-7-sonnet-20250219",
   "claude-3-7-sonnet-latest",
+  "claude-opus-4-20250514",
+  "claude-sonnet-4-20250514",
 ];
 
 const baiduModels = [

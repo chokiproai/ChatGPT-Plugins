@@ -246,6 +246,7 @@ export class ChatGPTApi implements LLMApi {
       | GPTImageRequestPayload;
 
     const isImageGenModel = isOpenAIImageGenerationModel(options.config.model);
+    const isGpt5 = options.config.model.startsWith("gpt-5");
     const isOseries =
       options.config.model.startsWith("o1") ||
       options.config.model.startsWith("o3") ||
@@ -284,7 +285,10 @@ export class ChatGPTApi implements LLMApi {
         const content = visionModel
           ? await preProcessImageAndWebReferenceContent(v)
           : getWebReferenceMessageTextContent(v);
-        if (!(isOseries && v.role === "system"))
+        if (
+          !(isOseries && v.role === "system") &&
+          !(isGpt5 && v.role === "system")
+        )
           messages.push({ role: v.role, content });
       }
 
@@ -293,23 +297,34 @@ export class ChatGPTApi implements LLMApi {
         messages,
         stream: options.config.stream,
         model: modelConfig.model,
-        temperature: !isOseries ? modelConfig.temperature : 1,
-        presence_penalty: !isOseries ? modelConfig.presence_penalty : 0,
-        frequency_penalty: !isOseries ? modelConfig.frequency_penalty : 0,
-        top_p: !isOseries ? modelConfig.top_p : 1,
+        temperature: !(isOseries || isGpt5) ? modelConfig.temperature : 1,
+        presence_penalty: !(isOseries || isGpt5)
+          ? modelConfig.presence_penalty
+          : 0,
+        frequency_penalty: !(isOseries || isGpt5)
+          ? modelConfig.frequency_penalty
+          : 0,
+        top_p: !(isOseries || isGpt5) ? modelConfig.top_p : 1,
         // max_tokens: Math.max(modelConfig.max_tokens, 1024),
         // Please do not ask me why not send max_tokens, no reason, this param is just shit, I dont want to explain anymore.
       };
 
-
       // add max_tokens to vision model
       // O series Use max_completion_tokens to control the number of tokens (https://platform.openai.com/docs/guides/reasoning#controlling-costs)
       if (visionModel) {
-        if (isOseries) {
+        if (isOseries || isGpt5) {
           requestPayload["max_completion_tokens"] = 23456;
         } else {
           requestPayload["max_tokens"] = Math.max(modelConfig.max_tokens, 4000);
         }
+      }
+
+      // Add this block for gpt-5 models
+      if (isGpt5) {
+        // Remove max_tokens if present
+        delete requestPayload.max_tokens;
+        // Add max_completion_tokens
+        requestPayload["max_completion_tokens"] = modelConfig.max_tokens;
       }
     }
 

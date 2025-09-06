@@ -1,18 +1,18 @@
 {
   "name": "ChatGPT-Plugins",
-  "private": false,
+  "private": true,
   "license": "mit",
   "scripts": {
     "mask": "npx tsx app/masks/build.ts",
     "mask:watch": "npx watch 'yarn mask' app/masks",
-    "dev": "yarn run mask:watch & next dev",
-    "dev:https": "yarn run mask:watch & next dev --experimental-https",
+    "dev": "concurrently \"yarn mask:watch\" \"next dev\"",
+    "dev:https": "concurrently \"yarn mask:watch\" \"next dev --experimental-https\"",
     "build": "yarn mask && cross-env BUILD_MODE=standalone next build",
     "start": "next start",
     "lint": "next lint",
     "export": "yarn mask && cross-env BUILD_MODE=export BUILD_APP=1 next build",
-    "export:dev": "yarn mask:watch & cross-env BUILD_MODE=export BUILD_APP=1 next dev",
-    "app:dev": "yarn mask:watch & yarn tauri dev",
+    "export:dev": "concurrently \"yarn mask:watch\" \"cross-env BUILD_MODE=export BUILD_APP=1 next dev\"",
+    "app:dev": "concurrently \"yarn mask:watch\" \"yarn tauri dev\"",
     "app:build": "yarn mask && yarn tauri build",
     "prompts": "node ./scripts/fetch-prompts.mjs",
     "prepare": "husky install",
@@ -38,10 +38,10 @@
     "@vercel/analytics": "^0.1.11",
     "@vercel/speed-insights": "^1.0.2",
     "axios": "^1.7.5",
+    "bufferutil": "^4.0.9",
     "canvas": "^3.0.1",
     "cheerio": "^1.0.0-rc.12",
     "clsx": "^2.1.1",
-    "crypto-browserify": "^3.12.0",
     "d3-dsv": "2",
     "duck-duck-scrape": "^2.2.4",
     "emoji-picker-react": "^4.9.2",
@@ -81,6 +81,7 @@
     "spark-md5": "^3.0.2",
     "srt-parser-2": "^1.2.3",
     "use-debounce": "^9.0.4",
+    "utf-8-validate": "^6.0.5",
     "zustand": "^4.3.8"
   },
   "devDependencies": {
@@ -122,5 +123,8 @@
     "lint-staged/yaml": "^2.2.2",
     "@langchain/core": "0.2.23"
   },
-  "packageManager": "yarn@1.22.19"
+  "packageManager": "yarn@1.22.19",
+  "engines": {
+    "node": ">=22.0.0"
+  }
 }

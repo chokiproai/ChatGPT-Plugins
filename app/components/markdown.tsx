@@ -24,7 +24,6 @@ import { IconButton } from "./button";
 
 import { useAppConfig } from "../store/config";
 import { TavilySearchResponse } from "@tavily/core";
-import type { Pluggable } from "unified";
 
 export function Mermaid(props: { code: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -294,7 +293,7 @@ function MarkDownContent(props: {
     <ReactMarkdown
       remarkPlugins={[RemarkMath, RemarkGfm, RemarkBreaks]}
       rehypePlugins={[
-        RehypeKatex as Pluggable,
+        RehypeKatex as any,
         [
           RehypeHighlight,
           {

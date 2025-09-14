@@ -785,6 +785,12 @@ const en: LocaleType = {
     Code: "Detected access code from url, confirm to apply?",
     Settings: "Detected settings from url, confirm to apply?",
   },
+  ModelSelector: {
+    Title: "Select Model",
+    SearchPlaceholder: "Search models...",
+    AllModels: "All",
+    OtherModels: "Other",
+  },
 };
 
 export default en;

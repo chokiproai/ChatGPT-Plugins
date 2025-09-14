@@ -779,6 +779,12 @@ URLCommand: {
     Code: "Phát hiện mã truy cập từ URL, xác nhận để áp dụng?",
     Settings: "Phát hiện cài đặt từ URL, xác nhận để áp dụng?",
 },
+  ModelSelector: {
+    Title: "Chọn mô hình",
+    SearchPlaceholder: "Tìm kiếm mô hình...",
+    AllModels: "tất cả",
+    OtherModels: "Khác",
+  },
 };
 
 export default vi;

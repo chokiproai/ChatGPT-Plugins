@@ -5,7 +5,7 @@ import { getServerSideConfig } from "../../config/server";
 const serverConfig = getServerSideConfig();
 
 // Danger! Do not hard code any secret value here!
-// Warn! Don't write any sensitive information here!
+// 警告！不要在这里写入任何敏感信息！
 const DANGER_CONFIG = {
   needCode: serverConfig.needCode,
   hideUserApiKey: serverConfig.hideUserApiKey,

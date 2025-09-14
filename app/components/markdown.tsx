@@ -293,7 +293,7 @@ function MarkDownContent(props: {
     <ReactMarkdown
       remarkPlugins={[RemarkMath, RemarkGfm, RemarkBreaks]}
       rehypePlugins={[
-        RehypeKatex as any,
+        RehypeKatex,
         [
           RehypeHighlight,
           {

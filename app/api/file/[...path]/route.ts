@@ -6,15 +6,16 @@ import mime from "mime";
 
 async function handle(
   req: NextRequest,
-  { params }: { params: { path: string[] } },
+  { params }: { params: Promise<{ path: string[] }> },
 ) {
   if (req.method === "OPTIONS") {
     return NextResponse.json({ body: "OK" }, { status: 200 });
   }
 
   try {
+    const { path } = await params;
     const serverConfig = getServerSideConfig();
-    const fileName = params.path[0];
+    const fileName = path[0];
     const contentType = mime.getType(fileName);
 
     if (serverConfig.isStoreFileToLocal) {

@@ -19,11 +19,12 @@ const normalizeUrl = (url: string) => {
 
 async function handle(
   req: NextRequest,
-  { params }: { params: { path: string[] } },
+  { params }: { params: Promise<{ path: string[] }> },
 ) {
   if (req.method === "OPTIONS") {
     return NextResponse.json({ body: "OK" }, { status: 200 });
   }
+  const { path } = await params;
   const folder = STORAGE_KEY;
   const fileName = `${folder}/backup.json`;
 
@@ -62,7 +63,7 @@ async function handle(
     endpoint += "/";
   }
 
-  const endpointPath = params.path.join("/");
+  const endpointPath = path.join("/");
   const targetPath = `${endpoint}${endpointPath}`;
 
   // only allow MKCOL, GET, PUT

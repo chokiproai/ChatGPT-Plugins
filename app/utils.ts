@@ -438,7 +438,8 @@ export function isFunctionCallModel(modelName: string) {
   ];
   if (specialModels.some((keyword) => modelName === keyword)) return true;
   return DEFAULT_MODELS.filter(
-    (model) => model.provider.id === "openai" && !model.name.includes("o4-mini"),
+    (model) =>
+      model.provider.id === "openai" && !model.name.includes("o4-mini"),
   ).some((model) => model.name === modelName);
 }
 
@@ -451,7 +452,10 @@ export function isClaudeThinkingModel(modelName: string) {
 }
 
 export function isImageGenerationModel(modelName: string) {
-  const specialModels = ["gemini-2.0-flash-exp"];
+  const specialModels = [
+    "gemini-2.0-flash-exp",
+    "gemini-2.5-flash-image-preview",
+  ];
   return specialModels.some((keyword) => modelName === keyword);
 }
 

@@ -7,11 +7,8 @@ import { getHeader } from "@/app/utils/tencent";
 
 const serverConfig = getServerSideConfig();
 
-async function handle(
-  req: NextRequest,
-  { params }: { params: { path: string[] } },
-) {
-  console.log("[Tencent Route] params ", params);
+async function handle(req: NextRequest) {
+  console.log("[Tencent Route] request method:", req.method);
 
   if (req.method === "OPTIONS") {
     return NextResponse.json({ body: "OK" }, { status: 200 });

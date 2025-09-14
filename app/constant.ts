@@ -363,9 +363,11 @@ export const FIREFOX_DEFAULT_STT_ENGINE = "OpenAI Whisper";
 const openaiModels = [
   // As of July 2024, gpt-4o-mini should be used in place of gpt-3.5-turbo,
   // as it is cheaper, more capable, multimodal, and just as fast. gpt-3.5-turbo is still available for use in the API.
+  // Gpt-3 series
   "gpt-3.5-turbo",
   "gpt-3.5-turbo-1106",
   "gpt-3.5-turbo-0125",
+  // Gpt-4 series
   "gpt-4",
   "gpt-4-0613",
   "gpt-4-32k",
@@ -378,13 +380,9 @@ const openaiModels = [
   "gpt-4.1-mini-2025-04-14",
   "gpt-4.1-nano",
   "gpt-4.1-nano-2025-04-14",
+  "gpt-4.1-2025-04-14",
   "gpt-4.5-preview",
   "gpt-4.5-preview-2025-02-27",
-  "gpt-5-chat",
-  "gpt-5-mini",
-  "gpt-5-nano",
-  "gpt-5",
-  "gpt-5-chat-2025-01-01-preview",
   "gpt-4o",
   "gpt-4o-2024-05-13",
   "gpt-4o-2024-08-06",
@@ -397,40 +395,67 @@ const openaiModels = [
   "gpt-4-1106-preview",
   "gpt-4.5-preview",
   "gpt-4.5-preview-2025-02-27",
+  // Gpt-5 series
+  "gpt-5-chat",
+  "gpt-5-mini",
+  "gpt-5-nano",
+  "gpt-5",
+  "gpt-5-chat-2025-01-01-preview",
+  "gpt-5-2025-08-07",
+  "gpt-5-mini-2025-08-07",
+  "gpt-5-nano-2025-08-07",
+  "gpt-5-chat-latest",
+  // DALL·E series
   "dall-e-3",
+  "gpt-image-1",
+  // o1 + o3 + o4 series
   "o1-mini",
   "o1",
   "o1-preview",
   "o1-pro",
   "o3-mini",
   "o3",
+  "o3-deep-research-2025-06-26",
+  "o3-deep-research",
+  "o3-pro-2025-06-10",
+  "o3-pro",
   "o4-mini",
-  "gpt-image-1",
+  "o4-mini-deep-research-2025-06-26",
+  "o4-mini-deep-research",
 ];
 
 const googleModels = [
   // https://ai.google.dev/gemini-api/docs/models/gemini?
+  // Gemini 1.5
   "gemini-1.5-flash",
   "gemini-1.5-flash-8b",
   "gemini-1.5-pro",
+  // Gemini 2.0
   "gemini-2.0-flash",
   "gemini-2.0-flash-lite",
-  // https://ai.google.dev/gemini-api/docs/models/experimental-models?
   "gemini-2.0-pro-exp-02-05",
   "gemini-2.0-flash-thinking-exp-01-21",
   "gemini-2.0-flash-exp",
-  "gemini-exp-1206",
-  "learnlm-1.5-pro-experimental",
   "gemini-2.0-flash-lite-preview-02-05",
   "gemini-2.0-flash-thinking-exp",
   "gemini-2.0-flash-thinking-exp-1219",
   "gemini-2.0-pro-exp",
+  // https://ai.google.dev/gemini-api/docs/models/experimental-models?
+  // Gemini 2.5
+  "gemini-2.5-pro",
+  "gemini-2.5-flash",
+  "gemini-2.5-flash-image-preview",
   "gemini-2.5-pro-preview-06-05",
+  // Gemini + learnlm
+  "gemini-exp-1206",
+  "learnlm-1.5-pro-experimental",
 ];
 
 const anthropicModels = [
+  // claude 2 series
   "claude-2.0",
   "claude-2.1",
+  // claude 3 series
   "claude-3-sonnet-20240229",
   "claude-3-opus-20240229",
   "claude-3-opus-latest",
@@ -442,6 +467,7 @@ const anthropicModels = [
   "claude-3-5-sonnet-latest",
   "claude-3-7-sonnet-20250219",
   "claude-3-7-sonnet-latest",
+  // claude 4 series
   "claude-opus-4-20250514",
   "claude-sonnet-4-20250514",
 ];

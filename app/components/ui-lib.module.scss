@@ -331,15 +331,15 @@
   }
 }
 
-// ModelSelectorModal 样式
+// ModelSelectorModal style
 .model-selector-container {
   height: 70vh;
   display: flex;
   flex-direction: column;
-  overflow: hidden; // 防止容器本身产生滚动条
+  overflow: hidden; // Prevent the container from generating scroll bars
 }
 
-// 为 ModelSelectorModal 专门设置的模态框内容样式，覆盖默认的 modal-content
+// Modal content style specifically set for ModelSelectorModal, overriding the default modal-content
 .model-selector-modal {
   .modal-content {
     max-height: unset !important;
@@ -376,7 +376,7 @@
     padding-right: 35px;
     outline: none;
     width: 100% !important;
-    max-width: 100% !important; // 强制覆盖全局样式的
+    max-width: 100% !important; // Force overriding of global styles
   }
 
   .search-input:focus {
@@ -405,7 +405,7 @@
   margin-bottom: 8px;
   border-radius: 8px;
   cursor: pointer;
-  /* 移除 transition 动画 */
+  /* Remove transition animation */
 
   &:hover:not(.model-selector-provider-active) {
     background-color: var(--hover-color);
@@ -453,7 +453,7 @@
     color: var(--black);
   }
 
-  /* 为"全部"添加特殊文本样式 */
+  /* Add special text styles for "all" */
   &-text {
     font-size: 14px;
     font-weight: 500;
@@ -483,7 +483,7 @@
   margin-bottom: 4px;
   border-radius: 6px;
   cursor: pointer;
-  /* 移除 transition 动画 */
+  /* Remove transition animation */
 
   &:hover:not(.model-selector-model-selected) {
     background-color: var(--hover-color);
@@ -527,7 +527,7 @@
   }
 }
 
-// 响应式设计
+// Responsive design
 @media screen and (max-width: 768px) {
   .model-selector-content {
     flex-direction: column;

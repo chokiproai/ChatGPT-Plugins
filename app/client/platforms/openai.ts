@@ -767,6 +767,11 @@ export class ChatGPTApi implements LLMApi {
     });
 
     const resJson = (await res.json()) as OpenAIListModelResponse;
+    // Check if the response data is valid
+    if (!resJson.data || !Array.isArray(resJson.data)) {
+      console.warn("[Models] Invalid response from OpenAI API:", resJson);
+      return [];
+    }
     // const chatModels = resJson.data?.filter(
     //   (m) => m.id.startsWith("gpt-") || m.id.startsWith("chatgpt-"),
     // );

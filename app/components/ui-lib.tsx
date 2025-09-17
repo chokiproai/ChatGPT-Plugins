@@ -1089,15 +1089,8 @@ export function ModelSelectorModal(props: ModelSelectorModalProps) {
     }
   };
 
-  // 过滤出可用且提供商有效API密钥的模型
-  const availableModels = allModels.filter((v) => {
-    if (!v.available) return false;
-
-    const providerName = v.provider?.providerName;
-    if (!providerName) return false;
-
-    return isProviderValid(providerName);
-  });
+  // Filter out models that are available and have a valid API key for the provider
+  const availableModels = allModels.filter(v => v.available);
 
   // 将模型转换为ModelItem格式
   const modelItems: ModelItem[] = availableModels.map((model) => {

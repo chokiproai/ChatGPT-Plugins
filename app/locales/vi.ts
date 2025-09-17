@@ -782,7 +782,7 @@ URLCommand: {
   ModelSelector: {
     Title: "Chọn mô hình",
     SearchPlaceholder: "Tìm kiếm mô hình...",
-    AllModels: "tất cả",
+    AllModels: "Tất cả",
     OtherModels: "Khác",
   },
 };

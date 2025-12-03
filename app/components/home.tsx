@@ -145,8 +145,7 @@ function Screen() {
     <div
       className={
         styles.container +
-        ` ${shouldTightBorder ? styles["tight-container"] : styles.container} ${
-          getLang() === "ar" ? styles["rtl-screen"] : ""
+        ` ${shouldTightBorder ? styles["tight-container"] : styles.container} ${getLang() === "ar" ? styles["rtl-screen"] : ""
         }`
       }
     >
@@ -176,12 +175,16 @@ function Screen() {
 
 export function useLoadData() {
   const config = useAppConfig();
-
+  const accessStore = useAccessStore.getState();
   const api: ClientApi = getClientApi(config.modelConfig.providerName);
 
   useEffect(() => {
     (async () => {
       const models = await api.llm.models();
+      if (accessStore.isUseRemoteModels) {
+        config.overWriteModels(models);
+        return;
+      }
       config.mergeModels(models);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps

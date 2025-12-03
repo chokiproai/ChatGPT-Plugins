@@ -624,9 +624,8 @@ export function Select(
   const { className, children, align, ...otherProps } = props;
   return (
     <div
-      className={`${styles["select-with-icon"]} ${
-        align === "left" ? styles["left-align-option"] : ""
-      } ${className}`}
+      className={`${styles["select-with-icon"]} ${align === "left" ? styles["left-align-option"] : ""
+        } ${className}`}
     >
       <select className={styles["select-with-icon-select"]} {...otherProps}>
         {children}
@@ -870,9 +869,8 @@ export function SearchSelector<T>(props: {
             const selected = selectedValues.includes(item.value);
             return (
               <ListItem
-                className={`${styles["selector-item"]} ${
-                  item.disable && styles["selector-item-disabled"]
-                }`}
+                className={`${styles["selector-item"]} ${item.disable && styles["selector-item-disabled"]
+                  }`}
                 key={i}
                 title={item.title}
                 subTitle={item.subTitle}
@@ -947,9 +945,8 @@ export function Selector<T>(props: {
             const selected = selectedValues.includes(item.value);
             return (
               <ListItem
-                className={`${styles["selector-item"]} ${
-                  item.disable && styles["selector-item-disabled"]
-                }`}
+                className={`${styles["selector-item"]} ${item.disable && styles["selector-item-disabled"]
+                  }`}
                 key={i}
                 title={item.title}
                 subTitle={item.subTitle}
@@ -1044,6 +1041,8 @@ export function ModelSelectorModal(props: ModelSelectorModalProps) {
 
   // 检查提供商是否有有效的API密钥
   const isProviderValid = (providerName: string) => {
+    if (accessStore.isUseRemoteModels) return true;
+
     try {
       switch (providerName) {
         case "OpenAI":
@@ -1090,23 +1089,20 @@ export function ModelSelectorModal(props: ModelSelectorModalProps) {
   };
 
   // Filter out models that are available and have a valid API key for the provider
-  const availableModels = allModels.filter(v => v.available);
+  const availableModels = allModels.filter((v) => {
+    if (accessStore.isUseRemoteModels) return true;
+
+    if (!v.available) return false;
+
+    const providerName = v.provider?.providerName;
+    return isProviderValid(providerName || "");
+  });
 
   // 将模型转换为ModelItem格式
   const modelItems: ModelItem[] = availableModels.map((model) => {
     // 处理模型名中包含@的情况，如google@gemini-2.5-pro
     let providerName = model.provider?.providerName;
     let modelName = model.name;
-
-    console.log("model.provider", model.provider);
-
-    if (model.name.includes("@")) {
-      const parts = model.name.split("@");
-      if (parts.length === 2) {
-        providerName = parts[0];
-        modelName = parts[1];
-      }
-    }
 
     if (model.name.includes("/")) {
       const parts = model.name.split("/");
@@ -1116,18 +1112,15 @@ export function ModelSelectorModal(props: ModelSelectorModalProps) {
       }
     }
 
-    console.log("providerName", providerName);
-    console.log("modelName", modelName);
-
     return {
       title: modelName,
       value: `${model.name}@${providerName || "unknown"}`,
       displayName: model.displayName,
       provider: providerName
         ? {
-            providerName,
-            sorted: model.provider?.sorted || 999,
-          }
+          providerName,
+          sorted: model.provider?.sorted || 999,
+        }
         : undefined,
     };
   });
@@ -1143,7 +1136,6 @@ export function ModelSelectorModal(props: ModelSelectorModalProps) {
     if (icon) {
       PROVIDER_ICON_CACHE[providerName] = icon;
     }
-    return icon;
     return icon;
   }, []);
 
@@ -1222,13 +1214,13 @@ export function ModelSelectorModal(props: ModelSelectorModalProps) {
   // 获取当前显示的模型列表
   const currentModels = searchQuery
     ? modelItems.filter(
-        (item) =>
-          item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          (item.displayName &&
-            item.displayName.toLowerCase().includes(searchQuery.toLowerCase())),
-      )
+      (item) =>
+        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (item.displayName &&
+          item.displayName.toLowerCase().includes(searchQuery.toLowerCase())),
+    )
     : providerGroups.find((group) => group.id === selectedProvider)?.models ||
-      [];
+    [];
 
   // 处理选择
   const handleSelection = (value: string) => {
@@ -1287,11 +1279,10 @@ export function ModelSelectorModal(props: ModelSelectorModalProps) {
                 {providerGroups.map((group) => (
                   <div
                     key={group.id}
-                    className={`${styles["model-selector-provider"]} ${
-                      selectedProvider === group.id
+                    className={`${styles["model-selector-provider"]} ${selectedProvider === group.id
                         ? styles["model-selector-provider-active"]
                         : ""
-                    }`}
+                      }`}
                     onClick={() => setSelectedProvider(group.id)}
                   >
                     {group.id === "ALL" ? (
@@ -1326,18 +1317,17 @@ export function ModelSelectorModal(props: ModelSelectorModalProps) {
               {currentModels.map((model, index) => (
                 <div
                   key={index}
-                  className={`${styles["model-selector-model"]} ${
-                    selectedValue === model.value
+                  className={`${styles["model-selector-model"]} ${selectedValue === model.value
                       ? styles["model-selector-model-selected"]
                       : ""
-                  }`}
+                    }`}
                   onClick={() => handleSelection(model.value)}
                 >
                   {searchQuery ? (
                     // 搜索模式：显示图标 + 模型名
                     <>
                       {model.provider?.providerName &&
-                      providerIcons[model.provider.providerName] ? (
+                        providerIcons[model.provider.providerName] ? (
                         React.createElement(
                           providerIcons[model.provider.providerName],
                           {

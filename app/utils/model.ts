@@ -67,6 +67,9 @@ export function collectModelTable(
   // default models
   models.forEach((m) => {
     // using <modelName>@<providerId> as fullName
+    if (modelTable[`${m.name}@${m?.provider?.id}`]) {
+      console.log("duplicate model found:", `${m.name}@${m?.provider?.id}`);
+    }
     modelTable[`${m.name}@${m?.provider?.id}`] = {
       ...m,
       displayName: m.name, // 'provider' is copied over if it exists

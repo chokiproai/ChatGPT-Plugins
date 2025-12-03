@@ -203,6 +203,16 @@ export const useAppConfig = createPersistStore(
       set(() => ({ ...DEFAULT_CONFIG }));
     },
 
+    overWriteModels(newModels: LLMModel[]) {
+      if (!newModels || newModels.length === 0) {
+        return;
+      }
+      console.log("overWriteModels", newModels);
+      set(() => ({
+        models: newModels,
+      }));
+    },
+
     mergeModels(newModels: LLMModel[]) {
       if (!newModels || newModels.length === 0) {
         return;
@@ -226,7 +236,7 @@ export const useAppConfig = createPersistStore(
       }));
     },
 
-    allModels() {},
+    allModels() { },
   }),
   {
     name: StoreKey.Config,

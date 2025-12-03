@@ -33,10 +33,19 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const serializedConfig = JSON.stringify(getClientConfig()).replace(
+    /</g,
+    "\\u003c",
+  );
+
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
-        <meta name="config" content={JSON.stringify(getClientConfig())} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.__BUILD_CONFIG__ = ${serializedConfig};`,
+          }}
+        />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"

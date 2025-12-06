@@ -3,6 +3,8 @@
         "silent": true
     },
     "functions": {
-        "runtime": "nodejs24.x"
+        "runtime": {
+            "value": "nodejs24.x"
+        }
     }
 }

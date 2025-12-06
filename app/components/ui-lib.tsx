@@ -1041,7 +1041,8 @@ export function ModelSelectorModal(props: ModelSelectorModalProps) {
 
   // 检查提供商是否有有效的API密钥
   const isProviderValid = (providerName: string) => {
-    if (accessStore.isUseRemoteModels) return true;
+    if (accessStore.isUseRemoteModels || accessStore.isUseOpenAIEndpointForAllModels)
+      return true;
 
     try {
       switch (providerName) {
@@ -1280,8 +1281,8 @@ export function ModelSelectorModal(props: ModelSelectorModalProps) {
                   <div
                     key={group.id}
                     className={`${styles["model-selector-provider"]} ${selectedProvider === group.id
-                        ? styles["model-selector-provider-active"]
-                        : ""
+                      ? styles["model-selector-provider-active"]
+                      : ""
                       }`}
                     onClick={() => setSelectedProvider(group.id)}
                   >
@@ -1318,8 +1319,8 @@ export function ModelSelectorModal(props: ModelSelectorModalProps) {
                 <div
                   key={index}
                   className={`${styles["model-selector-model"]} ${selectedValue === model.value
-                      ? styles["model-selector-model-selected"]
-                      : ""
+                    ? styles["model-selector-model-selected"]
+                    : ""
                     }`}
                   onClick={() => handleSelection(model.value)}
                 >

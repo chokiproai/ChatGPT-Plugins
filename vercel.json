@@ -1,5 +1,8 @@
 {
     "github": {
         "silent": true
+    },
+    "functions": {
+        "nodeVersion": "24.x"
     }
 }

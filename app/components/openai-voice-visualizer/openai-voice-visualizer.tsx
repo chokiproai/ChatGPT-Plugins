@@ -3,7 +3,16 @@ import styles from "./openai-voice-visualizer.module.scss";
 import { initWebGL } from "../../utils/webgl";
 import vertexShaderSource from "../../shaders/vertex.glsl";
 import fragmentShaderSource from "../../shaders/fragment.glsl";
-import { loadImage } from "canvas";
+
+// Browser-native image loading function to replace Node.js canvas package
+const loadImage = (src: string): Promise<HTMLImageElement> => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = src;
+  });
+};
 
 const CANVAS_SIZE = 208;
 const DEFAULT_VIEWPORT_SIZE: [number, number] = [300, 300];
